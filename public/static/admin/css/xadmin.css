@@ -439,6 +439,12 @@ table th, table td {
     .fast-add{
         display: none;
     }
+    .page-content-bg{
+        left:60px;
+    }
+    .left_open{
+        margin-left: 60px;
+    }
     .layui-nav .to-index{
         display: none;
     }
