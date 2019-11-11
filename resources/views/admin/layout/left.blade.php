@@ -10,6 +10,12 @@
                     <i class="iconfont nav_right">&#xec17;</i></a>
                 <ul class="sub-menu">
                     <li>
+                        <a onclick="xadmin.add_tab('配置类型','{{ route('admin.config_type.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>配置类型</cite></a>
+                    </li>
+
+                    <li>
                         <a onclick="xadmin.add_tab('系统配置','{{ route('admin.config.index') }}')">
                             <i class="iconfont">&#xec18;</i>
                             <cite>系统配置</cite></a>
