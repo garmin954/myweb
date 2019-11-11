@@ -36,7 +36,7 @@ class ConfigRequest extends BaseRequest
             'config.*.details' => 'present',
             'config.*.set_key' => 'required|string',
             'config.*.set_value' => 'present',
-            'token'  => 'required|string',
+            '_token'  => 'required|string',
         ],
     ];
     /**
