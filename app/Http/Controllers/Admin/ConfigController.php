@@ -18,6 +18,7 @@ class ConfigController extends Controller
     public function index()
     {
         //
+
         return view('admin.config.index');
     }
 
@@ -31,7 +32,7 @@ class ConfigController extends Controller
         if ($request->ajax()) {
 
             $params = $request->all();
-
+            $validated = $request->validated();
             $configModel = new \App\Model\Admin\Config();
             $params = $configModel->insert($params);
             if ($params){

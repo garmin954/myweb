@@ -36,9 +36,28 @@ class ConfigRequest extends BaseRequest
             'config.*.details' => 'present',
             'config.*.set_key' => 'required|string',
             'config.*.set_value' => 'present',
-            '_token'  => 'required|string',
+//            '_token'  => 'required|string',
         ],
     ];
+
+    /**
+     * attributes 设置各个字段的中文注解
+     * @return array
+     * @author   liuml  <liumenglei0211@163.com>
+     * @DateTime 2018/9/13  20:34
+     */
+    public function attributes()
+    {
+        return [
+            '_token'   => '令牌',
+            'config'  => '配置项',
+            'config.*.title'  => '配置项中标题',
+            'config.*.details'  => '配置项中详情',
+            'config.*.set_key'  => '配置项中设置的键名',
+            'config.*.set_value'  => '配置项中设置的键值',
+        ];
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -56,24 +75,6 @@ class ConfigRequest extends BaseRequest
             $this->useRules = array_merge($this->rules['update'], $this->rules['edit']);
         }
         return $this->useRules;
-    }
-
-    /**
-     * attributes 设置各个字段的中文注解
-     * @return array
-     * @author   liuml  <liumenglei0211@163.com>
-     * @DateTime 2018/9/13  20:34
-     */
-    public function attributes()
-    {
-        return [
-            'token'    => '令牌',
-            'config'  => '配置项',
-            'config.*.title'  => '配置项中标题',
-            'config.*.details'  => '配置项中详情',
-            'config.*.set_key'  => '配置项中设置的键名',
-            'config.*.set_value'  => '配置项中设置的键值',
-        ];
     }
 
 }
