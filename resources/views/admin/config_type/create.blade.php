@@ -8,12 +8,13 @@
 @endsection
 
 @section('container')
-    <form class="layui-form" action=""  lay-filter="example">
+    <form class="layui-form layui-form-pane" action=""  lay-filter="example">
 
+        <input type="hidden" name="type_id">
         <div class="layui-form-item">
-            <label class="layui-form-label">配置类型</label>
+            <label class="layui-form-label">配置类型名称</label>
             <div class="layui-input-block">
-                <input type="text" name="config_name" placeholder="请输入配置类型" class="layui-input">
+                <input type="text" name="type_name" lay-verify="required" placeholder="请输入配置类型名称" class="layui-input">
             </div>
         </div>
 
@@ -25,15 +26,15 @@
         </div>
 
         <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">描述</label>
+            <label class="layui-form-label">类型描述</label>
             <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <textarea name="type_desc" placeholder="请输入描述内容" class="layui-textarea"></textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>
@@ -45,25 +46,13 @@
     <script>
         var id = "{{ Request ()->get('id', 0) }}";
 
-        layui.use(['form', 'layedit'], function(){
+        layui.use(['form', 'jquery'], function(){
             var form = layui.form
-                ,layer = layui.layer
-                ,layedit = layui.layedit;
+                ,$ = layui.jquery
+                ,layer = layui.layer;
 
             //自定义验证规则
             form.verify({
-                title: function(value){
-                    if(value.length < 5){
-                        return '标题至少得5个字符啊';
-                    }
-                }
-                ,pass: [
-                    /^[\S]{6,12}$/
-                    ,'密码必须6到12位，且不能出现空格'
-                ]
-                ,content: function(value){
-                    layedit.sync(editIndex);
-                }
             });
 
             //监听指定开关
@@ -75,41 +64,46 @@
             });
 
 
+            let _params = {
+                "type_id": id // id
+                ,"type_name": "" // 配置分类名称
+                ,"type_desc": '' // 配置分类描述
+                ,"status": 1 // 配置分类状态
+            };
 
             if (parseInt(id) !== 0) {
-                let url = "{{ route('admin.config.info') }}";
-                $.post(url, {id: id},function (res) {
-                    if(res.code > 0){
-                        layer.msg(res.msg, {icon:1, shade:0.5,anim:6})
-                    } else {
-                        layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
+                //表单取值
+                $.ajax({
+                    url: "{{ route('admin.config_type.info') }}",
+                    type: 'post',
+                    data: {id: id},
+                    dataType: 'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    },
+                    success:function(res){
+                        if(res.code > 0){
+                            _params.type_name = res.data.type_name;
+                            _params.status = res.data.status;
+                            _params.type_desc = res.data.type_desc;
+                            form.val('example', _params);
+                        } else {
+                            layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
+                        }
                     }
-                })
+                });
             }
             //表单赋值
-            form.val('example', {
-                "id": id // id
-                ,"config_name": "" // 配置名称
-                ,"config_code": 1 // 配置名称
-                ,"type_id": 1 // 所属分类
-                ,"config_type": 1 // 所属类型
-                ,"value": '' // 值
-                ,"values": '' // 多选值
-                ,"status": true // 状态
-                ,"desc": "我爱 layui" // 描述
-            });
-
-            //表单取值
-            var data = form.val('example');
+            form.val('example', _params);
             // alert(JSON.stringify(data));
 
             //监听提交
             form.on('submit(submit)', function(data){
-
+                //表单取值
                 $.ajax({
-                    url: "{{ route('admin.config.create') }}",
+                    url: "{{ route('admin.config_type.create') }}",
                     type: 'post',
-                    data: data.field,
+                    data: form.val('example'),
                     dataType: 'json',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

@@ -8,7 +8,7 @@
  * @param array $other 其他数据
  * @return false|string
  */
-function getAjaxData(string $msg='', int $code=1, array $data=[], $other=[]){
+function getAjaxData(string $msg='', int $code=1, $data=[], $other=[]){
 
     if ($code == 0){
         $msg = '操作失败！';

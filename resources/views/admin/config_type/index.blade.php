@@ -40,25 +40,27 @@
 
             table.render({
                 elem: '#test'
-                ,url:'/test/table/demo1.json'
+                ,url:'{{ route('admin.config_type.index') }}'
                 ,toolbar: '#toolbarDemo'
                 ,title: '用户数据表'
                 ,totalRow: true
+                ,response: {
+                    // statusName: 'code' //规定数据状态的字段名称，默认：code
+                    statusCode: 1
+                    ,countName: 'count' //规定数据总数的字段名称，默认：count
+                    ,dataName: 'data' //规定数据列表的字段名称，默认：data
+                }
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
-                    ,{field:'username', title:'用户名', width:120, edit: 'text'}
-                    ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
+                    ,{field:'type_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                    ,{field:'type_name', title:'用户名', minWidth:120, edit: 'text'}
+                    ,{field:'email', title:'邮箱', minWidth:150, edit: 'text', templet: function(res){
                             return '<em>'+ res.email +'</em>'
                         }}
-                    ,{field:'experience', title:'积分', width:80, sort: true, totalRow: true}
-                    ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
-                    ,{field:'logins', title:'登入次数', width:100, sort: true, totalRow: true}
-                    ,{field:'sign', title:'签名'}
-                    ,{field:'city', title:'城市', width:100}
-                    ,{field:'ip', title:'IP', width:120}
-                    ,{field:'joinTime', title:'加入时间', width:120}
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                    ,{field:'experience', title:'积分', minWidth:80, sort: true, totalRow: true}
+
+                    ,{field:'updated_at', title:'更新时间', minWidth:120}
+                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', minWidth:150}
                 ]]
                 ,page: true
             });
