@@ -35,13 +35,7 @@ class ConfigRequest extends BaseRequest
         ],
         // 不管是创建还是更新都要验证的字段
         'edit'   => [
-<<<<<<< HEAD
-            'config.*.title' => 'required|string',
-            'config.*.details' => 'present',
-            'config.*.set_key' => 'required|string',
-            'config.*.set_value' => 'present',
-=======
->>>>>>> cfbf795130290377e64f21a19c13a427ab22aab8
+
 //            '_token'  => 'required|string',
         ],
     ];
@@ -56,11 +50,6 @@ class ConfigRequest extends BaseRequest
     {
         return [
             '_token'   => '令牌',
-            'config'  => '配置项',
-            'config.*.title'  => '配置项中标题',
-            'config.*.details'  => '配置项中详情',
-            'config.*.set_key'  => '配置项中设置的键名',
-            'config.*.set_value'  => '配置项中设置的键值',
         ];
     }
 
@@ -88,23 +77,7 @@ class ConfigRequest extends BaseRequest
         }
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * attributes 设置各个字段的中文注解
-     * @return array
-     * @author   liuml  <liumenglei0211@163.com>
-     * @DateTime 2018/9/13  20:34
-     */
-    public function attributes()
-    {
-        return [
-            'config_name'  => '配置名称',
-            'config_code'  => '配置代码',
-//            '_token'    => '令牌a',
-        ];
-    }
 
 
->>>>>>> cfbf795130290377e64f21a19c13a427ab22aab8
+
 }
