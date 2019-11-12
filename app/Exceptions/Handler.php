@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -39,7 +40,7 @@ class Handler extends ExceptionHandler
 
     /**
      * Render an exception into an HTTP response.
-     *
+     * 将异常呈现到HTTP响应中。
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
@@ -48,4 +49,10 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $exception);
     }
+
+    //ValidationException
+//    protected function invalidJson($request, ValidationException $exception)
+//    {
+//        return response()->json($exception->errors(), 200 );
+//    }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class BaseRequest extends FormRequest
 {
@@ -79,11 +81,7 @@ class BaseRequest extends FormRequest
     {
         return [
             '_token'    => '令牌',
-            'config'  => '配置项',
-            'config.*.title'  => '配置项中标题',
-            'config.*.details'  => '配置项中详情',
-            'config.*.set_key'  => '配置项中设置的键名',
-            'config.*.set_value'  => '配置项中设置的键值',
+
         ];
     }
 
@@ -96,5 +94,14 @@ class BaseRequest extends FormRequest
     public function authorize()
     {
         return false;
+    }
+
+    //HttpResponseException
+    public function failedValidation(Validator $validator)
+    {
+        throw (new HttpResponseException(response()->json([
+            'code' => 0,
+            'msg' => $validator->errors()->first(),
+        ], 200)));
     }
 }

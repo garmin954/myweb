@@ -22,4 +22,9 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::get('info', 'Admin\ConfigController@info')->name('info');
 
     });
+
+    Route::prefix('config_type')->name('config_type.')->group(function (){
+        Route::get('index', 'Admin\ConfigTypeController@index')->name('index');
+        Route::any('create', 'Admin\ConfigTypeController@create')->name('create');
+    });
 });
