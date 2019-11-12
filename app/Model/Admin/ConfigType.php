@@ -16,4 +16,15 @@ class ConfigType extends Base
 
         return $res;
     }
+
+    /**
+     * 获取配置类型
+     * @return mixed
+     */
+    public function getConfigTypeList()
+    {
+        $list = $this->where('status', 1)->get();
+
+        return $list;
+    }
 }

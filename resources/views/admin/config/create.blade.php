@@ -26,9 +26,10 @@
             <label class="layui-form-label">配置分类</label>
                 <div class="layui-input-inline">
                     <select name="type_id">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-
+                        <option value="">请选择</option>
+                        @foreach( config('template.config_input_type') as $key =>$val)
+                            <option value="{{$key}}">{{$val}}</option>
+                        @endforeach
                     </select>
             </div>
         </div>
@@ -36,8 +37,10 @@
             <label class="layui-form-label">配置类型</label>
             <div class="layui-input-inline">
                     <select name="config_type">
-                        <option value=""></option>
-                        <option value="0">写作</option>
+                        <option value="">请选择</option>
+                        @foreach($config_type_list as $type)
+                            <option value="{{ $type['type_id'] }}">{{ $type['type_name'] }}</option>
+                        @endforeach
                     </select>
             </div>
         </div>
@@ -45,6 +48,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">配置值</label>
             <div class="layui-input-block">
+
                 <input type="text" name="value" placeholder="" class="layui-input">
             </div>
         </div>

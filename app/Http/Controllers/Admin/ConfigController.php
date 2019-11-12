@@ -6,6 +6,7 @@ use App\Admin\Config;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ConfigRequest;
 use App\Http\Requests\Base;
+use App\Model\admin\ConfigType;
 use Illuminate\Http\Request;
 
 class ConfigController extends Controller
@@ -45,7 +46,10 @@ class ConfigController extends Controller
 
         } else {
 
-            return view('admin.config.create');
+            $configTypeModel = new ConfigType();
+            $configTypeList = $configTypeModel->getConfigTypeList();
+
+            return view('admin.config.create',['config_type_list'=>$configTypeList]);
         }
     }
 

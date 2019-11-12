@@ -98,6 +98,7 @@
             // alert(JSON.stringify(data));
 
             //监听提交
+            let index = parent.layer.getFrameIndex(window.name);
             form.on('submit(submit)', function(data){
                 //表单取值
                 $.ajax({
@@ -110,7 +111,12 @@
                     },
                     success:function(res){
                         if(res.code > 0){
-                            layer.msg(res.msg, {icon:1, shade:0.5,anim:6})
+                            layer.msg(res.msg, {icon:1, shade:0.5,anim:6});
+
+                            setTimeout(function () {
+                                window.parent.location.reload();//刷新父页面
+                                parent.layer.close(index);
+                            }, 2000)
                         } else {
                             layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
                         }

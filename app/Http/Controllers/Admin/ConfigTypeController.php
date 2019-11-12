@@ -68,4 +68,5 @@ class ConfigTypeController extends Controller
         return getAjaxData('', 0);
     }
 
+
 }
