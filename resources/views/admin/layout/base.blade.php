@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/font.css">
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/xadmin.css">
-
+    <meta name="_token" content="{{ csrf_token() }}"/>
     @yield('resources')
 </head>
 <body>

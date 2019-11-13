@@ -19,7 +19,9 @@ Route::prefix('admin')->name('admin.')->group( function (){
     Route::prefix('config')->name('config.')->group(function (){
         Route::get('index', 'Admin\ConfigController@index')->name('index');
         Route::any('create', 'Admin\ConfigController@create')->name('create');
-        Route::get('info', 'Admin\ConfigController@info')->name('info');
+        Route::post('info', 'Admin\ConfigController@info')->name('info');
+        Route::post('changeField', 'Admin\ConfigController@changeField')->name('changeField');
+        Route::any('config', 'Admin\ConfigController@config')->name('config');
 
     });
 

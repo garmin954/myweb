@@ -17,11 +17,11 @@
                 <table class="layui-hide" id="list" lay-filter="list"></table>
 
                 <script type="text/html" id="toolbar">
-                    <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-                        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-                    </div>
+{{--                    <div class="layui-btn-container">--}}
+{{--                        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>--}}
+{{--                        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>--}}
+{{--                        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>--}}
+{{--                    </div>--}}
                 </script>
                 {{--                行工具--}}
                 <script type="text/html" id="bar">
@@ -31,13 +31,11 @@
 
                 {{--                状态--}}
                 <script type="text/html" id="status">
-
+                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.config_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
                     <%#  if(d.status == 1){ %>
-                    <input type="checkbox" checked name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
-                    <%# }else{  %>
-                    <input type="checkbox" name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
+                    checked
                     <%# }  %>
-
+                    >
 
                 </script>
             </div>
@@ -47,9 +45,10 @@
 @endsection
 @section('scripts')
     <script>
-        layui.use(['table', 'laytpl', 'layer'], function(){
+        layui.use(['table', 'laytpl', 'layer', 'form'], function(){
             var table = layui.table
                 ,layer = layui.layer
+                ,form = layui.form
                 ,laytpl = layui.laytpl;
 
             let url = '{{ route('admin.config.index') }}';
@@ -69,10 +68,9 @@
                 }
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'type_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
-                    ,{field:'type_name', title:'用户名', minWidth:120, edit: 'text'}
+                    ,{field:'config_name', title:'配置名称', minWidth:50, fixed: 'left'}
+                    ,{field:'config_code', title:'配置代码', minWidth:120, edit: 'text'}
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
-
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
@@ -114,6 +112,14 @@
                 };
             });
 
+            form.on('switch(status)', function(data){
+                let status = data.elem.checked ? 1: 0;
+                YuanLu.changStatus({
+                    url :'{{ route('admin.config.changeField') }}',
+                    params : {id: $(data.elem).attr('data-id'), value: status, field : 'status'}
+                });
+            });
+
             //监听行工具事件
             table.on('tool(list)', function(obj){
                 var data = obj.data;
@@ -124,7 +130,7 @@
                         layer.close(index);
                     });
                 } else if(obj.event === 'update'){
-                    xadmin.open('添加配置','{{ route('admin.config.create') }}?id='+data.type_id,600 )
+                    xadmin.open('修改配置','{{ route('admin.config.create') }}?id='+data.type_id,600 )
                 }
             });
         });

@@ -13,7 +13,7 @@
 			setTimeout(function () {
 				window.parent.location.reload();//刷新父页面
 				parent.layer.close(index);
-            }, time)                   
+            }, time)
 		},
 		// 提交表单
 		submitForm : function(obj){
@@ -23,7 +23,6 @@
             _token = obj._token ? obj._token : '_token'
             time = obj.time ? obj.time : 2000
             type = obj.type ? obj.type : 'post'
-
 
             //表单取值
             $.ajax({
@@ -42,8 +41,8 @@
                         layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
                     }
                 }
-            });        
- 
+            });
+
 		},
 		// 获取表单值
 		getFrom : function(obj){
@@ -64,8 +63,33 @@
 					} else {
 						layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
 					}
-				}    
+				}
             });
-		}
+		},
+
+        // 获取表单值
+        changStatus : function(obj){
+            let _token = obj._token ? obj._token : '_token'
+            let type = obj.type ? obj.type : 'post'
+            let params = obj.params ? obj.params : {}
+            $.ajax({
+                async: false,
+                url: obj.url,
+                type: type,
+                data: params,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="'+_token+'"]').attr('content')
+                },
+                success:function(res){
+                    if(res.code > 0){
+                        layer.msg(res.msg);
+                    } else {
+                        layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
+                        obj.el.elem.checked = !obj.el.elem.checked;
+                    }
+                }
+            });
+        }
     }
 })(window);

@@ -27,11 +27,12 @@ class ConfigRequest extends BaseRequest
         // 这里代表创建表单需要验证的字段
         'create' => [
             'config_name' => 'required|unique:config|max:255',
-            'config_code' => 'required',
+            'config_code' => 'required|unique:config',
         ],
         // 更新表单需要验证的字段
         'update' => [
-            'testUpdate' => 'required'
+            'config_name' => 'required|max:255',
+            'config_code' => 'required',
         ],
         // 不管是创建还是更新都要验证的字段
         'edit'   => [
@@ -65,16 +66,16 @@ class ConfigRequest extends BaseRequest
             if (static::getPathInfo() == '/admin/config/create')
             {
                 $this->useRules = array_merge($this->rules['create'], $this->rules['edit']);
-            }
-            if (static::getPathInfo() == '/api/system/editconfig')
-            {
-                $this->useRules = array_merge($this->rules['update'], $this->rules['edit']);
+                if (intval($this->request->get('config_id')) > 0){
+                    $this->useRules = array_merge($this->rules['update'], $this->rules['edit']);
+                }
             }
             return $this->useRules;
         } else{
             return [];
         }
     }
+
 
 
 

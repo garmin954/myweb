@@ -67,4 +67,16 @@ class Base extends Model
         return $count;
     }
 
+
+    /**
+     * 改变值
+     */
+    public function changeField($param)
+    {
+         $res = $this->where($this->primaryKey, $param['id'])->update([
+             $param['field'] => $param['value']
+         ]);
+
+         return $res;
+    }
 }

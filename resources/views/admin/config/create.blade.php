@@ -10,6 +10,7 @@
 @section('container')
     <form class="layui-form" action=""  lay-filter="example">
 
+        <input type="hidden" name="config_id">
         <div class="layui-form-item">
             <label class="layui-form-label">配置名称</label>
             <div class="layui-input-block">
@@ -86,7 +87,7 @@
 @section('scripts')
 
     <script>
-        var id = "{{ Request ()->get('id', 0) }}";
+        var id = "{{ Request()->get('id', 0) }}";
 
         layui.use(['form', 'layedit'], function(){
             var form = layui.form
@@ -98,15 +99,15 @@
             });
 
             let _params = {
-                "id": id // id
+                "config_id": id // id
                 ,"config_name": "" // 配置名称
-                ,"config_code": 1 // 配置名称
-                ,"type_id": 1 // 所属分类
-                ,"config_type": 1 // 所属类型
+                ,"config_code": '' // 配置名称
+                ,"type_id": '1' // 所属分类
+                ,"config_type": '1' // 所属类型
                 ,"value": '' // 值
                 ,"values": '' // 多选值
                 ,"status": true // 状态
-                ,"desc": "我爱 layui" // 描述
+                ,"desc": "" // 描述
             };
 
             if (parseInt(id) !== 0) {
@@ -125,6 +126,7 @@
             form.on('submit(submit)', function(data){
                 //监听提交
                 let params = form.val('example');
+                console.log(params);
                 YuanLu.submitForm({
                     url : "{{ route('admin.config.create') }}",
                     params: params,

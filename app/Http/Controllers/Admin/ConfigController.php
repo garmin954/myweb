@@ -11,6 +11,13 @@ use Illuminate\Http\Request;
 
 class ConfigController extends Controller
 {
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = new \App\Model\Admin\Config();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,9 +52,9 @@ class ConfigController extends Controller
         if ($request->ajax()) {
 
             $params = $request->all();
-            $validated = $request->validated();
+
             $configModel = new \App\Model\Admin\Config();
-            $params = $configModel->insert($params);
+            $params = $configModel->saveData($params);
             if ($params){
                 return getAjaxData();
 
@@ -66,9 +73,67 @@ class ConfigController extends Controller
     }
 
 
-    public function info()
+    /**
+     * 获取数据
+     * @param Request $request
+     * @return false|string
+     */
+    public function info(Request $request)
     {
-        return '';
+        if ($request->ajax()){
+            $id = $request->post('id', 0);
+            if ($id){
+                $configModel = new \App\Model\Admin\Config();
 
+                $info = $configModel->where('config_id', $id)->first();
+                if ($info){
+                    return getAjaxData('', 1, $info);
+                }
+            }
+        }
+        return getAjaxData('', 0);
+    }
+
+
+    /**
+     * 改变值
+     */
+    public function changeField(Request $request)
+    {
+        if ($request->ajax()){
+            if (isset($request['id']) && isset($request['id']) && isset($request['id'])){
+                $res= $this->model->changeField($request);
+                if ($res){
+                    return getAjaxData('', 1);
+                }
+            }
+        }
+
+        return getAjaxData('', 0);
+    }
+
+    /**
+     * 配置页面
+     */
+    public function config()
+    {
+        $configTypeModel = new ConfigType();
+        $configTypeList = $configTypeModel->where('status', 1)->get ();
+        $configList = $this->model->where('status', 1)->get();
+        $list = [];
+        if (!empty($configTypeList)){
+
+            foreach ($configTypeList as &$type){
+                 $arr= [];
+                foreach ($configList as $config){
+                    if ($config['config_type'] == $type['type_id']){
+                        $arr[] = $config;
+                    }
+                }
+                $type['child'] = $arr;
+            }
+        }
+
+        return view('admin.config.config', ['config_type_list'=>$configTypeList]);
     }
 }
