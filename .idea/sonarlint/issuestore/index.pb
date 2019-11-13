@@ -45,3 +45,11 @@ Z
 +resources/views/admin/layout/base.blade.php,2\2\2243ac01f3fe27799991ffd4cabfc97e4434396f
 a
 1resources/views/admin/config_type/index.blade.php,1\8\181bd794239d46c2dc933af5615904950ea22f77
+C
+app/Http/Kernel.php,4\0\405f423e61f666bcedb754ae8befdce9e746176e
+]
+-app/Http/Requests/Admin/ConfigTypeRequest.php,7\c\7cc0612950175a2a0aecbfa9ada7cfaa4614a720
+]
+-resources/views/admin/config/create.blade.php,7\0\709e0fe419aa9f42323b0938fc03b03836c5da91
+P
+ public/static/admin/js/yuanlu.js,1\2\127d1249e1b6e3dab7c7aa6e9f1ca2680078e00e

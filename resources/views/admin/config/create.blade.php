@@ -95,42 +95,9 @@
 
             //自定义验证规则
             form.verify({
-                title: function(value){
-                    if(value.length < 5){
-                        return '标题至少得5个字符啊';
-                    }
-                }
-                ,pass: [
-                    /^[\S]{6,12}$/
-                    ,'密码必须6到12位，且不能出现空格'
-                ]
-                ,content: function(value){
-                    layedit.sync(editIndex);
-                }
             });
 
-            //监听指定开关
-            form.on('switch(switchTest)', function(data){
-                layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
-                    offset: '6px'
-                });
-                layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-            });
-
-
-
-            if (parseInt(id) !== 0) {
-                let url = "{{ route('admin.config.info') }}";
-                $.post(url, {id: id},function (res) {
-                    if(res.code > 0){
-                        layer.msg(res.msg, {icon:1, shade:0.5,anim:6})
-                    } else {
-                        layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
-                    }
-                })
-            }
-            //表单赋值
-            form.val('example', {
+            let _params = {
                 "id": id // id
                 ,"config_name": "" // 配置名称
                 ,"config_code": 1 // 配置名称
@@ -140,32 +107,28 @@
                 ,"values": '' // 多选值
                 ,"status": true // 状态
                 ,"desc": "我爱 layui" // 描述
-            });
+            };
 
-            //表单取值
-            var data = form.val('example');
-            // alert(JSON.stringify(data));
-
-            //监听提交
-            form.on('submit(submit)', function(data){
-
-                $.ajax({
-                    url: "{{ route('admin.config.create') }}",
-                    type: 'post',
-                    data: data.field,
-                    dataType: 'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    },
-                    success:function(res){
-                        if(res.code > 0){
-                            layer.msg(res.msg, {icon:1, shade:0.5,anim:6})
-                        } else {
-                            layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
-                        }
-                    }
+            if (parseInt(id) !== 0) {
+                //表单取值
+                _params = YuanLu.getFrom({
+                    url : "{{ route('admin.config.info') }}",
+                    params: {id:id},
+                    data: _params,
+                    form: form
                 });
+            }else {
+                //表单赋值
+                form.val('example', _params);
+            }
 
+            form.on('submit(submit)', function(data){
+                //监听提交
+                let params = form.val('example');
+                YuanLu.submitForm({
+                    url : "{{ route('admin.config.create') }}",
+                    params: params,
+                });
                 return false;
             });
         });

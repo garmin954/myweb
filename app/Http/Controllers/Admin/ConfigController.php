@@ -16,10 +16,22 @@ class ConfigController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        if ($request->ajax()){
+            $configModel = new \App\Model\Admin\Config();
+            $pageIndex = $request->post('page', 1);
+            $pageSize = $request->post('limit', PAGE_SIZE);
+            $condition = [];
+            $list = $configModel->getPageQuery($configModel, $pageIndex, $pageSize, $condition);
 
+            if ($list) {
+                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
+            } else {
+                return getAjaxData('', 0);
+            }
+        }
         return view('admin.config.index');
     }
 
