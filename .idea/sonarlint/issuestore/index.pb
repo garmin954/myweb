@@ -53,3 +53,5 @@ C
 -resources/views/admin/config/create.blade.php,7\0\709e0fe419aa9f42323b0938fc03b03836c5da91
 P
  public/static/admin/js/yuanlu.js,1\2\127d1249e1b6e3dab7c7aa6e9f1ca2680078e00e
+l
+<database/migrations/2019_11_14_072843_create_goods_table.php,2\f\2f09e80109bf87ddcd79b888cd971ef22f7fac11
