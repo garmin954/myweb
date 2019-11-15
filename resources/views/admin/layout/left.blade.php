@@ -36,9 +36,29 @@
                     <i class="iconfont nav_right">&#xec17;</i></a>
                 <ul class="sub-menu">
                     <li>
+                        <a onclick="xadmin.add_tab('产品分类','{{ route('admin.goods_category.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>产品分类</cite></a>
+                    </li>
+
+                    <li>
                         <a onclick="xadmin.add_tab('产品管理','{{ route('admin.goods.index') }}')">
                             <i class="iconfont">&#xec18;</i>
                             <cite>产品管理</cite></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont left-nav-li layui-icon" lay-tips="其他管理">&#xe705;</i>
+                    <cite>其他管理</cite>
+                    <i class="iconfont nav_right">&#xec17;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('相册管理','{{ route('admin.picture.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>相册管理</cite></a>
                     </li>
                 </ul>
             </li>

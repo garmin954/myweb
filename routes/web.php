@@ -33,11 +33,27 @@ Route::prefix('admin')->name('admin.')->group( function (){
 
     });
 
+    //商品
     Route::prefix('goods')->name('goods.')->group(function (){
         Route::get('index', 'Admin\GoodsController@index')->name('index');
         Route::any('create', 'Admin\GoodsController@create')->name('create');
         Route::any('info', 'Admin\GoodsController@info')->name('info');
         Route::any('changeField', 'Admin\GoodsController@changeField')->name('changeField');
         Route::post('getConfigTypeList', 'Admin\GoodsController@getConfigTypeList')->name('getConfigTypeList');
+    });
+    // 商品分类
+    Route::prefix('goods_category')->name('goods_category.')->group(function (){
+        Route::get('index', 'Admin\GoodsCategoryController@index')->name('index');
+        Route::any('create', 'Admin\GoodsCategoryController@create')->name('create');
+        Route::any('info', 'Admin\GoodsCategoryController@info')->name('info');
+        Route::any('changeField', 'Admin\GoodsCategoryController@changeField')->name('changeField');
+        Route::post('getConfigTypeList', 'Admin\GoodsCategoryController@getConfigTypeList')->name('getConfigTypeList');
+    });
+
+    //相册
+    Route::prefix('picture')->name('picture.')->group(function (){
+        Route::get('index', 'Admin\PictureController@index')->name('index');
+        Route::post('update', 'Admin\PictureController@update')->name('update');
+        Route::post('delete', 'Admin\PictureController@delete')->name('delete');
     });
 });
