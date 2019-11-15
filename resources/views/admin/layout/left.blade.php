@@ -29,6 +29,20 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont left-nav-li layui-icon" lay-tips="产品管理">&#xe857;</i>
+                    <cite>产品管理</cite>
+                    <i class="iconfont nav_right">&#xec17;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('产品管理','{{ route('admin.goods.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>产品管理</cite></a>
+                    </li>
+                </ul>
+            </li>
+
 
         </ul>
     </div>

@@ -55,3 +55,7 @@ P
  public/static/admin/js/yuanlu.js,1\2\127d1249e1b6e3dab7c7aa6e9f1ca2680078e00e
 l
 <database/migrations/2019_11_14_072843_create_goods_table.php,2\f\2f09e80109bf87ddcd79b888cd971ef22f7fac11
+n
+>database/migrations/2019_11_15_025233_create_article_table.php,f\d\fdc23a045fbc999d20c09132b80562d5cf4db9bd
+p
+@database/migrations/2019_11_15_035255_create_advertise_table.php,d\1\d149a375ac9815e95dd907622ea69d8430e4f9a3

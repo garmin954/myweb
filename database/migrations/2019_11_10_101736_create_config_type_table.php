@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
 
 class CreateConfigTypeTable extends Migration
 {
@@ -20,6 +22,8 @@ class CreateConfigTypeTable extends Migration
             $table->string('type_desc', '250')->default('')->comment('配置描述');
             $table->timestamps();
         });
+
+        DB::statement("ALTER TABLE yl_config_type COMMENT '配置类型'");
     }
 
     /**

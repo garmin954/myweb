@@ -32,4 +32,12 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::post('getConfigTypeList', 'Admin\ConfigTypeController@getConfigTypeList')->name('getConfigTypeList');
 
     });
+
+    Route::prefix('goods')->name('goods.')->group(function (){
+        Route::get('index', 'Admin\GoodsController@index')->name('index');
+        Route::any('create', 'Admin\GoodsController@create')->name('create');
+        Route::any('info', 'Admin\GoodsController@info')->name('info');
+        Route::any('changeField', 'Admin\GoodsController@changeField')->name('changeField');
+        Route::post('getConfigTypeList', 'Admin\GoodsController@getConfigTypeList')->name('getConfigTypeList');
+    });
 });
