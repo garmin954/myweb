@@ -3,19 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\GoodsCateGoryRequest;
+use App\Model\Admin\GoodsCategoryModel;
 use Illuminate\Http\Request;
 
 class GoodsCategoryController extends Controller
 {
+    protected $model;
+
+    public function __construct()
+    {
+        $this->model = new \App\Model\Admin\GoodsCategoryModel();
+    }
     //
     public function index(Request $request)
     {
         if ($request->ajax()){
-            $configTypeModel = new ConfigType();
+            $goodsCategoryModel = new GoodsCategoryModel();
             $pageIndex = $request->post('page', 1);
             $pageSize = $request->post('limit', PAGE_SIZE);
             $condition = [];
-            $list = $configTypeModel->getPageQuery($configTypeModel, $pageIndex, $pageSize, $condition);
+            $list = $goodsCategoryModel->getPageQuery($goodsCategoryModel, $pageIndex, $pageSize, $condition);
 
             if ($list) {
                 return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
@@ -31,12 +39,12 @@ class GoodsCategoryController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create(ConfigTypeRequest $request)
+    public function create(GoodsCateGoryRequest $request)
     {
         if ($request->ajax()){
             $params = $request->all();
-            $configTypeModel = new ConfigType();
-            $res = $configTypeModel->saveConfigType($params);
+            $goodsCategoryModel = new GoodsCategoryModel();
+            $res = $goodsCategoryModel->saveGoodsCategory($params);
 
             if ($res) {
                 return getAjaxData('', 1);
@@ -44,7 +52,10 @@ class GoodsCategoryController extends Controller
                 return getAjaxData('', 0);
             }
         }
-        return view('admin.goods_category.create');
+        $goodsCateList  = $this->model->getCategoryList();
+        return view('admin.goods_category.create', [
+            'goodsCateList' => $goodsCateList
+        ]);
     }
 
     /**
@@ -57,7 +68,7 @@ class GoodsCategoryController extends Controller
         if ($request->ajax()){
             $id = $request->post('id', 0);
             if ($id){
-                $info = DB::table('config_type')->where('type_id', $id)->first();
+                $info = DB::table('goods_category')->where('category_id', $id)->first();
                 if ($info){
                     return getAjaxData('', 1, $info);
                 }

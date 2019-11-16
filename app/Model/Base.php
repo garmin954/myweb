@@ -79,4 +79,53 @@ class Base extends Model
 
          return $res;
     }
+
+
+    /**
+     * 获取下级
+     * @param $pid
+     * @param $data
+     * @param int $level
+     * @return array
+     */
+    public function getSonList($pid, $data, $level=1)
+    {
+        if (!is_array($data)){
+            $data = $data->toArray();
+        }
+        static $arr = [];
+        foreach ($data as $val){
+            if ($val['pid'] == $pid){
+                $val['level'] = $level;
+                $arr[] = $val;
+                $this->getSonList($val[$this->primaryKey], $data, $level + 1);
+            }
+        }
+
+        return $arr;
+    }
+
+
+    /**
+     * 获取下级
+     * @param $pid
+     * @param $data
+     * @return array
+     */
+    public function getSonTree($pid, $data)
+    {
+        if (!is_array($data)){
+            $data = $data->toArray();
+        }
+
+        $arr = [];
+        foreach ($data as $val) {
+            if ($val['pid'] == $pid){
+                $val['child'] = $this->getSonTree($pid, $data);
+                $arr[] = $val;
+            }
+        }
+
+        return $arr;
+    }
 }

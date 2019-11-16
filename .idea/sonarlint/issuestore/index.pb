@@ -59,3 +59,15 @@ n
 >database/migrations/2019_11_15_025233_create_article_table.php,f\d\fdc23a045fbc999d20c09132b80562d5cf4db9bd
 p
 @database/migrations/2019_11_15_035255_create_advertise_table.php,d\1\d149a375ac9815e95dd907622ea69d8430e4f9a3
+X
+(app/Http/Requests/Admin/GoodsRequest.php,1\a\1a36c8e829af27a89a7a955cacbb7ee5d57cac47
+e
+5resources/views/admin/goods_category/create.blade.php,5\3\53dd8b8ebacbf72326811ac3858ff65815699cd6
+`
+0app/Http/Requests/Admin/GoodsCateGoryRequest.php,d\3\d3014c420e364d7cd95fd2f8fee3a61ff7fa5651
+f
+6app/Http/Controllers/Admin/GoodsCategoryController.php,d\1\d1658358ecb916ff3e5d30fcaf134bb3a75430bd
+V
+&app/Model/Admin/GoodsCategoryModel.php,5\5\55473f6c61f10f23b3589f76993ac69f63c7459b
+d
+4resources/views/admin/goods_category/index.blade.php,9\0\90a8f8f828c03745c4bc7d856650169bdc1bbf4c

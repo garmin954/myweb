@@ -4,7 +4,18 @@
     @endsection
 
 @section('container')
-    <div class="layui-col-md12">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md4 layui-col-lg4">
+            <div class="layui-card">
+                <div class="layui-card-header">
+            445
+                </div>
+                <div class="layui-card-body ">
+                    55
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8 layui-col-lg8 ">
         <div class="layui-card">
             <div class="layui-card-body ">
             </div>
@@ -42,6 +53,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 @endsection
 
