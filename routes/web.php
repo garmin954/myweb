@@ -57,4 +57,46 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::post('update', 'Admin\PictureController@update')->name('update');
         Route::post('delete', 'Admin\PictureController@delete')->name('delete');
     });
+
+    //广告
+    Route::prefix('advertise')->name('advertise.')->group(function (){
+        Route::any('create', 'Admin\AdvertiseController@create')->name('create');
+        Route::get('index', 'Admin\AdvertiseController@index')->name('index');
+        Route::post('update', 'Admin\AdvertiseController@update')->name('update');
+        Route::post('delete', 'Admin\AdvertiseController@delete')->name('delete');
+        Route::any('changeField', 'Admin\AdvertiseController@changeField')->name('changeField');
+
+    });
+
+    // 内容
+    Route::prefix('article1')->name('article1.')->group(function (){
+        Route::any('create', 'Admin\ArticleController@create')->name('create');
+        Route::get('index', 'Admin\ArticleController@index')->name('index');
+        Route::post('update', 'Admin\ArticleController@update')->name('update');
+        Route::post('delete', 'Admin\ArticleController@delete')->name('delete');
+        Route::any('changeField', 'Admin\ArticleController@changeField')->name('changeField');
+
+    });
+    // 内容
+    Route::prefix('article')->name('article.')->group(function (){
+        Route::any('create', 'Admin\ArticleController@create')->name('create');
+        Route::get('index', 'Admin\ArticleController@index')->name('index');
+        Route::post('update', 'Admin\ArticleController@update')->name('update');
+        Route::post('delete', 'Admin\ArticleController@delete')->name('delete');
+        Route::any('changeField', 'Admin\ArticleController@changeField')->name('changeField');
+
+    });
+    // 内容
+    Route::prefix('article2')->name('article2.')->group(function (){
+        Route::any('create', 'Admin\ArticleController@create')->name('create');
+        Route::get('index', 'Admin\ArticleController@index')->name('index');
+        Route::post('update', 'Admin\ArticleController@update')->name('update');
+        Route::post('delete', 'Admin\ArticleController@delete')->name('delete');
+        Route::any('changeField', 'Admin\ArticleController@changeField')->name('changeField');
+
+    });
+
+    // 上传
+    Route::any('upload', 'BaseController@upload')->name('upload');
+
 });

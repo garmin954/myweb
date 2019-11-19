@@ -27,7 +27,7 @@ class CreateConfigTable extends Migration
             $table->tinyInteger('type_id')->default('1')->comment('所属类型');
             $table->timestamps();
         });
-        DB::statement("ALTER TABLE yl_config_type COMMENT '配置类型'");
+        DB::statement("ALTER TABLE yl_config COMMENT '配置'");
 
     }
 

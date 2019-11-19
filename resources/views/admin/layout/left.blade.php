@@ -51,10 +51,42 @@
 
             <li>
                 <a href="javascript:;">
+                    <i class="iconfont left-nav-li layui-icon" lay-tips="内容管理">&#xe705;</i>
+                    <cite>内容管理</cite>
+                    <i class="iconfont nav_right">&#xec17;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('团建攻略','{{ route('admin.article1.index', array('cate_id'=>1)) }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>团建攻略</cite></a>
+                    </li>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('合作伙伴','{{ route('admin.article2.index', array('cate_id'=>2)) }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>合作伙伴</cite></a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="javascript:;">
                     <i class="iconfont left-nav-li layui-icon" lay-tips="其他管理">&#xe705;</i>
                     <cite>其他管理</cite>
                     <i class="iconfont nav_right">&#xec17;</i></a>
                 <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('相册管理','{{ route('admin.picture.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>相册管理</cite></a>
+                    </li>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('广告管理','{{ route('admin.advertise.index') }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>广告管理</cite></a>
+                    </li>
+
                     <li>
                         <a onclick="xadmin.add_tab('相册管理','{{ route('admin.picture.index') }}')">
                             <i class="iconfont">&#xec18;</i>

@@ -1,2 +1,4 @@
 
-K	php:S1481#"/Remove this unused "$validated" local variable.(ĞÛ”¦8îÙÇå-
+K	php:S1066h"/Merge this if statement with the enclosing one.(ïËâ·8äˆöŒè-
+T	php:S1764h"8Identical sub-expressions on both sides of operator "&&"(ïËâ·8äˆöŒè-
+F	php:S1481{"*Remove this unused "$list" local variable.(ï ì8äˆöŒè-

@@ -7,6 +7,7 @@
     <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/article.css">
     <!-- 引入组件库 -->
     <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
 
@@ -184,8 +185,14 @@
 
     <script>
         var ue = UE.getEditor('content');
+                UE.registerUI('uiname', function(editor, uiname) {
+                    //do something
+                });
 
-        var vm = new Vue({
+
+
+
+                var vm = new Vue({
             el: '#app',
             data:{
                 goodsForm:{

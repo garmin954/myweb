@@ -7,79 +7,22 @@ use Illuminate\Http\Request;
 
 class BaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * 上传图片
+     * @param  Request  $request
+     * @return Response
      */
-    public function create()
+    public function upload(Request $request)
     {
-        //
+        $path = $request->file('file')->store('image');
+
+        if ($path){
+            return getAjaxData('', 1, '/uploads/'.$path);
+        } else {
+            return getAjaxData('', 0);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Base  $base
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Base $base)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Base  $base
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Base $base)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Base  $base
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Base $base)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Base  $base
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Base $base)
-    {
-        //
-    }
 }
