@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GoodsCateGoryRequest;
 use App\Model\Admin\GoodsCategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GoodsCategoryController extends Controller
 {
@@ -69,6 +70,7 @@ class GoodsCategoryController extends Controller
             $id = $request->post('id', 0);
             if ($id){
                 $info = DB::table('goods_category')->where('category_id', $id)->first();
+                $info->status =$info->status ==1 ? true : false;
                 if ($info){
                     return getAjaxData('', 1, $info);
                 }
@@ -78,4 +80,40 @@ class GoodsCategoryController extends Controller
     }
 
 
+    /**
+     * 改变值
+     */
+    public function changeField(Request $request)
+    {
+        if ($request->ajax()){
+            if (isset($request['id']) && isset($request['id']) && isset($request['id'])){
+                $res= $this->model->changeField($request);
+                if ($res){
+                    return getAjaxData('', 1);
+                }
+            }
+        }
+
+        return getAjaxData('', 0);
+    }
+
+
+    /**
+     * 删除
+     * @param Request $request
+     * @return false|string
+     */
+    public function delData(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $request->get('id');
+            $res = $this->model->delData($id);
+
+            if ($res) {
+                return getAjaxData('', 1);
+            } else {
+                return getAjaxData('', 0);
+            }
+        }
+    }
 }

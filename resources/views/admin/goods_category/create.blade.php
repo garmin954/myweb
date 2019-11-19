@@ -10,7 +10,7 @@
 @section('container')
     <form class="layui-form layui-form-pane" action=""  lay-filter="example">
 
-        <input type="hidden" name="type_id">
+        <input type="hidden" name="category_id">
         <div class="layui-form-item">
             <label class="layui-form-label">分类名称</label>
             <div class="layui-input-block">
@@ -24,8 +24,10 @@
                 <select name="pid" >
                     <option value="0"> 顶级分类</option>
                     @foreach($goodsCateList as $cate)
-                        
-                        <option value="{{ $cate['category_id'] }}"> {{ $cate['category_name'] }}</option>
+                        <option value="{{ $cate['category_id'] }}">
+                            {{ str_repeat('--|', ($cate['level']-1)) }}
+                            {{ $cate['category_name'] }}
+                        </option>
                     @endforeach
                 </select>
             </div>
@@ -59,6 +61,8 @@
     <script>
         var id = "{{ Request ()->get('id', 0) }}";
 
+
+
         layui.use(['form', 'jquery'], function(){
             var form = layui.form
                 ,$ = layui.jquery
@@ -70,20 +74,21 @@
 
             let _params = {
                 "category_id": id // id
-                ,"category_name": "33" // 分类名称
+                ,"category_name": "" // 分类名称
                 ,"pid": '' // 上级
                 ,"status": true // 状态
-                ,"sort": 1 // 排序
+                ,"sort": 50 // 排序
             };
 
             if (parseInt(id) !== 0) {
                 //表单取值
-				_params = YuanLu.getFrom({
+				YuanLu.getFrom({
                     url : "{{ route('admin.goods_category.info') }}",
                     params: {id:id},
                     data: _params,
                     form: form
                 });
+
             }else {
 				//表单赋值
 				form.val('example', _params);
@@ -91,13 +96,22 @@
 
             form.on('submit(submit)', function(data){
 				//监听提交
-				let params = form.val('example');
-				console.log(params);
+				let params = data.field;
+                console.log(params);
 				YuanLu.submitForm({
                     url : "{{ route('admin.goods_category.create') }}",
                     params: params,
                 });
                 return false;
+            });
+
+            // switch 切换
+            form.on('switch()', function(data){
+                if(data.elem.checked == true){
+                    $(data.elem).val('1');
+                }else{
+                    $(data.elem).val('2');
+                }
             });
         });
     </script>

@@ -9,6 +9,7 @@ class GoodsCategoryModel extends \App\Model\Base
     protected $table = 'goods_category';
     protected $primaryKey = 'category_id';
     public $timestamps = true;
+    protected $switchField = ['status'];
 
     public function saveGoodsCategory($params)
     {

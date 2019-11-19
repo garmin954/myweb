@@ -46,6 +46,7 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::get('index', 'Admin\GoodsCategoryController@index')->name('index');
         Route::any('create', 'Admin\GoodsCategoryController@create')->name('create');
         Route::any('info', 'Admin\GoodsCategoryController@info')->name('info');
+        Route::any('delData', 'Admin\GoodsCategoryController@delData')->name('delData');
         Route::any('changeField', 'Admin\GoodsCategoryController@changeField')->name('changeField');
         Route::post('getConfigTypeList', 'Admin\GoodsCategoryController@getConfigTypeList')->name('getConfigTypeList');
     });

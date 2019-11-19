@@ -90,6 +90,28 @@
                     }
                 }
             });
-        }
+        },
+        // 获取表单值
+        delData : function(obj){
+            _token = obj._token ? obj._token : '_token'
+            $.ajax({
+                async: false,
+                url: obj.url,
+                type: obj.type ? obj.type : 'post',
+                data: obj.params,
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="'+_token+'"]').attr('content')
+                },
+                success:function(res){
+                    if(res.code > 0){
+                        obj.obj.del();
+                        layer.close(index);
+                    } else {
+                        layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
+                    }
+                }
+            });
+        },
     }
 })(window);

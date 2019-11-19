@@ -8,10 +8,10 @@
         <div class="layui-col-md4 layui-col-lg4">
             <div class="layui-card">
                 <div class="layui-card-header">
-            445
+                    产品分类
                 </div>
                 <div class="layui-card-body ">
-                    55
+                    <div id="goodsTree"></div>
                 </div>
             </div>
         </div>
@@ -41,11 +41,10 @@
 
 {{--                状态--}}
                 <script type="text/html" id="status">
-
                     <%#  if(d.status == 1){ %>
-                    <input type="checkbox" checked name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
+                    <input type="checkbox" checked lay-filter="status" data-id="<% d.category_id %>" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
                     <%# }else{  %>
-                    <input type="checkbox" name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
+                    <input type="checkbox" lay-filter="status" data-id="<% d.category_id %>" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
                     <%# }  %>
 
 
@@ -59,10 +58,12 @@
 
 @section('scripts')
     <script>
-        layui.use(['table', 'laytpl', 'layer'], function(){
+        layui.use(['table', 'laytpl', 'layer', 'form', 'tree'], function(){
             var table = layui.table
                 ,layer = layui.layer
-                ,laytpl = layui.laytpl;
+                ,form = layui.form
+                ,laytpl = layui.laytpl,
+                tree = layui.tree;
 
             let url = '{{ route('admin.goods_category.index') }}';
             table.render({
@@ -71,7 +72,7 @@
                 ,id:'idTest'
                 ,title: '用户数据表'
                 ,totalRow: true
-                ,toolbar: '#toolbar' // 自定义头部工具
+                // ,toolbar: '#toolbar' // 自定义头部工具
                 ,defaultToolbar: ['filter', 'print', 'exports'] // layui工具
                 ,response: {
                     // statusName: 'code' //规定数据状态的字段名称，默认：code
@@ -81,23 +82,31 @@
                 }
                 ,cols: [[
                      {type: 'checkbox', fixed: 'left'}
-                    ,{field:'type_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
-                    ,{field:'type_name', title:'用户名', minWidth:120, edit: 'text'}
+                    ,{field:'category_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
+                    ,{field:'category_name', title:'分类名称', minWidth:120, edit: 'text'}
+                    ,{field:'pid', title:'上级分类', minWidth:80 }
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
 
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
                 ,page: true
-                ,done: function(res, curr, count){
-                    logs(res);
 
-                }
             });
+
             laytpl.config({
                 open: '<%',
                 close: '%>'
             });
+
+            form.on('switch(status)', function(data){
+                let status = data.elem.checked ? 1: 0;
+                YuanLu.changStatus({
+                    url :'{{ route('admin.goods_category.changeField') }}',
+                    params : {id: $(data.elem).attr('data-id'), value: status, field : 'status'}
+                });
+            });
+
 
             window.reload = ()=>{
 
@@ -129,15 +138,46 @@
             //监听行工具事件
             table.on('tool(list)', function(obj){
                 var data = obj.data;
-                //console.log(obj)
+                console.log(obj)
                 if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
+                    layer.confirm('确认删除？', function(index){
+                        YuanLu.delData({
+                            url :'{{ route('admin.goods_category.delData') }}',
+                            params : {id: obj.data.category_id},
+                            obj: obj,
+                        });
                     });
                 } else if(obj.event === 'update'){
-                    xadmin.open('添加配置','{{ route('admin.goods_category.create') }}?id='+data.type_id,600 )
+                    xadmin.open('添加配置','{{ route('admin.goods_category.create') }}?id='+data.category_id,600 )
                 }
+            });
+
+
+            //渲染
+            var inst1 = tree.render({
+                elem: '#goodsTree'  //绑定元素
+                ,click: function(obj){
+                    console.log(obj.data); //得到当前点击的节点数据
+                    console.log(obj.state); //得到当前节点的展开状态：open、close、normal
+                    console.log(obj.elem); //得到当前节点元素
+
+                    console.log(obj.data.children); //当前节点下是否有子节点
+                }
+                ,data: [{
+                    title: '江西' //一级菜单
+                    ,children: [{
+                        title: '南昌' //二级菜单
+                        ,children: [{
+                            title: '高新区' //三级菜单
+                            //…… //以此类推，可无限层级
+                        }]
+                    }]
+                },{
+                    title: '陕西' //一级菜单
+                    ,children: [{
+                        title: '西安' //二级菜单
+                    }]
+                }]
             });
         });
     </script>
