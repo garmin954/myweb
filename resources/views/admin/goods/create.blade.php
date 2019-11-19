@@ -14,7 +14,7 @@
     <meta name="_token" content="{{ csrf_token() }}"/>
 
     <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.all.js"> </script>
 
     <style>
         .avatar-uploader .el-upload {
@@ -184,11 +184,19 @@
 @section('scripts')
 
     <script>
-        var ue = UE.getEditor('content');
-                UE.registerUI('uiname', function(editor, uiname) {
-                    //do something
-                });
 
+        var ueditor =UE.getEditor('content', {
+
+
+
+        });
+        ueditor.addListener("ready", function () {
+            // editor准备好之后才可以使用
+            ueditor.setContent(`
+            11
+            `);
+
+        });
 
 
 
@@ -211,6 +219,8 @@
                     'sale_type' : '1', // 营销类型
                     'sale_value' : '1', // 营销展示值
                 },
+                value:'',
+                dialogVisible:false,
                 options: [{
                     value: '选项1',
                     label: '黄金糕'
@@ -218,12 +228,22 @@
                     value: '选项2',
                     label: '双皮奶'
                 }],
-                    activeName : 'first'
+                    activeName : 'third'
             },
             methods:{
                 onSubmit(){
 
                 },
+                handleChange(){
+
+                },
+                handleClick(){
+
+                },
+
+                dialogImageUrl(){
+
+                }
             }
         })
     </script>
