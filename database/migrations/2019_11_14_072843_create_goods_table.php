@@ -52,8 +52,6 @@ class CreateGoodsTable extends Migration
             $table->integer('category_id')->default('0')->comment('主分类id');
             $table->integer('category_id_1')->default('0')->comment('二级分类');
             $table->integer('category_id_2')->default('0')->comment('三级分类');
-
-
         });
 
         DB::statement("ALTER TABLE yl_goods_category comment'商品分类表'");//表注释

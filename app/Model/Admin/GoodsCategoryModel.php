@@ -10,6 +10,17 @@ class GoodsCategoryModel extends \App\Model\Base
     protected $primaryKey = 'category_id';
     public $timestamps = true;
     protected $switchField = ['status'];
+    protected $treeParams;
+
+    public function __construct(array $attributes = [])
+    {
+        $this->treeParams = [
+            'label' => 'category_name',
+            'value' => 'category_id',
+            'children' => 'child',
+        ];
+        parent::__construct($attributes);
+    }
 
     public function saveGoodsCategory($params)
     {
@@ -39,5 +50,13 @@ class GoodsCategoryModel extends \App\Model\Base
         $data = $this->getSonList(0, $list);
 
         return $data;
+    }
+
+    public function getGoodsCateTree()
+    {
+        $data = $this->get();
+        $list = $this->getSonTree(0, $data);
+
+        return $list;
     }
 }

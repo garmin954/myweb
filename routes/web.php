@@ -39,6 +39,7 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::any('create', 'Admin\GoodsController@create')->name('create');
         Route::any('info', 'Admin\GoodsController@info')->name('info');
         Route::any('changeField', 'Admin\GoodsController@changeField')->name('changeField');
+        Route::any('getGoodsRelated', 'Admin\GoodsController@getGoodsRelated')->name('getGoodsRelated');
         Route::post('getConfigTypeList', 'Admin\GoodsController@getConfigTypeList')->name('getConfigTypeList');
     });
     // 商品分类

@@ -9,12 +9,7 @@
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/article.css">
     <!-- 引入组件库 -->
-    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
-
     <meta name="_token" content="{{ csrf_token() }}"/>
-
-    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.all.js"> </script>
 
     <style>
         .avatar-uploader .el-upload {
@@ -45,7 +40,7 @@
 
 @section('container')
     <div id="app">
-        <el-form ref="goodsForm" :model="goodsForm" label-width="80px">
+        <el-form ref="goodsForm" :model="goodsForm" label-width="80px" style="max-width: 1255px">
 
             <el-tabs v-model="activeName" @tab-click="handleClick">
                 <el-tab-pane label="商品基本信息" name="first">
@@ -60,17 +55,23 @@
                     </el-form-item>
                     {{--参团人数--}}
                     <el-form-item label="参团人数">
-                        <el-input-number v-model="goodsForm.nums" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                        <el-input-number v-model="goodsForm.nums" @change="handleChange" :min="1" :max="1000" label="描述文字">
+                        </el-input-number>
                     </el-form-item>
 
                     {{--price--}}
-                    <el-form-item label="均价">
-                        <el-input-number v-model="goodsForm.price" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                    <el-form-item label="均价" style="width: 300px">
+                        <el-input
+                                type="number"
+                                placeholder="请输入均价"
+                                suffix-icon="el-icon-money"
+                                v-model="goodsForm.price">
+                        </el-input>
                     </el-form-item>
 
                     {{--参团人均--}}
                     <el-form-item label="参团人数">
-                        <el-input-number v-model="goodsForm.avg" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                        <el-input-number v-model="goodsForm.avg" @change="handleChange" :min="1" :max="10000" label="描述文字"></el-input-number>
                     </el-form-item>
 
 
@@ -78,35 +79,43 @@
                     <el-form-item label="商品状态">
                         <el-switch
                             v-model="goodsForm.status"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949">
+                            active-value="1"
+                            inactive-value="0"
+                            >
                         </el-switch>
                     </el-form-item>
 
                     {{--参团人均--}}
                     <el-form-item label="排序">
-                        <el-input-number v-model="goodsForm.sort" @change="handleChange" :min="1" :max="10" label="描述文字"></el-input-number>
+                        <el-input-number v-model="goodsForm.sort" @change="handleChange" :min="1" :max="1000" label="描述文字"></el-input-number>
                     </el-form-item>
 
                     {{--是否推荐--}}
                     <el-form-item label="是否推荐">
                         <el-switch
                             v-model="goodsForm.is_top"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949">
+                            active-value="1"
+                            inactive-value="0">
                         </el-switch>
                     </el-form-item>
-
                     {{--营销类型--}}
                     <el-form-item label="营销类型">
-                        <el-select v-model="value" placeholder="请选择">
-                            <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
+                        <el-cascader
+                                v-model="goodsForm.category_list"
+                                :options="cateOptions"
+                                :props="props"
+                                clearable>
+                        </el-cascader>
+                    </el-form-item>
+
+                    {{--分类--}}
+                    <el-form-item label="分类">
+                        <el-cascader
+                                v-model="goodsForm.category_list"
+                                :options="cateOptions"
+                                :props="props"
+                                clearable>
+                        </el-cascader>
                     </el-form-item>
 
                     <el-form-item label="营销设置">
@@ -167,13 +176,15 @@
                 </el-tab-pane>
 
                 <el-tab-pane label="内容" name="third">
-                    <script  id="content" type="text/plain" style="width:100%;height:500px;"></script>
+                    <div style="padding-right: 1px;width: 1250px;border: 1px solid grey;box-sizing: content-box;">
+                    <textarea  id="content" type="text/plain"></textarea>
+                    </div>
                 </el-tab-pane>
             </el-tabs>
 
 
 
-            <el-form-item>
+            <el-form-item style="margin-top: 50px">
                 <el-button type="primary" @click="onSubmit">立即创建</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
@@ -182,20 +193,23 @@
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.all.js"> </script>
+    {{--<script src="stylesheet" href="{{ asset(ADMIN) }}/js/axios.min.js"></script>--}}
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
 
         var ueditor =UE.getEditor('content', {
-
-
-
         });
-        ueditor.addListener("ready", function () {
-            // editor准备好之后才可以使用
-            ueditor.setContent(`
-            11
-            `);
-
+        ueditor.ready(function() {
+            ueditor.setHeight(600);
+            //设置编辑器的内容
+            // ue.setContent('hello');
+            // //获取html内容，返回: <p>hello</p>
+            // var html = ue.getContent();
+            // //获取纯文本内容，返回: hello
+            // var txt = ue.getContentTxt();
         });
 
 
@@ -208,11 +222,12 @@
                     'goods_desc' : '', // 商品描述
                     'goods_thumb' : '', // 商品图片
                     'picture_list' : '', // 图片列表
+                    'category_list' : [],
                     'nums' : '1', // 参团人数
                     'price' : '1', // 均价
                     'avg' : '1', // 参团人均
                     'status' : '1', // 商品状态
-                    'sort' : '1', // 排序
+                    'sort' : '50', // 排序
                     'content' : '1', // 商品内容
                     'is_top' : '1', // 是否推荐
                     'discount' : '1', // 折扣
@@ -221,16 +236,30 @@
                 },
                 value:'',
                 dialogVisible:false,
-                options: [{
-                    value: '选项1',
-                    label: '黄金糕'
-                }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }],
-                    activeName : 'third'
+                props: { multiple: true },
+
+                cateOptions:  [],
+                activeName : 'first'
+            },
+            created(){
+                this.getGoodsRelated();
             },
             methods:{
+                getGoodsRelated(){
+                    let self = this;
+                    let url = "{{ route('admin.goods.getGoodsRelated') }}";
+                    let params = {};
+                    axios.post(url, params).then(respond => {
+                        res = respond.data;
+                        if (res.code > 0){
+                            self.cateOptions = res.data.cate_list
+                        }else{
+                            layer.msg('获取异常');
+                        }
+                    }).catch((e)=>{
+                        layer.msg('获取异常'+e);
+                    })
+                },
                 onSubmit(){
 
                 },

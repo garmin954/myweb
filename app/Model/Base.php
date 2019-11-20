@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Base extends Model
 {
 
+    /**
+     * @$treeParams = [
+     *      key(保存的键名) => val（字段名）
+     *      最后一个是子级 值是固定的(child)
+     *      children => child
+     * ]
+     */
+    protected $treeParams;
     protected $switchField;
 
     public function getTable()
@@ -126,10 +134,22 @@ class Base extends Model
         }
 
         $arr = [];
-        foreach ($data as $val) {
+        foreach ($data as $key => $val) {
             if ($val['pid'] == $pid){
-                $val['child'] = $this->getSonTree($pid, $data);
-                $arr[] = $val;
+                $param = [];
+                foreach ($this->treeParams as $tpkey => $tpval){
+                    if ($tpval == 'child'){
+                        unset($data[$key]);
+                        $res = $this->getSonTree($val[$this->primaryKey], $data);
+                        if ($res){
+                            $param[$tpkey] =$res;
+                        }
+                    } else {
+                        $param[$tpkey] = $val[$tpval];
+                    }
+                }
+
+                $arr[] = $param;
             }
         }
 
