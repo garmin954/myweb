@@ -51,7 +51,7 @@
 
                     {{--商品描述--}}
                     <el-form-item label="商品描述">
-                        <el-input type="textarea" v-model="goodsForm.desc"></el-input>
+                        <el-input type="textarea" v-model="goodsForm.goods_desc"></el-input>
                     </el-form-item>
                     {{--参团人数--}}
                     <el-form-item label="参团人数">
@@ -70,7 +70,7 @@
                     </el-form-item>
 
                     {{--参团人均--}}
-                    <el-form-item label="参团人数">
+                    <el-form-item label="参团人均">
                         <el-input-number v-model="goodsForm.avg" @change="handleChange" :min="1" :max="10000" label="描述文字"></el-input-number>
                     </el-form-item>
 
@@ -100,12 +100,20 @@
                     </el-form-item>
                     {{--营销类型--}}
                     <el-form-item label="营销类型">
-                        <el-cascader
-                                v-model="goodsForm.category_list"
-                                :options="cateOptions"
-                                :props="props"
-                                clearable>
-                        </el-cascader>
+                        <el-select v-model="goodsForm.sale_type" placeholder="请选择">
+                            <el-option
+                                    v-for="item in typeOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item v-if="goodsForm.sale_type" label="营销值" style="width: 300px">
+                        <el-input
+                                placeholder="请输入营销值"
+                                v-model="goodsForm.sale_value">
+                        </el-input>
                     </el-form-item>
 
                     {{--分类--}}
@@ -117,32 +125,25 @@
                                 clearable>
                         </el-cascader>
                     </el-form-item>
-
-                    <el-form-item label="营销设置">
-                        <el-input v-model="goodsForm.sale_type"></el-input>
-                    </el-form-item>
                 </el-tab-pane>
+
+
                 <el-tab-pane label="图片设置" name="second">
 {{--                    商品主图--}}
                     <el-form-item label="商品主图">
                         <el-upload
-                            action="#"
+                            action="{{ route('admin.upload') }}"
+                            :on-success='beforeTempSuccess'
+                            :headers="{'X-CSRF-TOKEN': '{{ csrf_token() }}'}"
                             list-type="picture-card"
-                            :auto-upload="false">
+                            name="file"
+                            :multiple="false"
+                            :disabled="goodsForm.goods_thumb != ''"
+                            :limit="1"
+                            >
                             <i slot="default" class="el-icon-plus"></i>
                             <div slot="file" slot-scope="{file}">
                                 <img :src="file.url" alt="" class="el-upload-list__item-thumbnail" >
-                                <span class="el-upload-list__item-actions">
-                                <span @click="handlePictureCardPreview(file)" class="el-upload-list__item-preview">
-                                  <i class="el-icon-zoom-in"></i>
-                                </span>
-                                <span v-if="!disabled" @click="handleDownload(file)" class="el-upload-list__item-delete">
-                                  <i class="el-icon-download"></i>
-                                </span>
-                                <span v-if="!disabled" @click="handleRemove(file)" class="el-upload-list__item-delete">
-                                  <i class="el-icon-delete"></i>
-                                </span>
-                              </span>
                             </div>
                         </el-upload>
                     </el-form-item>
@@ -150,23 +151,18 @@
 {{--                    商品副图--}}
                     <el-form-item label="商品副图">
                         <el-upload
-                            action="#"
-                            list-type="picture-card"
-                            :auto-upload="false">
+                                action="{{ route('admin.upload') }}"
+                                :file-list="thumbList"
+                                :on-success='beforeListSuccess'
+                                :headers="{'X-CSRF-TOKEN': '{{ csrf_token() }}'}"
+                                list-type="picture-card"
+                                name="file"
+                                :before-remove='finishRemoveFun'
+                                :multiple="false"
+                                >
                             <i slot="default" class="el-icon-plus"></i>
                             <div slot="file" slot-scope="{file}">
                                 <img :src="file.url" alt="" class="el-upload-list__item-thumbnail" >
-                                <span class="el-upload-list__item-actions">
-                                <span @click="handlePictureCardPreview(file)" class="el-upload-list__item-preview">
-                                  <i class="el-icon-zoom-in"></i>
-                                </span>
-                                <span v-if="!disabled" @click="handleDownload(file)" class="el-upload-list__item-delete">
-                                  <i class="el-icon-download"></i>
-                                </span>
-                                <span v-if="!disabled" @click="handleRemove(file)" class="el-upload-list__item-delete">
-                                  <i class="el-icon-delete"></i>
-                                </span>
-                              </span>
                             </div>
                         </el-upload>
                         <el-dialog :visible.sync="dialogVisible">
@@ -177,7 +173,7 @@
 
                 <el-tab-pane label="内容" name="third">
                     <div style="padding-right: 1px;width: 1250px;border: 1px solid grey;box-sizing: content-box;">
-                    <textarea  id="content" type="text/plain"></textarea>
+                    <textarea  id="content" v-model="goodsForm.content" type="text/plain"></textarea>
                     </div>
                 </el-tab-pane>
             </el-tabs>
@@ -214,14 +210,14 @@
 
 
 
-                var vm = new Vue({
+        var vm = new Vue({
             el: '#app',
             data:{
                 goodsForm:{
                     'goods_name' : '', // 商品名称
                     'goods_desc' : '', // 商品描述
                     'goods_thumb' : '', // 商品图片
-                    'picture_list' : '', // 图片列表
+                    'picture_list' : [], // 图片列表
                     'category_list' : [],
                     'nums' : '1', // 参团人数
                     'price' : '1', // 均价
@@ -230,16 +226,16 @@
                     'sort' : '50', // 排序
                     'content' : '1', // 商品内容
                     'is_top' : '1', // 是否推荐
-                    'discount' : '1', // 折扣
                     'sale_type' : '1', // 营销类型
                     'sale_value' : '1', // 营销展示值
                 },
                 value:'',
                 dialogVisible:false,
                 props: { multiple: true },
-
-                cateOptions:  [],
-                activeName : 'first'
+                cateOptions:  [], // 分类
+                typeOptions:[], // 类型
+                thumbList:[], // 相册
+                activeName : 'first' // 当前tab
             },
             created(){
                 this.getGoodsRelated();
@@ -253,6 +249,10 @@
                         res = respond.data;
                         if (res.code > 0){
                             self.cateOptions = res.data.cate_list
+                            self.typeOptions = Object.keys(res.data.type_list).map((key)=>({
+                                label: res.data.type_list[key],
+                                value: key
+                            }))
                         }else{
                             layer.msg('获取异常');
                         }
@@ -260,8 +260,39 @@
                         layer.msg('获取异常'+e);
                     })
                 },
+                // 添加图片
+                beforeTempSuccess(response, file, fileList){
+                    this.goodsForm.goods_thumb = response.data;
+                },
+                beforeListSuccess(response, file, fileList){
+                    this.thumbList.push({name:'',url:response.data});
+                    this.goodsForm.picture_list.push(response.data);
+                },
+                // 删除图片
+                finishRemoveFun(file, fileList){
+                    console.log(file);
+                    this.goodsForm.picture_list.forEach((item, index)=>{
+                        if (file.url == item) {
+                            this.goodsForm.picture_list.splice(index, 1)
+                        }
+                    })
+                },
                 onSubmit(){
+                    let params = JSON.parse(JSON.stringify(this.goodsForm));
+                    params.content = ueditor.getContent();
 
+                    let url = "{{ route('admin.goods.create') }}";
+                    axios.post(url, params).then(respond => {
+                        res = respond.data;
+                        if (res.code > 0){
+                            layer.msg(res.msg,{icon:1,shade:0.5,anim:6});
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    }).catch((e)=>{
+                        layer.msg('提交异常'+e);
+                    });
+                    console.log(this.goodsForm);
                 },
                 handleChange(){
 

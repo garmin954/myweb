@@ -27,7 +27,7 @@ class CreateGoodsTable extends Migration
             $table->bigIncrements('goods_id');
             $table->string('goods_name', '200')->default('')->comment('商品名称');
             $table->string('goods_desc', '500')->default('')->comment('商品描述');
-            $table->string('goods_picture', '255')->default('')->comment('商品主图');
+            $table->string('goods_thumb', '255')->default('')->comment('商品主图');
             $table->text('picture_list')->nullable(false)->comment('商品图片组');
 //            $table->integer('category_id')->default('0')->comment('主分类');
             $table->string('nums', '100')->default('')->comment('参团人数');
@@ -37,8 +37,8 @@ class CreateGoodsTable extends Migration
             $table->tinyInteger('sort')->default('50')->comment('排序');
             $table->text('content')->nullable(false)->comment('内容');
             $table->tinyInteger('is_top')->default('0')->comment('是否推荐');
-            $table->float('discount', 4, 2)->default('10')->comment('折扣');
-            $table->tinyInteger('sale_type')->default('1')->comment('营销展示类型 1满意度 2折扣 3销量 4团购');
+//            $table->float('discount', 4, 2)->default('10')->comment('折扣');
+            $table->tinyInteger('sale_type')->default('1')->comment('营销展示类型 1折扣 2好评数');
             $table->string('sale_value', '100')->default('')->comment('营销展示值');
             $table->timestamps();
 

@@ -36,12 +36,16 @@ class Base extends Model
             }
         }
 
-        foreach ($this->switchField as $field) {
-            $data[$field] = 0;
+        if ($this->switchField){
+            foreach ($this->switchField as $field) {
+                $data[$field] = 0;
+            }
         }
+
 
         $id = $this->primaryKey;
         if (!isset($data[$id]) || !$data[$id]) {   // 新增
+//            $data['created_at'] = date();
             $res = $this->insertGetId($data);
         } else { // 更新
             $res = $this->where($id, $data[$id])->update($data);

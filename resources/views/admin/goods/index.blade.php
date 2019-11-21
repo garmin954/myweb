@@ -2,6 +2,14 @@
 
 @section('title')
 @endsection
+@section('resources')
+    <style>
+        .layui-table-cell{
+            height:80px;
+            line-height: 60px;
+        }
+    </style>
+@endsection
 
 @section('container')
     <div class="layui-col-md12">
@@ -38,6 +46,11 @@
                     >
 
                 </script>
+
+                {{--主图--}}
+                <script type="text/html" id="goods_thumb">
+                    <img style="width: 80px;height: 60px" src="<% d.goods_thumb %>" alt="<% d.goods_name %>">
+                </script>
             </div>
 
         </div>
@@ -53,7 +66,8 @@
 
             let url = '{{ route('admin.goods.index') }}';
             table.render({
-                elem: '#list'
+                elem: '#list',
+                height:600
                 ,url: url
                 ,id:'idTest'
                 ,title: '用户数据表'
@@ -68,16 +82,22 @@
                 }
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'config_name', title:'配置名称', minWidth:50, fixed: 'left'}
-                    ,{field:'config_code', title:'配置代码', minWidth:120, edit: 'text'}
-                    ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
+                    ,{field:'goods_thumb', title:'配置名称', minWidth:50, templet:'#goods_thumb'}
+                    ,{field:'goods_name', title:'配置名称', minWidth:50, }
+                    ,{field:'nums', title:'价格(均价)', minWidth:50, }
+                    ,{field:'avg', title:'参与人均价', minWidth:50, }
+                    ,{field:'price', title:'价格(均价)', minWidth:50, }
+                    ,{field:'sort', title:'排序', minWidth:120, edit: 'text'}
+                    ,{field:'sale_type', title:'营销展示类型', minWidth:120}
+                    ,{field:'sale_value', title:'营销展示值', minWidth:120}
+                    ,{field:'is_top', title:'推荐', minWidth:80}
+                    ,{field:'status', title:'状态', minWidth:50, templet:'#status'}
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
                 ,page: true
                 ,done: function(res, curr, count){
                     logs(res);
-
                 }
             });
             laytpl.config({
@@ -130,7 +150,7 @@
                         layer.close(index);
                     });
                 } else if(obj.event === 'update'){
-                    xadmin.open('修改配置','{{ route('admin.goods.create') }}?id='+data.type_id,600 )
+                    xadmin.open('修改配置','{{ route('admin.goods.create') }}?id='+data.goods_id )
                 }
             });
         });

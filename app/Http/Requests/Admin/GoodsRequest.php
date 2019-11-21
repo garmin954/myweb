@@ -24,11 +24,15 @@ class GoodsRequest extends BaseRequest
     private $rules = [
         // 这里代表创建表单需要验证的字段
         'create' => [
-            'type_name' => 'required|unique:config_type|max:255',
+            'goods_name' => 'required|max:255',
+            'goods_desc' => 'required',
+            'category_list' => 'required',
+            'content' => 'required',
+            'goods_thumb' => 'required',
         ],
         // 更新表单需要验证的字段
         'update' => [
-            'type_name' => 'required|max:255',
+//            'type_name' => 'required|max:255',
         ],
         // 不管是创建还是更新都要验证的字段
         'edit'   => [
@@ -45,8 +49,11 @@ class GoodsRequest extends BaseRequest
     public function attributes()
     {
         return [
-            'type_name' => '配置类型名称',
-//            '_token'   => '令牌',
+            'goods_name' => '商品名称',
+            'goods_desc' => '商品描述',
+            'category_list' => '商品分类',
+            'goods_thumb' => '商品主图',
+            'content' => '商品内容',
         ];
     }
 
