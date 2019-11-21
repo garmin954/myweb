@@ -17,6 +17,7 @@ class GoodsCategoryModel extends \App\Model\Base
         $this->treeParams = [
             'label' => 'category_name',
             'value' => 'category_id',
+            'disabled' => 'exist',
             'children' => 'child',
         ];
         parent::__construct($attributes);
@@ -52,9 +53,19 @@ class GoodsCategoryModel extends \App\Model\Base
         return $data;
     }
 
-    public function getGoodsCateTree()
+    public function getGoodsCateTree($goodsId = 0)
     {
-        $data = $this->get();
+        $data = $this->get()->toArray();
+        $goodsCateLinkModel = new GoodsCategoryLinkModel();
+        $existList = $goodsCateLinkModel->getGoodsCateLinkItem($goodsId);
+
+        foreach ($data as &$val){
+            $val['exist'] = false;
+            if (in_array($val['category_id'], $existList)){
+                $val['exist'] = true;
+            }
+        }
+
         $list = $this->getSonTree(0, $data);
 
         return $list;

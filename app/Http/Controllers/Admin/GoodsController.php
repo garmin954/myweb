@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GoodsRequest;
+use App\Model\Admin\GoodsCategoryLinkModel;
 use App\Model\Admin\GoodsCategoryModel;
 use App\Model\Admin\GoodsModel;
 use Illuminate\Http\Request;
@@ -57,9 +58,17 @@ class GoodsController extends Controller
     /**
      * 切换状态
      */
-    public function changeField()
+    public function changeField(Request $request)
     {
-
+        if ($request->ajax()){
+            if (isset($request['id']) && isset($request['id']) && isset($request['id'])){
+                $res= $this->model->changeField($request);
+                if ($res){
+                    return getAjaxData('', 1);
+                }
+            }
+        }
+        return getAjaxData('', 0);
     }
 
 
@@ -70,10 +79,16 @@ class GoodsController extends Controller
      */
     public function getGoodsRelated(Request $request)
     {
+        $goodsId = $request->get('goods_id', 0);
 
         $goodsCategoryModel = new GoodsCategoryModel();
-        $data['cate_list'] = $goodsCategoryModel->getGoodsCateTree();
+        $data['cate_list'] = $goodsCategoryModel->getGoodsCateTree($goodsId);
         $data['type_list'] = config('template.goods_type_list');
+        if ($goodsId){
+            $goodsCateLinkModel = new GoodsCategoryLinkModel();
+            $data['info'] = $this->model->where('goods_id', $goodsId)->first();
+            $data['info']['category_list'] =$goodsCateLinkModel->getGoodsCateLinkArr($goodsId);
+        }
 
         return getAjaxData('', 1, $data);
     }

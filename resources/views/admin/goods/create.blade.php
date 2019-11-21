@@ -195,7 +195,6 @@
     {{--<script src="stylesheet" href="{{ asset(ADMIN) }}/js/axios.min.js"></script>--}}
     <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
-
         var ueditor =UE.getEditor('content', {
         });
         ueditor.ready(function() {
@@ -209,11 +208,12 @@
         });
 
 
-
+        var goods_id = "{{ request()->get('id') }}}";
         var vm = new Vue({
             el: '#app',
             data:{
                 goodsForm:{
+                    'goods_id' : goods_id ? goods_id :'',
                     'goods_name' : '', // 商品名称
                     'goods_desc' : '', // 商品描述
                     'goods_thumb' : '', // 商品图片
@@ -225,7 +225,7 @@
                     'status' : '1', // 商品状态
                     'sort' : '50', // 排序
                     'content' : '1', // 商品内容
-                    'is_top' : '1', // 是否推荐
+                    'is_top' : '0', // 是否推荐
                     'sale_type' : '1', // 营销类型
                     'sale_value' : '1', // 营销展示值
                 },
@@ -244,7 +244,7 @@
                 getGoodsRelated(){
                     let self = this;
                     let url = "{{ route('admin.goods.getGoodsRelated') }}";
-                    let params = {};
+                    let params = {goods_id: goods_id};
                     axios.post(url, params).then(respond => {
                         res = respond.data;
                         if (res.code > 0){
@@ -253,6 +253,11 @@
                                 label: res.data.type_list[key],
                                 value: key
                             }))
+
+                            // 基本信息
+                            if (goods_id){
+                                self.goodsForm.category_list = res.data.info.category_list;
+                            }
                         }else{
                             layer.msg('获取异常');
                         }
@@ -280,12 +285,17 @@
                 onSubmit(){
                     let params = JSON.parse(JSON.stringify(this.goodsForm));
                     params.content = ueditor.getContent();
-
+                    //监听提交
+                    let index = parent.layer.getFrameIndex(window.name);
                     let url = "{{ route('admin.goods.create') }}";
                     axios.post(url, params).then(respond => {
                         res = respond.data;
                         if (res.code > 0){
                             layer.msg(res.msg,{icon:1,shade:0.5,anim:6});
+                            setTimeout(function () {
+                                parent.layer.close(index);
+                                window.parent.location.reload();//刷新父页面
+                            }, 2000)
                         }else{
                             layer.msg(res.msg);
                         }

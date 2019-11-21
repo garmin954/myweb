@@ -50,4 +50,71 @@ class GoodsCategoryLinkModel extends Model
             return $res;
         }
     }
+
+
+    /**
+     * 获取商品的关联cateid
+     * @param $goodsId
+     * @return array
+     */
+    public function getGoodsCateLinkItem($goodsId)
+    {
+        $data = $this->where('goods_id', $goodsId)->get();
+        $arr = [];
+        foreach ($data as $val){
+            if (intval($val['category_id_2']) != 0){
+                $arr[] = $val['category_id_2'];
+                continue;
+
+            }else if(intval($val['category_id_1']) != 0){
+                $arr[] = $val['category_id_1'];
+                continue;
+
+            }else if(intval($val['category_id']) != 0){
+                $arr[] = $val['category_id'];
+                continue;
+
+            }
+        }
+
+        return $arr;
+    }
+
+
+    /**
+     * 获取商品的关联cateid
+     * @param $goodsId
+     * @return array
+     */
+    public function getGoodsCateLinkArr($goodsId)
+    {
+        $data = $this->where('goods_id', $goodsId)->get();
+        $arr = [];
+        foreach ($data as $val){
+            if (intval($val['category_id_2']) != 0){
+                $arr[] = [
+                    $val['category_id'],
+                    $val['category_id_1'],
+                    $val['category_id_2'],
+                ];
+                continue;
+
+            }else if(intval($val['category_id_1']) != 0){
+                $arr[] = [
+                    $val['category_id'],
+                    $val['category_id_1'],
+                ];
+                continue;
+
+            }else if(intval($val['category_id']) != 0){
+                $arr[] = [
+                    $val['category_id'],
+                ];
+                continue;
+
+            }
+        }
+
+        return $arr;
+    }
 }

@@ -39,14 +39,22 @@
 
                 {{--                状态--}}
                 <script type="text/html" id="status">
-                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.config_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
+                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.goods_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
                     <%#  if(d.status == 1){ %>
                     checked
                     <%# }  %>
                     >
 
                 </script>
+                {{--                顶置--}}
+                <script type="text/html" id="is_top">
+                    <input type="checkbox" name="is_top" lay-filter="is_top" data-id="<% d.goods_id %>" value="<% d.is_top %>" lay-skin="switch"  lay-text="ON|OFF"
+                    <%#  if(d.is_top == 1){ %>
+                    checked
+                    <%# }  %>
+                    >
 
+                </script>
                 {{--主图--}}
                 <script type="text/html" id="goods_thumb">
                     <img style="width: 80px;height: 60px" src="<% d.goods_thumb %>" alt="<% d.goods_name %>">
@@ -81,17 +89,17 @@
                     ,dataName: 'data' //规定数据列表的字段名称，默认：data
                 }
                 ,cols: [[
-                    {type: 'checkbox', fixed: 'left'}
-                    ,{field:'goods_thumb', title:'配置名称', minWidth:50, templet:'#goods_thumb'}
-                    ,{field:'goods_name', title:'配置名称', minWidth:50, }
-                    ,{field:'nums', title:'价格(均价)', minWidth:50, }
-                    ,{field:'avg', title:'参与人均价', minWidth:50, }
-                    ,{field:'price', title:'价格(均价)', minWidth:50, }
+                    // {type: 'checkbox', fixed: 'left'}
+                    ,{field:'goods_thumb', title:'图片', minWidth:90, templet:'#goods_thumb', fixed: 'left'}
+                    ,{field:'goods_name', title:'名称', minWidth:120, }
+                    ,{field:'nums', title:'价格(均价)', minWidth:120, }
+                    ,{field:'avg', title:'参与人均价', minWidth:120, }
+                    ,{field:'price', title:'价格(均价)', minWidth:120, }
                     ,{field:'sort', title:'排序', minWidth:120, edit: 'text'}
                     ,{field:'sale_type', title:'营销展示类型', minWidth:120}
                     ,{field:'sale_value', title:'营销展示值', minWidth:120}
-                    ,{field:'is_top', title:'推荐', minWidth:80}
-                    ,{field:'status', title:'状态', minWidth:50, templet:'#status'}
+                    ,{field:'is_top', title:'推荐', minWidth:120, templet:'#is_top'}
+                    ,{field:'status', title:'状态', minWidth:120, templet:'#status'}
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
@@ -137,6 +145,14 @@
                 YuanLu.changStatus({
                     url :'{{ route('admin.goods.changeField') }}',
                     params : {id: $(data.elem).attr('data-id'), value: status, field : 'status'}
+                });
+            });
+
+            form.on('switch(is_top)', function(data){
+                let status = data.elem.checked ? 1: 0;
+                YuanLu.changStatus({
+                    url :'{{ route('admin.goods.changeField') }}',
+                    params : {id: $(data.elem).attr('data-id'), value: status, field : 'is_top'}
                 });
             });
 
