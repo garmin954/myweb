@@ -84,9 +84,9 @@
                      {type: 'checkbox', fixed: 'left'}
                     ,{field:'category_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
                     ,{field:'category_name', title:'分类名称', minWidth:120, edit: 'text'}
-                    ,{field:'pid', title:'上级分类', minWidth:80 }
+                    ,{field:'pname', title:'上级分类', minWidth:80 }
+                    ,{field:'sort', title:'排序', minWidth:80, edit:'text'}
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
-
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
@@ -107,6 +107,16 @@
                 });
             });
 
+            table.on('edit()', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+                if (obj.value> 127){
+                    layer.msg('最大不能超过127');
+                    return false;
+                }
+                YuanLu.changStatus({
+                    url :'{{ route('admin.goods_category.changeField') }}',
+                    params : {id: obj.data.category_id, value: obj.value, field : 'sort'}
+                });
+            });
 
             window.reload = ()=>{
 

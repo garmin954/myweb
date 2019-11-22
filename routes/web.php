@@ -11,7 +11,6 @@
 |
 */
 
-Route::redirect('/', 'admin');
 Route::prefix('admin')->name('admin.')->group( function (){
     Route::get('/', 'Admin\AdminController@index')->name('home');
     Route::get('/home', 'Admin\AdminController@home')->name('home');
@@ -38,6 +37,7 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::get('index', 'Admin\GoodsController@index')->name('index');
         Route::any('create', 'Admin\GoodsController@create')->name('create');
         Route::any('info', 'Admin\GoodsController@info')->name('info');
+        Route::get('getSearchData', 'Admin\GoodsController@getSearchData')->name('getSearchData');
         Route::any('changeField', 'Admin\GoodsController@changeField')->name('changeField');
         Route::any('getGoodsRelated', 'Admin\GoodsController@getGoodsRelated')->name('getGoodsRelated');
         Route::post('getConfigTypeList', 'Admin\GoodsController@getConfigTypeList')->name('getConfigTypeList');
@@ -101,3 +101,8 @@ Route::prefix('admin')->name('admin.')->group( function (){
     Route::any('upload', 'BaseController@upload')->name('upload');
 
 });
+
+
+/************* 前台路由 *************/
+Route::get('goods', 'Home\GoodsController@index')->name('goods');
+Route::get('/', 'Home\IndexController@index')->name('/');

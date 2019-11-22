@@ -4,7 +4,6 @@
 @endsection
 
 @section('resources')
-    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
     <!-- 引入样式 -->
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/article.css">
@@ -102,7 +101,7 @@
                     <el-form-item label="营销类型">
                         <el-select v-model="goodsForm.sale_type" placeholder="请选择">
                             <el-option
-                                    v-for="item in typeOptions"
+                                    v-for="(item ,index) in typeOptions"
                                     :key="item.value"
                                     :label="item.label"
                                     :value="item.value">
@@ -136,9 +135,10 @@
                             :on-success='beforeTempSuccess'
                             :headers="{'X-CSRF-TOKEN': '{{ csrf_token() }}'}"
                             list-type="picture-card"
+                            :file-list="thumbItem"
                             name="file"
                             :multiple="false"
-                            :disabled="goodsForm.goods_thumb != ''"
+                            {{--:disabled="goodsForm.goods_thumb != ''"--}}
                             :limit="1"
                             >
                             <i slot="default" class="el-icon-plus"></i>
@@ -189,11 +189,13 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
     <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+
     <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.config.js"></script>
     <script type="text/javascript" charset="utf-8" src="{{ asset(VENDOR) }}/ueditor/ueditor.all.js"> </script>
     {{--<script src="stylesheet" href="{{ asset(ADMIN) }}/js/axios.min.js"></script>--}}
-    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
         var ueditor =UE.getEditor('content', {
         });
@@ -208,7 +210,7 @@
         });
 
 
-        var goods_id = "{{ request()->get('id') }}}";
+        var goods_id = "{{ request()->get('id') }}";
         var vm = new Vue({
             el: '#app',
             data:{
@@ -235,6 +237,7 @@
                 cateOptions:  [], // 分类
                 typeOptions:[], // 类型
                 thumbList:[], // 相册
+                thumbItem:[], // 相册
                 activeName : 'first' // 当前tab
             },
             created(){
@@ -252,11 +255,38 @@
                             self.typeOptions = Object.keys(res.data.type_list).map((key)=>({
                                 label: res.data.type_list[key],
                                 value: key
-                            }))
+                            }));
 
                             // 基本信息
-                            if (goods_id){
+                            if (self.goodsForm.goods_id != '' && parseInt(self.goodsForm.goods_id) > 0){
+                                self.goodsForm.goods_id = res.data.info.goods_id;
                                 self.goodsForm.category_list = res.data.info.category_list;
+                                self.goodsForm.goods_id=res.data.info.goods_id;
+                                self.goodsForm.goods_name=res.data.info.goods_name;
+                                self.goodsForm.goods_desc=res.data.info.goods_desc;
+                                self.goodsForm.goods_thumb=res.data.info.goods_thumb;
+                                self.goodsForm.picture_list = res.data.info.picture_list.split(',');
+                                self.goodsForm.category_list=res.data.info.category_list;
+                                self.goodsForm.nums=res.data.info.nums;
+                                self.goodsForm.price=res.data.info.price;
+                                self.goodsForm.avg=res.data.info.avg;
+                                self.goodsForm.status=res.data.info.status.toString();
+                                self.goodsForm.sort=res.data.info.sort;
+                                self.goodsForm.is_top=res.data.info.is_top.toString();
+                                self.goodsForm.sale_type=res.data.info.sale_type.toString();
+                                self.goodsForm.sale_value=res.data.info.sale_value;
+                                self.goodsForm.content=res.data.info.content;
+                                setTimeout(function () {
+                                    ueditor.setContent(res.data.info.content)
+                                },1000)
+                               self.thumbList = self.goodsForm.picture_list.map((item)=>({
+                                   name:'',
+                                   url:item,
+                                }));
+                                if (self.goodsForm.goods_thumb){
+                                    self.thumbItem = [{name:'',url:self.goodsForm.goods_thumb}]
+                                }
+                                self.$forceUpdate();
                             }
                         }else{
                             layer.msg('获取异常');
@@ -268,6 +298,7 @@
                 // 添加图片
                 beforeTempSuccess(response, file, fileList){
                     this.goodsForm.goods_thumb = response.data;
+                    self.thumbItem = [{name:'',url:response.data}]
                 },
                 beforeListSuccess(response, file, fileList){
                     this.thumbList.push({name:'',url:response.data});
@@ -316,5 +347,6 @@
                 }
             }
         })
+
     </script>
 @endsection

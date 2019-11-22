@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Base extends Model
 {
@@ -68,9 +69,29 @@ class Base extends Model
             $order = $this->primaryKey;
         }
         $currSize = ($pageIndex-1)*$pageSize;
-        $list = $viewObj->offset($currSize)->limit($pageSize)->orderBy($order)->where($condition)->get();
 
-        return $list;
+        DB::connection()->enableQueryLog();#开启执行日志
+         return $viewObj->where(function ($query) use($condition){
+            if (!empty($condition)){
+                foreach($condition as $key => $search){
+                    switch ($search[0]) {
+                        case 'like':
+                            if (is_array($search)){
+                                foreach (explode('|', $key) as $field){
+                                    $query->where($field, 'like',  '%'.$search[1].'%');
+                                }
+                            }
+                            break;
+                        case 'nq':
+                            $query->where($key, $search[1]);
+                            break;
+                    }
+                }
+            }
+        })->offset($currSize)->limit($pageSize)->orderBy($order)->get();
+
+        dd(DB::getQueryLog());   //获取查询语句、参数和执行时间
+
     }
 
 
@@ -79,9 +100,33 @@ class Base extends Model
      * @param $viewObj
      * @param array $condition
      */
-    public function getCount($viewObj, $condition=[])
+    public function getCount($viewObj, $condition=[], $distinct = '')
     {
-        $count = $viewObj->where($condition)->count();
+//        $count = $viewObj->where($condition)->count();
+        DB::connection()->enableQueryLog();#开启执行日志
+        if ($distinct){
+            $viewObj = $viewObj->distinct($distinct);
+        }
+         return $count = $viewObj->where(function ($query) use($condition){
+            if (!empty($condition)){
+                foreach($condition as $key => $search){
+                    switch ($search[0]) {
+                        case 'like':
+                            if (is_array($search)){
+                                foreach (explode('|', $key) as $field){
+                                    $query->where($field, 'like',  '%'.$search[1].'%');
+                                }
+                            }
+                            break;
+                        case 'nq':
+                            $query->where($key, $search[1]);
+                            break;
+                    }
+                }
+            }
+        })->count();
+        dd(DB::getQueryLog());   //获取查询语句、参数和执行时间
+
 
         return $count;
     }

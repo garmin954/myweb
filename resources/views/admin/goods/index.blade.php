@@ -3,18 +3,48 @@
 @section('title')
 @endsection
 @section('resources')
+    <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
+
     <style>
         .layui-table-cell{
             height:80px;
-            line-height: 60px;
+            line-height: 80px;
         }
+        .layui-table-total{display: none}
     </style>
 @endsection
 
 @section('container')
     <div class="layui-col-md12">
         <div class="layui-card">
-            <div class="layui-card-body ">
+            <div class="layui-card-body" id="app">
+                <el-form :inline="true" ref="form" :model="form" class="demo-form-inline">
+                    <el-form-item label="商品名称">
+                        <el-input v-model="form.goods_name" placeholder="商品名称"></el-input>
+                    </el-form-item>
+                    <el-form-item label="分类">
+                        <el-cascader
+                                v-model="form.category_id"
+                                :options="optionsCate"
+                                :props="{ checkStrictly: true }"
+                                clearable></el-cascader>
+                    </el-form-item>
+
+                    <el-form-item label="状态">
+                        <el-select v-model="form.status" placeholder="请选择">
+                            <el-option
+                                    v-for="item in optionsStatus"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                    </el-form-item>
+                </el-form>
             </div>
             <div class="layui-card-header">
                 <button class="layui-btn" onclick="xadmin.open('添加配置','{{ route('admin.goods.create') }}' )"><i class="layui-icon"></i>添加</button>
@@ -33,31 +63,32 @@
                 </script>
                 {{--                行工具--}}
                 <script type="text/html" id="bar">
+                    <a class="layui-btn layui-btn-xs" lay-event="look">查看</a>
                     <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
 
                 {{--                状态--}}
                 <script type="text/html" id="status">
-                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.goods_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
-                    <%#  if(d.status == 1){ %>
+                    <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
+                    @php  echo "{{  if(d.status == 1){ }}"; @endphp
                     checked
-                    <%# }  %>
+                    @php echo "{{ }  }}";@endphp
                     >
 
                 </script>
-                {{--                顶置--}}
+                {{--                状态--}}
                 <script type="text/html" id="is_top">
-                    <input type="checkbox" name="is_top" lay-filter="is_top" data-id="<% d.goods_id %>" value="<% d.is_top %>" lay-skin="switch"  lay-text="ON|OFF"
-                    <%#  if(d.is_top == 1){ %>
-                    checked
-                    <%# }  %>
+                    <input type="checkbox" name="is_top" lay-filter="is_top" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.is_top }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
+                           @php  echo "{{  if(d.is_top == 1){ }}"; @endphp
+                           checked
+                            @php echo "{{ }  }}";@endphp
                     >
 
                 </script>
                 {{--主图--}}
                 <script type="text/html" id="goods_thumb">
-                    <img style="width: 80px;height: 60px" src="<% d.goods_thumb %>" alt="<% d.goods_name %>">
+                    <img style="width: 80px;height: 60px" src="@php  echo "{{ d.goods_thumb }}"; @endphp" alt="@php  echo "{{ d.goods_name }}"; @endphp" >
                 </script>
             </div>
 
@@ -65,7 +96,47 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
+    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
+        var vm = new Vue({
+            el:'#app',
+            data: {
+                form:{
+                    goods_name: '',
+                    category_id: '',
+                    status: ''
+                },
+                optionsStatus:[
+                    {label:'全部', value:''},
+                    {label:'正常', value:'1'},
+                    {label:'关闭', value:'0'},
+                ],
+                optionsCate: []
+            },
+            created(){
+                this.getSearchData();
+            },
+            methods:{
+                getSearchData(){
+                    let self = this;
+                    axios.get("{{ route('admin.goods.getSearchData') }}", {}).then(respond=>{
+                        let res = respond.data;
+                        if (res.code > 0){
+                            self.optionsCate =  res.data.cate_list
+                        }else{
+                            layer.msg('获取搜索资源异常');
+                        }
+                    }).catch(e=>{
+                        layer.msg('获取搜索资源异常'+ e);
+                    })
+                },
+                onSubmit(){
+                    reload(this.form.goods_name, this.form.category_id, this.form.status);
+                }
+            }
+        });
         layui.use(['table', 'laytpl', 'layer', 'form'], function(){
             var table = layui.table
                 ,layer = layui.layer
@@ -75,7 +146,7 @@
             let url = '{{ route('admin.goods.index') }}';
             table.render({
                 elem: '#list',
-                height:600
+                height:700
                 ,url: url
                 ,id:'idTest'
                 ,title: '用户数据表'
@@ -89,38 +160,41 @@
                     ,dataName: 'data' //规定数据列表的字段名称，默认：data
                 }
                 ,cols: [[
-                    // {type: 'checkbox', fixed: 'left'}
-                    ,{field:'goods_thumb', title:'图片', minWidth:90, templet:'#goods_thumb', fixed: 'left'}
+                    { fixed: 'left',width: 1}
+                    ,{field:'goods_thumb', title:'图片', minWidth:90, templet:'#goods_thumb'}
                     ,{field:'goods_name', title:'名称', minWidth:120, }
                     ,{field:'nums', title:'价格(均价)', minWidth:120, }
                     ,{field:'avg', title:'参与人均价', minWidth:120, }
                     ,{field:'price', title:'价格(均价)', minWidth:120, }
-                    ,{field:'sort', title:'排序', minWidth:120, edit: 'text'}
+                    ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
                     ,{field:'sale_type', title:'营销展示类型', minWidth:120}
                     ,{field:'sale_value', title:'营销展示值', minWidth:120}
                     ,{field:'is_top', title:'推荐', minWidth:120, templet:'#is_top'}
                     ,{field:'status', title:'状态', minWidth:120, templet:'#status'}
-                    ,{field:'updated_at', title:'更新时间', minWidth:120}
-                    ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
+                    ,{field:'updated_at', title:'更新时间', minWidth:180}
+                    ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:160}
                 ]]
                 ,page: true
                 ,done: function(res, curr, count){
                     logs(res);
                 }
             });
-            laytpl.config({
-                open: '<%',
-                close: '%>'
-            });
+            // laytpl.config({
+            //     open: '<%',
+            //     close: '%>'
+            // });
 
-            window.reload = ()=>{
-
+            window.reload = (goods_name='', category_id='', status=1)=>{
                 table.reload('idTest', {
                     url: url
-                    ,where: {} //设定异步数据接口的额外参数
+                    ,where: {
+                        goods_name: goods_name,
+                        category_id: category_id,
+                        status: status,
+                    } //设定异步数据接口的额外参数
                     //,height: 300
-                });
 
+                });
             }
             //工具栏事件
             table.on('toolbar(list)', function(obj){
@@ -156,6 +230,17 @@
                 });
             });
 
+            table.on('edit()', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+                if (obj.value> 127){
+                    layer.msg('最大不能超过127');
+                    return false;
+                }
+                YuanLu.changStatus({
+                    url :'{{ route('admin.goods.changeField') }}',
+                    params : {id: obj.data.goods_id, value: obj.value, field : 'sort'}
+                });
+            });
+
             //监听行工具事件
             table.on('tool(list)', function(obj){
                 var data = obj.data;
@@ -167,6 +252,8 @@
                     });
                 } else if(obj.event === 'update'){
                     xadmin.open('修改配置','{{ route('admin.goods.create') }}?id='+data.goods_id )
+                } else if(obj.event === 'look'){
+                    window.open( "{{ route('goods') }}"+'?id='+data.goods_id );
                 }
             });
         });

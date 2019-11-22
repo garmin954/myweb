@@ -24,10 +24,15 @@ class GoodsCategoryController extends Controller
             $pageIndex = $request->post('page', 1);
             $pageSize = $request->post('limit', PAGE_SIZE);
             $condition = [];
-            $list = $goodsCategoryModel->getPageQuery($goodsCategoryModel, $pageIndex, $pageSize, $condition);
+            $count = $goodsCategoryModel->getCount($goodsCategoryModel,$condition);
+            $list = [];
+            if ($count){
+//                $ov = $goodsCategoryModel-
+                $list = $goodsCategoryModel->getPageQuery($goodsCategoryModel, $pageIndex, $pageSize, $condition);
+            }
 
             if ($list) {
-                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
+                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
                 return getAjaxData('', 0);
             }

@@ -17,7 +17,7 @@ class GoodsCategoryModel extends \App\Model\Base
         $this->treeParams = [
             'label' => 'category_name',
             'value' => 'category_id',
-            'disabled' => 'exist',
+//            'disabled' => 'exist',
             'children' => 'child',
         ];
         parent::__construct($attributes);
