@@ -39,14 +39,13 @@
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
 
-{{--                状态--}}
+                {{--                状态--}}
                 <script type="text/html" id="status">
-                    <%#  if(d.status == 1){ %>
-                    <input type="checkbox" checked lay-filter="status" data-id="<% d.category_id %>" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
-                    <%# }else{  %>
-                    <input type="checkbox" lay-filter="status" data-id="<% d.category_id %>" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
-                    <%# }  %>
-
+                    <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
+                           @php  echo "{{  if(d.status == 1){ }}"; @endphp
+                           checked
+                        @php echo "{{ }  }}";@endphp
+                    >
 
                 </script>
             </div>
@@ -58,6 +57,8 @@
 
 @section('scripts')
     <script>
+
+
         layui.use(['table', 'laytpl', 'layer', 'form', 'tree'], function(){
             var table = layui.table
                 ,layer = layui.layer
@@ -84,8 +85,8 @@
                      {type: 'checkbox', fixed: 'left'}
                     ,{field:'category_id', title:'ID', minWidth:50, fixed: 'left', unresize: true, sort: true, totalRowText: '合计'}
                     ,{field:'category_name', title:'分类名称', minWidth:120, edit: 'text'}
-                    ,{field:'pname', title:'上级分类', minWidth:80 }
-                    ,{field:'sort', title:'排序', minWidth:80, edit:'text'}
+                    ,{field:'pname', title:'上级分类', minWidth:120 }
+                    ,{field:'sort', title:'排序', minWidth:80, edit:'text', sort: 'true'}
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
@@ -94,10 +95,6 @@
 
             });
 
-            laytpl.config({
-                open: '<%',
-                close: '%>'
-            });
 
             form.on('switch(status)', function(data){
                 let status = data.elem.checked ? 1: 0;
@@ -118,11 +115,13 @@
                 });
             });
 
-            window.reload = ()=>{
+            window.reload = (pid = 0)=>{
 
                 table.reload('idTest', {
                     url: url
-                    ,where: {} //设定异步数据接口的额外参数
+                    ,where: {
+                        pid: pid
+                    } //设定异步数据接口的额外参数
                     //,height: 300
                 });
 
@@ -157,38 +156,40 @@
                             obj: obj,
                         });
                     });
+
                 } else if(obj.event === 'update'){
                     xadmin.open('添加配置','{{ route('admin.goods_category.create') }}?id='+data.category_id,600 )
                 }
             });
 
 
-            //渲染
-            var inst1 = tree.render({
-                elem: '#goodsTree'  //绑定元素
-                ,click: function(obj){
-                    console.log(obj.data); //得到当前点击的节点数据
-                    console.log(obj.state); //得到当前节点的展开状态：open、close、normal
-                    console.log(obj.elem); //得到当前节点元素
+            $(function () {
+                axios.post("{{route('admin.goods_category.getGoodsCategoryTree')}}", {}).then(respond => {
+                    let res = respond.data
+                    if(res.code > 0){
+                        //渲染
+                        var inst1 = tree.render({
+                            elem: '#goodsTree'  //绑定元素
+                            ,data: res.data
+                            ,click: function(obj){
+                                // console.log(obj.data); //得到当前点击的节点数据
+                                // console.log(obj.state); //得到当前节点的展开状态：open、close、normal
+                                // console.log(obj.elem); //得到当前节点元素
+                                // console.log(obj.data.children); //当前节点下是否有子节点
+                                reload(obj.data.id);
+                            }
+                        });
+                    } else{
+                        layer.msg('获取异常');
+                    }
+                }).catch((e)=>{
+                    layer.msg('获取异常'+e);
+                })
+            })
 
-                    console.log(obj.data.children); //当前节点下是否有子节点
-                }
-                ,data: [{
-                    title: '江西' //一级菜单
-                    ,children: [{
-                        title: '南昌' //二级菜单
-                        ,children: [{
-                            title: '高新区' //三级菜单
-                            //…… //以此类推，可无限层级
-                        }]
-                    }]
-                },{
-                    title: '陕西' //一级菜单
-                    ,children: [{
-                        title: '西安' //二级菜单
-                    }]
-                }]
-            });
+
         });
+
+
     </script>
 @endsection

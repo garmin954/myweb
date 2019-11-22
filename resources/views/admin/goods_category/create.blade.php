@@ -5,6 +5,9 @@
 
 @section('resources')
     <meta name="_token" content="{{ csrf_token() }}"/>
+    <style>
+        .layui-form-select .layui-input{    word-spacing: -3.5px;}
+    </style>
 @endsection
 
 @section('container')

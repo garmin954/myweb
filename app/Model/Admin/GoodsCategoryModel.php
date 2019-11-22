@@ -70,4 +70,20 @@ class GoodsCategoryModel extends \App\Model\Base
 
         return $list;
     }
+
+    public function getGoodsCateTrees($goodsId = 0)
+    {
+        $this->treeParams = [
+            'title' => 'category_name',
+            'id' => 'category_id',
+            'children' => 'child',
+        ];
+
+        return $this->getGoodsCateTree();;
+    }
+
+    public function delData($id)
+    {
+        return $this->where($this->primaryKey, $id)->delete();
+    }
 }

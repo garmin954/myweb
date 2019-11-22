@@ -24,9 +24,11 @@ class GoodsCateGoryRequest extends FormRequest
         // 这里代表创建表单需要验证的字段
         'create' => [
             'category_name' => 'required|max:255',
+            'pid' => 'required|max:255',
         ],
         // 更新表单需要验证的字段
         'update' => [
+            'pid' => 'required|max:255',
         ],
         // 不管是创建还是更新都要验证的字段
         'edit'   => [
@@ -43,6 +45,7 @@ class GoodsCateGoryRequest extends FormRequest
     {
         return [
             'category_name' => '商品分类名称',
+            'pid' => '上级分类'
 //            '_token'   => '令牌',
         ];
     }

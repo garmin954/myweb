@@ -24,17 +24,24 @@ class GoodsCategoryController extends Controller
             $pageIndex = $request->post('page', 1);
             $pageSize = $request->post('limit', PAGE_SIZE);
             $condition = [];
-            $count = $goodsCategoryModel->getCount($goodsCategoryModel,$condition);
+
+            $pid = $request->get('pid', 0);
+            $condition['cate.pid'] = ['nq', $pid];
+
+            $count = $goodsCategoryModel->getCount($goodsCategoryModel->from('goods_category','cate'),$condition);
             $list = [];
             if ($count){
-//                $ov = $goodsCategoryModel-
-                $list = $goodsCategoryModel->getPageQuery($goodsCategoryModel, $pageIndex, $pageSize, $condition);
+                $objView = $goodsCategoryModel->from('goods_category','cate')
+                    ->leftJoin('goods_category as scate', 'cate.pid', '=', 'scate.category_id')
+//                    ->select(DB::raw('yl_cate.*,yl_scate.category_name as pname'));
+                    ->select('cate.*','scate.category_name  as pname');
+                $list = $goodsCategoryModel->getPageQuery($objView, $pageIndex, $pageSize, $condition, 'cate.category_id');
             }
 
             if ($list) {
                 return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
-                return getAjaxData('', 0);
+                return getAjaxData('没有数据', 0);
             }
         }
         return view('admin.goods_category.index');
@@ -119,6 +126,20 @@ class GoodsCategoryController extends Controller
             } else {
                 return getAjaxData('', 0);
             }
+        }
+    }
+
+    /**
+     * 获取tree
+     */
+    public function getGoodsCategoryTree()
+    {
+        $data = $this->model->getGoodsCateTrees();
+
+        if ($data){
+            return getAjaxData('', 1, $data);
+        } else {
+            return getAjaxData('');
         }
     }
 }

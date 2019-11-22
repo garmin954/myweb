@@ -106,7 +106,7 @@
                 success:function(res){
                     if(res.code > 0){
                         obj.obj.del();
-                        layer.close(index);
+                        layer.closeAll();
                     } else {
                         layer.msg(res.msg, {icon:2, shade:0.5,anim:6})
                     }
