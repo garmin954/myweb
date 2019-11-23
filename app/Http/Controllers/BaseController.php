@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Base;
+use Carbon\Traits\Date;
 use Illuminate\Http\Request;
 
 class BaseController extends Controller
@@ -15,7 +16,9 @@ class BaseController extends Controller
      */
     public function upload(Request $request)
     {
-        $path = $request->file('file')->store('image');
+        $dirName = date('Y_m_d');
+
+        $path = $request->file('file')->store('image/'.$dirName);
 
         if ($path){
             return getAjaxData('', 1, '/uploads/'.$path);

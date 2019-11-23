@@ -1,5 +1,6 @@
 <?php
 define('ADMIN', 'static/admin');
+define('HOME', 'static/home');
 define('VENDOR', 'static/vendor');
 define('PAGE_SIZE', 10);
 

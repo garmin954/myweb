@@ -24,7 +24,7 @@
         <a><i title="展开左侧栏" class="iconfont">&#xec1e;</i></a>
     </div>
     <div class="left_menu ">
-        <a href="/"><i title="前端" class="iconfont">&#xe68a;</i></a>
+        <a href="/" target="_blank"><i title="前端" class="iconfont">&#xe68a;</i></a>
     </div>
     <div class="left_menu">
         <a href="javascript:;" class="refreshThis" id="refresh"><i title="刷新" class="iconfont">&#xe673;</i></a>
@@ -43,7 +43,7 @@
             <a href="javascript:;" class="iconfont" title="消息"  >&#xe610;</a>
         </li>
         <li class="layui-nav-item to-index">
-            <a href="javascript:;" class="iconfont" title="前端"  >&#xe619;</a>
+            <a href="/" target="_blank" class="iconfont" title="前端"  >&#xe619;</a>
         </li>
         <li class="layui-nav-item to-index">
             <a href="javascript:;"  > <i class="iconfont" >&#xe6ae;</i></a>

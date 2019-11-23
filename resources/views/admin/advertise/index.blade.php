@@ -2,11 +2,42 @@
 
 @section('title')
     @endsection
+@section('resources')
+    <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
+@endsection
 
 @section('container')
     <div class="layui-col-md12">
         <div class="layui-card">
-            <div class="layui-card-body ">
+            <div class="layui-card-body " id="app">
+                <el-form :inline="true" ref="form" :model="form" class="demo-form-inline">
+
+                    <el-form-item label="分类">
+                        <el-select v-model="form.type_id" placeholder="请选择">
+                            <el-option
+                                    v-for="item in optionsCate"
+                                    :key="item.type_id"
+                                    :label="item.type_name"
+                                    :value="item.type_id">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item label="状态">
+                        <el-select v-model="form.status" placeholder="请选择">
+                            <el-option
+                                    v-for="item in optionsStatus"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">查询</el-button>
+                    </el-form-item>
+                </el-form>
             </div>
             <div class="layui-card-header">
                     <button class="layui-btn" onclick="xadmin.open('添加广告','{{ route('admin.advertise.create') }}',600 )"><i class="layui-icon"></i>添加</button>
@@ -31,10 +62,10 @@
 
                 {{--                状态--}}
                 <script type="text/html" id="status">
-                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.config_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
-                    <%#  if(d.status == 1){ %>
-                    checked
-                    <%# }  %>
+                    <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.adv_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
+                        @php echo "{{ if( d.status == 1){ }}"; @endphp
+                           checked
+                        @php echo "{{ } }}"; @endphp
                     >
 
                 </script>
@@ -44,7 +75,47 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
+    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
+        var vm = new Vue({
+            el:'#app',
+            data: {
+                form:{
+                    type_id: '',
+                    status: ''
+                },
+                optionsStatus:[
+                    {label:'全部', value:''},
+                    {label:'正常', value:'1'},
+                    {label:'关闭', value:'0'},
+                ],
+                optionsCate: []
+            },
+            created(){
+                this.getSearchData();
+            },
+            methods:{
+                getSearchData(){
+                    let self = this;
+                    axios.post("{{ route('admin.advertise.getInitialData') }}", {}).then(respond=>{
+                        let res = respond.data;
+                        if (res.code > 0){
+                            self.optionsCate =  res.data.adv_type_list
+                        }else{
+                            layer.msg('获取搜索资源异常');
+                        }
+                    }).catch(e=>{
+                        layer.msg('获取搜索资源异常'+ e);
+                    })
+                },
+                onSubmit(){
+                    reload( this.form.type_id, this.form.status);
+                }
+            }
+        });
+
         layui.use(['table', 'laytpl', 'layer', 'form'], function(){
             var table = layui.table
                 ,layer = layui.layer
@@ -59,7 +130,7 @@
                 ,title: '用户数据表'
                 ,totalRow: true
                 ,toolbar: '#toolbar' // 自定义头部工具
-                ,defaultToolbar: ['filter', 'print', 'exports'] // layui工具
+                ,defaultToolbar: [] // layui工具
                 ,response: {
                     // statusName: 'code' //规定数据状态的字段名称，默认：code
                     statusCode: 1
@@ -68,9 +139,11 @@
                 }
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
-                    ,{field:'config_name', title:'配置名称', minWidth:50, fixed: 'left'}
-                    ,{field:'config_code', title:'配置代码', minWidth:120, edit: 'text'}
+                    ,{field:'adv_name', title:'广告名称', minWidth:50, fixed: 'left'}
+                    ,{field:'type_name', title:'所属类型', minWidth:120}
+                    ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
+                    ,{field:'created_at', title:'创建时间', minWidth:120}
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
@@ -80,16 +153,16 @@
 
                 }
             });
-            laytpl.config({
-                open: '<%',
-                close: '%>'
-            });
 
-            window.reload = ()=>{
+
+            window.reload = (type_id = '', status = '')=>{
 
                 table.reload('idTest', {
                     url: url
-                    ,where: {} //设定异步数据接口的额外参数
+                    ,where: {
+                        type_id: type_id,
+                        status: status
+                    } //设定异步数据接口的额外参数
                     //,height: 300
                 });
 
@@ -120,17 +193,32 @@
                 });
             });
 
+            table.on('edit()', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+                if (obj.value> 127){
+                    layer.msg('最大不能超过127');
+                    return false;
+                }
+                YuanLu.changStatus({
+                    url :'{{ route('admin.advertise.changeField') }}',
+                    params : {id: obj.data.adv_id, value: obj.value, field : 'sort'}
+                });
+            });
+
             //监听行工具事件
             table.on('tool(list)', function(obj){
                 var data = obj.data;
                 //console.log(obj)
                 if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
+                    layer.confirm('确认删除？', function(index){
+                        YuanLu.delData({
+                            url :'{{ route('admin.advertise.delData') }}',
+                            params : {id: obj.data.adv_id},
+                            obj: obj,
+                        });
                     });
                 } else if(obj.event === 'update'){
-                    xadmin.open('修改配置','{{ route('admin.advertise.create') }}?id='+data.type_id,600 )
+                    console.log(data.adv_id);
+                    xadmin.open('修改','{{ route('admin.advertise.create') }}?id='+data.adv_id,600 )
                 }
             });
         });

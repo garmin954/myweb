@@ -1,0 +1,257 @@
+a {
+	transition: all .15s;
+	text-decoration: none;
+	color: #666;
+}
+.header-wrap {
+	width: 100%;
+	height: 62px;
+	border-bottom: 1px solid #efefef;
+	background-color: #fff;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.06);
+}
+.header-infos {
+	position: absolute;
+    z-index: 2;
+}
+.content-flexible {
+	width: 1200px;
+	margin: 0px auto;
+}
+.header-wrap .header-logo-wrap {
+	float: left;
+	margin-right: 20px;
+	width: 150px;
+	background: url(../picture/logo-1.png) no-repeat;
+	height: 60px;
+	overflow: hidden;
+}
+.header-wrap .header-logo-wrap a {
+	display: block;
+	height: 62px;
+	width: 150px;
+	text-indent: -99999px;
+}
+.header-list {
+	display: block;
+	position: relative;
+	float: left;
+}
+.header-list li {
+	position: relative;
+	display: block;
+	float: left;
+	width: 75px;
+	height: 62px;
+	text-align: center;
+}
+.header-list li a {
+	display: block;
+	color: #333333;
+	font-size: 16px;
+	text-align: center;
+	line-height: 62px;
+}
+.header-list li:hover a.bcat-li-a {
+	color: #17CEDD;
+}
+/*.header-nav {
+	display: none;
+}*/
+	.header-right-icons-wrap {
+	float: right;
+	display: block;
+	height: 62px;
+	position: relative;
+}
+.header-right-icona {
+	display: block;
+	width: 24px;
+	height: 62px;
+	line-height: 62px;
+	margin-right: 7px;
+	float: left;
+}
+.header-right-icona .top-wechat-icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background: url("../images/index-wx-icon.png") no-repeat;
+}
+.user-pic-w .top-tel-icon {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	background: url("../images/index-tel-icon.png") no-repeat;
+}
+.login-u-i-wrap {
+	width: 122px;
+	position: absolute;
+	left: 0px;
+	top: 56px;
+	z-index: 100;
+	display: none;
+}
+.header-right-icons-wrap:hover .login-u-i-wrap {
+	display: block;
+}
+.login-user-i {
+	float: right;
+	display: block;
+	height: 62px;
+	position: relative;
+}
+.login-user-i .user-pic-w {
+	display: block;
+	width: 24px;
+	height: 62px;
+	line-height: 62px;
+	float: left;
+}
+.login-user-i .user-i-name {
+	display: block;
+	float: left;
+	line-height: 42px;
+	margin-left: 7px;
+	font-size: 20px;
+	color: #333333;
+	margin-top: 10px;
+}
+#header-wrap.header-wrap {
+	background-color: transparent;
+	position: absolute;
+	left: 0px;
+	top:0px;
+	z-index: 10;
+	width: 100%;
+	height: 62px;
+	border-bottom: none;
+	box-shadow: none;
+}
+#header-wrap.header-wrap .header-logo-wrap {
+	background: url(../picture/logo.png) no-repeat;
+}
+#header-wrap .header-list li a.bcat-li-a {
+	color: #fff;
+	line-height: normal;
+	padding-top: 21px;
+	display: inline-block;
+	padding-bottom: 5px;
+}
+#header-wrap .header-list li:hover {
+	background-color: transparent;
+	border: none;
+}
+#header-wrap .header-list li:hover .bcat-li-a {
+	border-bottom: 1px solid #fff;
+}
+#header-wrap .login-user-i .user-i-name {
+	color: #fff;
+}
+#header-wrap .header-list li {
+	border: none;
+}
+#header-wrap .header-right-icona p {
+	color: #fff;
+}
+#header-wrap .header-right-icona:hover p {
+	font-size: 12px;
+	color: #f4543c;
+	text-align: center;
+}
+#header-wrap .header-right-icona:hover .top-wechat-icon {
+	background: url("../images/index-wx-icon.png") no-repeat;
+}
+#header-wrap .user-pic-w:hover .top-tel-icon {
+	background: url("../images/index-tel-icon.png") no-repeat;
+}
+#header-wrap .header-right-icona .top-wechat-icon{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background: url("../images/index-wx-icon-1.png") no-repeat;
+}
+#header-wrap .user-pic-w .top-tel-icon{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    background: url("../images/index-tel-icon-1.png") no-repeat;
+}
+.wm-1200-header {
+	width: 1200px;
+	margin: 0 auto;
+	position: relative;
+}
+.wm-1200-header:before,
+.wm-1200-header:after {
+	content: '.';
+	display: block;
+	height: 0;
+	clear: both;
+	overflow: hidden
+}
+.header-nav {
+	width: 100%;
+	border-bottom: 1px solid #efefef;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.06);
+	display: none;
+}
+.header-menu-m {
+	width: 100%;
+	height: 46px;
+	background: #fff;
+}
+.header-menu-m .p-1 {
+	height: inherit;
+	float: left;
+}
+.header-menu-m .p-2 {
+	height: inherit;
+	float: right;
+}
+.header-menu-m p img {
+	height: 46px;
+}
+.header-menu-m .header-menu-m-list ul li {
+	width: 15%;
+	height: 30px;
+	line-height: 30px;
+	float: left;
+	text-align: center;
+}
+.header-menu-m .header-menu-m-list ul .nav-break {
+	width: 2%;
+	height: 30px;
+	line-height: 28px;
+	color: #fff;
+	float: left;
+	text-align: center;
+}
+.header-menu-m .header-menu-m-list ul li a {
+	font-size: 14px;
+	color: #fff;
+}
+@media only screen and (min-width: 320px) and (max-width: 1201px) {
+.header-wrap {
+	display: none;
+}
+.wm-1200-header {
+	width: 100%
+}
+.header-nav {
+	display: block;
+}
+.header-menu-m .header-menu-m-list {
+	display: none;
+	position: absolute;
+	z-index: 99;
+	width: 100%;
+	background: rgba(0,0,0,0.5);
+	left: 0;
+	top: 46px;
+}
+}

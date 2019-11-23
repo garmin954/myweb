@@ -29,10 +29,14 @@ class ArticleController extends Controller
             $pageSize = $request->post('limit', PAGE_SIZE);
             $cateId = $request->all('cate_id', 1);
             $condition = [];
-            $list = $this->model->getPageQuery($this->model, $pageIndex, $pageSize, $condition);
+            $list = [];
+            $count = $this->model->getCount($this->model, $condition);
+            if ($count){
+                $list = $this->model->getPageQuery($this->model, $pageIndex, $pageSize, $condition);
+            }
 
             if ($list) {
-                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
+                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
                 return getAjaxData('', 0);
             }

@@ -65,9 +65,10 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::any('create', 'Admin\AdvertiseController@create')->name('create');
         Route::get('index', 'Admin\AdvertiseController@index')->name('index');
         Route::post('update', 'Admin\AdvertiseController@update')->name('update');
-        Route::post('delete', 'Admin\AdvertiseController@delete')->name('delete');
+        Route::post('delData', 'Admin\AdvertiseController@delData')->name('delData');
+        Route::post('getSearchData', 'Admin\AdvertiseController@getSearchData')->name('getSearchData');
         Route::any('changeField', 'Admin\AdvertiseController@changeField')->name('changeField');
-
+        Route::post('getInitialData', 'Admin\AdvertiseController@getInitialData')->name('getInitialData');
     });
 
     // 内容

@@ -5,121 +5,186 @@
 
 @section('resources')
     <meta name="_token" content="{{ csrf_token() }}"/>
+    <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .avatar-uploader .el-upload {
+            border: 1px dashed #d9d9d9;
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar-uploader .el-upload:hover {
+            border-color: #409EFF;
+        }
+        .avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 78px;
+            height: 78px;
+            line-height: 78px;
+            text-align: center;
+        }
+        .avatar {
+            width: 78px;
+            height: 78px;
+            display: block;
+        }
+    </style>
 @endsection
 
 @section('container')
-    <form class="layui-form" action=""  lay-filter="example">
+    <div id="app">
+        <el-form ref="forms"  :rules="rules" :model="forms" label-width="80px" >
+            <el-form-item label="广告名称"  prop="adv_name">
+                <el-input v-model="forms.adv_name"></el-input>
+            </el-form-item>
+            <el-form-item label="广告类型" prop="type_id">
+                <el-select v-model="forms.type_id" placeholder="请选择活动区域">
+                    <el-option v-for="type in typeList" :label="type.type_name" :value="type.type_id"></el-option>
+                </el-select>
+            </el-form-item>
 
-        <input type="hidden" name="config_id">
-        <div class="layui-form-item">
-            <label class="layui-form-label">广告名称</label>
-            <div class="layui-input-block">
-                <input type="text" name="adv_name" lay-verify="required" placeholder="请输入广告名称" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">上传图片</label>
-            <div class="layui-input-block">
-                <div class="layui-upload">
-                    <button type="button" class="layui-btn" id="test1">上传图片</button>
-                    <div class="layui-upload-list" style="height: 150px;border: 1px solid grey">
-                        <img class="layui-upload-img" id="demo1"style="width: auto;height: 100%">
-                        <p id="demoText"></p>
+            <el-form-item label="图片上传" >
+                <el-upload
+                        action="{{ route('admin.upload') }}"
+                        :on-success='handleSuccess'
+                        :headers="{'X-CSRF-TOKEN': '{{ csrf_token() }}'}"
+                        list-type="picture-card"
+                        :file-list="thumbItem"
+                        name="file"
+                        :multiple="false"
+                        :limit="1">
+                    <i slot="default" class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                        <img :src="file.url" alt="" class="el-upload-list__item-thumbnail" >
                     </div>
-                </div>
-            </div>
-        </div>
+                </el-upload>
+            </el-form-item>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">链接</label>
-            <div class="layui-input-block">
-                <input type="text" name="link" placeholder="" class="layui-input">
-            </div>
-        </div>
+            <el-form-item label="链接" prop="link">
+                <el-input v-model="forms.link"></el-input>
+            </el-form-item>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">排序</label>
-            <div class="layui-input-block">
-                <input type="text" name="sort" placeholder="" value="50" class="layui-input">
-            </div>
-        </div>
+            <el-form-item label="排序">
+                <el-input v-model="forms.sort" min="1" max="127"></el-input>
+            </el-form-item>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-block">
-                <input type="checkbox" checkbox name="status" value="1" lay-skin="switch" lay-text="ON|OFF">
-            </div>
-        </div>
+            <el-form-item label="状态">
+                <el-switch v-model="forms.status"  active-value="1" inactive-value="0"></el-switch>
+            </el-form-item>
 
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button type="button" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-            </div>
-        </div>
-    </form>
+            <el-form-item>
+                <el-button type="primary" @click="onSubmit('forms')">立即创建</el-button>
+                <el-button @click="resetForm('forms')">重置</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
 @endsection
 
 @section('scripts')
-
+    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
+    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
     <script>
-        var id = "{{ Request()->get('id', 0) }}";
+        var id = "{{ request()->get('id') }}";
+        var vm = new Vue({
+            el: '#app',
+            data :{
+                forms: {
+                    adv_id: id ? id : 0,
+                    adv_name: '',
+                    type_id: '',
+                    thumb: '',
+                    link: 'http://',
+                    sort: '50',
+                    status: '1',
+                },
+                rules: {
+                    adv_name: [
+                        { required: true, message: '请输入广告名称', trigger: 'blur' },
+                        { min: 2, max: 15, message: '长度在 2 到 15 个字符', trigger: 'blur' }
+                    ],
+                    type_id: [
+                        { required: true, message: '请选择广告类型', trigger: 'change' }
+                    ],
+                    link: [
+                        { type: 'url', required: true, message: '请填写正确的链接', trigger: 'change' }
+                    ],
+                },
+                thumbItem:[], // 相册
+                typeList:[],
 
-        layui.use(['form', 'layedit', 'upload'], function(){
-            var form = layui.form
-                ,layer = layui.layer
-                ,upload = layui.upload
-                ,layedit = layui.layedit;
+            },
+            created(){
+                this.getInitialData();
+            },
+            methods:{
+                getInitialData(){
+                    let self = this;
+                    axios.post("{{ route('admin.advertise.getInitialData') }}", {id: self.forms.adv_id}).then(respond=>{
+                        let res = respond.data;
+                        if (res.code > 0){
+                            self.typeList = res.data.adv_type_list;
 
-            //自定义验证规则
-            form.verify({
-            });
+                            if (self.forms.adv_id) {
+                                self.forms.adv_id =  res.data.info.adv_id
+                                self.forms.adv_name =  res.data.info.adv_name
+                                self.forms.thumb =  res.data.info.thumb
+                                self.forms.link =  res.data.info.link
+                                self.forms.sort =  res.data.info.sort
+                                self.forms.type_id =  res.data.info.type_id
+                                self.forms.status =  res.data.info.status.toString();
 
-            if (parseInt(id) !== 0) {
-                //表单取值
-                _params = YuanLu.getFrom({
-                    url : "{{ route('admin.config.info') }}",
-                    params: {id:id},
-                    data: _params,
-                    form: form
-                });
-            }else {
-                //表单赋值
-            }
-
-
-
-            //普通图片上传
-            var uploadInst = upload.render({
-                elem: '#test1'
-                ,url: "{{ route('admin.upload') }}"
-                ,headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                ,before: function(obj){
-                    //预读本地文件示例，不支持ie8
-                    obj.preview(function(index, file, result){
-                        $('#demo1').attr('src', result); //图片链接（base64）
+                                if (self.forms.thumb){
+                                    self.thumbItem = [{name:'',url:self.forms.thumb}]
+                                }
+                            }
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }).catch(e=>{
+                        layer.msg('获取异常'+ e);
+                    })
+                },
+                onSubmit(form) {
+                    let self = this;
+                    let index = parent.layer.getFrameIndex(window.name);
+                    this.$refs[form].validate((valid) => {
+                        console.log(valid);
+                        if (valid) {
+                            axios.post("{{ route('admin.advertise.create') }}", self.forms).then(respond=>{
+                                let res = respond.data;
+                                if (res.code > 0){
+                                    layer.msg(res.msg, {shade:0.5, icon:1, anim:6});
+                                    window.parent.location.reload();//刷新父页面
+                                    // parent.layer.close(index);
+                                } else {
+                                    layer.msg(res.msg);
+                                }
+                            }).catch(e=>{
+                                layer.msg('获取异常'+ e);
+                            })
+                        } else {
+                            console.log('error submit!!');
+                            return false;
+                        }
                     });
+                },
+                resetForm(formName) {
+                    this.$refs[formName].resetFields();
+                },
+                // 添加图片
+                handleSuccess(response, file, fileList){
+                    this.forms.thumb = response.data;
+                    self.thumbItem = [{name:'',url:response.data}]
                 }
-                ,done: function(res){
-                    //如果上传失败
-                    if(res.code > 0){
-                        return layer.msg('上传失败');
-                    }
-                    //上传成功
-                }
-                ,error: function(){
-                    //演示失败状态，并实现重传
-                    var demoText = $('#demoText');
-                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
-                    demoText.find('.demo-reload').on('click', function(){
-                        uploadInst.upload();
-                    });
-                }
-            });
+                ,deleteUpload(){
 
-        });
+                }
+            },
+
+
+        })
     </script>
 @endsection

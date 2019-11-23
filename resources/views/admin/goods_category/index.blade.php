@@ -158,7 +158,7 @@
                     });
 
                 } else if(obj.event === 'update'){
-                    xadmin.open('添加配置','{{ route('admin.goods_category.create') }}?id='+data.category_id,600 )
+                    xadmin.open('修改','{{ route('admin.goods_category.create') }}?id='+data.category_id,600 )
                 }
             });
 

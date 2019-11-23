@@ -6,7 +6,6 @@
 @section('resources')
     <!-- 引入样式 -->
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
-    <link rel="stylesheet" href="{{ asset(ADMIN) }}/css/article.css">
     <!-- 引入组件库 -->
     <meta name="_token" content="{{ csrf_token() }}"/>
 

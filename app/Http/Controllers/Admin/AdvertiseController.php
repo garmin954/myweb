@@ -30,10 +30,23 @@ class AdvertiseController extends Controller
             $pageIndex = $request->post('page', 1);
             $pageSize = $request->post('limit', PAGE_SIZE);
             $condition = [];
-            $list = $this->model->getPageQuery($this->model, $pageIndex, $pageSize, $condition);
+
+            $typeId = $request->get('type_id', '');
+            if ($typeId){
+                $condition['type_id'] = ['nq', $typeId];
+            }
+
+            $status = $request->get('status', '');
+            if ($status != ''){
+                $condition['status'] = ['nq', $status];
+            }
+            $count = $this->model->getCount($this->model, $condition);
+
+            $objView = $this->model->from('advertise', 'adv')->select('adv.*', 'type.type_name')->leftJoin('advertise_type as type', 'adv.type_id', '=', 'type.type_id');
+            $list = $this->model->getPageQuery($objView, $pageIndex, $pageSize, $condition);
 
             if ($list) {
-                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
+                return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
                 return getAjaxData('', 0);
             }
@@ -48,25 +61,18 @@ class AdvertiseController extends Controller
      */
     public function create(AdvertiseRequest $request)
     {
-        if ($request->ajax()) {
-
+        if ($request->get('adv_name', '')) {
             $params = $request->all();
-            $params = $this->model->saveData($params);
+            $params = $this->model->saveAdvertise($params);
             if ($params){
                 return getAjaxData();
-
             } else {
                 return getAjaxData('', 0);
-
             }
 
         } else {
 
-            $type = $request->get('type', 1); // 1为团队 2 为合作
-            // 获取广告类型
-            $advertiseTypeModel = new AdvertiseTypeModel();
-            $advertiseTypeList = $advertiseTypeModel->getAdvertiseTypeList();
-            return view('admin.advertise.create',['advertise_type_list'=>$advertiseTypeList]);
+            return view('admin.advertise.create');
         }
     }
 
@@ -108,5 +114,40 @@ class AdvertiseController extends Controller
 
         return getAjaxData('', 0);
     }
+
+
+    public function getInitialData(Request $request)
+    {
+        // 获取广告类型
+        $advId = $request->all('id', 0);
+        $advertiseTypeModel = new AdvertiseTypeModel();
+        $data['adv_type_list'] = $advertiseTypeModel->getAdvertiseTypeList();
+        $data['info'] = $this->model->where('adv_id', $advId)->first();
+
+        if ($data){
+            return getAjaxData('', 1, $data);
+        } else {
+            return getAjaxData('', 0);
+        }
+    }
+
+    /**
+     * 删除
+     * @param Request $request
+     * @return false|string
+     */
+    public function delData(Request $request)
+    {
+        if ($request->ajax()) {
+            $id = $request->get('id');
+            $res = $this->model->where('adv_id',$id)->delete();
+            if ($res) {
+                return getAjaxData('', 1);
+            } else {
+                return getAjaxData('', 0);
+            }
+        }
+    }
+
 
 }

@@ -1,0 +1,107 @@
+﻿﻿html {
+	margin:0 auto;
+	padding:0 auto;
+    font-size: 62.5%;
+   /*font-size: 15px;*/
+  /*font-size: 10px;*/
+}
+/*@media only screen and (min-width: 320px){
+    html {
+        font-size:10px !important;
+    }
+
+}
+
+@media only screen and (min-width: 360px){
+    html {
+        font-size:11.25px !important;
+    }
+}
+
+@media only screen and (min-width: 400px){
+    html {
+        font-size:12.5px !important;
+    }
+}
+
+@media only screen and (min-width: 480px){
+    html {
+        font-size:15px !important;
+    }
+}
+
+@media only screen and (min-width: 640px){
+    html {
+        font-size:20px !important;
+    }
+}*/
+/*通用*/
+*{
+	box-sizing:border-box;
+	-moz-box-sizing:border-box; /* Firefox */
+	-webkit-box-sizing:border-box; /* Safari */
+}
+body {
+    font-family:"microsoft yahei", Arial, Helvetica, sans-serif;
+    color:#666;
+    margin:0px;
+    padding:0px;
+    overflow-x:hidden;
+}
+ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd {
+    margin:0px;
+    padding:0px;
+    border:none;
+    list-style:none;
+}
+img{
+    vertical-align: bottom;
+    border: 0;
+}
+a{
+	text-decoration: none;
+	color: #666;
+}
+a:hover{
+	text-decoration: none;
+}
+
+input {border:none;outline: none}
+.lf   {float:left;}
+.rt  {float:right;}
+.clear:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg') format('svg');
+}
+
+/* 倒计时简单样式*/
+.payment-time{
+	display: inline-block;
+	overflow: hidden;
+	line-height: 20px;
+	color: #666;
+}
+.payment-time em{
+	color: #fff;
+	background-color: #f9541c;
+	padding: 0 4px;
+	margin: 0 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	font-style: normal;
+}
+.time-end {
+	display: inline-block;
+    overflow: hidden;
+    line-height: 20px;
+    color: #666;
+}

@@ -4,6 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class Base extends Model
 {
@@ -47,6 +48,10 @@ class Base extends Model
         $id = $this->primaryKey;
         if (!isset($data[$id]) || !$data[$id]) {   // 新增
 //            $data['created_at'] = date();
+            $columns = Schema::getColumnListing($this->table); // 获取表的字段
+            if (in_array('created_at', $columns)){
+                $data['created_at'] = date('Y-m-d H:i:s');
+            }
             $res = $this->insertGetId($data);
         } else { // 更新
             $res = $this->where($id, $data[$id])->update($data);
