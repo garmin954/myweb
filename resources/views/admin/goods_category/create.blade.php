@@ -78,7 +78,7 @@
             let _params = {
                 "category_id": id // id
                 ,"category_name": "" // 分类名称
-                ,"pid": '' // 上级
+                ,"pid": '0' // 上级
                 ,"status": true // 状态
                 ,"sort": 50 // 排序
             };

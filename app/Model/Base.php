@@ -76,7 +76,7 @@ class Base extends Model
         $currSize = ($pageIndex-1)*$pageSize;
 
         DB::connection()->enableQueryLog();#开启执行日志
-         return $viewObj->where(function ($query) use($condition){
+        return  $viewObj->where(function ($query) use($condition){
             if (!empty($condition)){
                 foreach($condition as $key => $search){
                     switch ($search[0]) {
@@ -89,6 +89,13 @@ class Base extends Model
                             break;
                         case 'nq':
                             $query->where($key, $search[1]);
+                            break;
+                        case 'in':
+                            if (is_array($search[1])){
+                                $query->whereIn($key, $search[1]);
+                            }else{
+                                $query->whereIn($key, explode(',', $search[1]));
+                            }
                             break;
                     }
                 }

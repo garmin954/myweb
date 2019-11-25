@@ -23,7 +23,7 @@ class ConfigTypeController extends Controller
             if ($list) {
                 return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize]);
             } else {
-                return getAjaxData('', 0);
+                return getAjaxData('没有数据', 0);
             }
         }
         return view('admin.config_type.index');

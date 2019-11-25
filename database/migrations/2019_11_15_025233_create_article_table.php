@@ -21,6 +21,8 @@ class CreateArticleTable extends Migration
             $table->string('article_desc', '250')->default('')->comment('描述');
             $table->string('thumb', '250')->default('')->comment('图片');
             $table->text('content')->nullable(false)->comment('内容');
+            $table->tinyInteger('status')->default('1')->comment('状态');
+
             $table->tinyInteger('is_top')->default('0')->comment('是否推荐');
             $table->tinyInteger('sort')->default('50')->comment('排序');
             $table->timestamps();
@@ -31,6 +33,7 @@ class CreateArticleTable extends Migration
             $table->string('category_name', '100')->default('')->comment('分类名称');
             $table->tinyInteger('pid')->default('0')->comment('上级分类');
             $table->tinyInteger('is_top')->default('0')->comment('是否推荐');
+            $table->tinyInteger('status')->default('1')->comment('状态');
             $table->tinyInteger('sort')->default('50')->comment('排序');
             $table->timestamps();
         });

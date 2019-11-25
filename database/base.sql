@@ -33,3 +33,7 @@ INSERT INTO `yl_goods_category` VALUES (null, '1000元以上', '5', '1', '50', n
 INSERT INTO `yl_advertise_type` VALUES ('1', '首页轮播', '50', null, null);
 INSERT INTO `yl_advertise_type` VALUES ('2', '友情链接', '50', null, null);
 INSERT INTO `yl_advertise_type` VALUES ('3', '其它广告', '50', null, null);
+
+
+INSERT INTO `yl_article_category` VALUES ('1', '团建攻略', '0', '0', '50', null, null);
+INSERT INTO `yl_article_category` VALUES ('2', '合作伙伴', '0', '0', '50', null, null);

@@ -25,6 +25,7 @@ class GoodsCategoryLinkModel extends Model
             $this->where('goods_id', $goodsId)->delete();
             $dataList = [];
             foreach ($categoryList as $cate){
+
                 $item = [
                     'goods_id' => $goodsId,
                 ];
@@ -42,10 +43,11 @@ class GoodsCategoryLinkModel extends Model
                         $item['category_id_2'] = $cate[2];
                         break;
                 }
+                $res = $this->insert($item);
                 array_push($dataList, $item);
             }
 
-            $res = $this->insert($dataList);
+
 
             return $res;
         }

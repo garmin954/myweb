@@ -43,7 +43,7 @@
             <ul class="menu-group clearfix">
                 <li class="active"><a href="/">首页</a></li>
                 <li>
-                    <a href="list-6.html">团建产品</a>
+                    <a href="{{ route('group') }}">团建产品</a>
                 </li>
                 <li>
                     <a href="list-5.html">团建攻略</a>

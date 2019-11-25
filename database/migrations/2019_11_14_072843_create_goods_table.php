@@ -29,7 +29,10 @@ class CreateGoodsTable extends Migration
             $table->string('goods_desc', '500')->default('')->comment('商品描述');
             $table->string('goods_thumb', '255')->default('')->comment('商品主图');
             $table->text('picture_list')->nullable(false)->comment('商品图片组');
-//            $table->integer('category_id')->default('0')->comment('主分类');
+//          $table->integer('category_id')->default('0')->comment('主分类');
+            $table->string('category_id')->default('')->comment('主分类');
+            $table->string('category_id_1')->default('')->comment('一级主分类');
+            $table->string('category_id_2')->default('')->comment('二级分类');
             $table->string('nums', '100')->default('')->comment('参团人数');
             $table->decimal('price')->default('0.00')->comment('价格(均价)');
             $table->tinyInteger('avg')->default('1')->comment('参与人均价');

@@ -48,7 +48,7 @@ class AdvertiseController extends Controller
             if ($list) {
                 return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
-                return getAjaxData('', 0);
+                return getAjaxData('没有数据', 0);
             }
         }
         return view('admin.advertise.index');

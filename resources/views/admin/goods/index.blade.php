@@ -152,7 +152,7 @@
                 ,title: '用户数据表'
                 ,totalRow: true
                 ,toolbar: '#toolbar' // 自定义头部工具
-                ,defaultToolbar: ['filter', 'print', 'exports'] // layui工具
+                ,defaultToolbar: [] // layui工具
                 ,response: {
                     // statusName: 'code' //规定数据状态的字段名称，默认：code
                     statusCode: 1

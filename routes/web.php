@@ -86,6 +86,10 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::get('index', 'Admin\ArticleController@index')->name('index');
         Route::post('update', 'Admin\ArticleController@update')->name('update');
         Route::post('delete', 'Admin\ArticleController@delete')->name('delete');
+        Route::post('getInitialData', 'Admin\ArticleController@getInitialData')->name('getInitialData');
+
+
+
         Route::any('changeField', 'Admin\ArticleController@changeField')->name('changeField');
 
     });
@@ -108,3 +112,9 @@ Route::prefix('admin')->name('admin.')->group( function (){
 /************* 前台路由 *************/
 Route::get('goods', 'Home\GoodsController@index')->name('goods');
 Route::get('/', 'Home\IndexController@index')->name('/');
+Route::get('group', 'Home\GoodsController@group')->name('group');
+
+Route::prefix('goods')->name('goods.')->group(function () {
+    Route::post('getCategoryList', 'Home\GoodsController@getCategoryList')->name('getCategoryList');
+    Route::post('searchGoods', 'Home\GoodsController@searchGoods')->name('searchGoods');
+});

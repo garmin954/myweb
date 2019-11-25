@@ -62,7 +62,7 @@ class GoodsCategoryController extends Controller
             if ($res) {
                 return getAjaxData('', 1);
             } else {
-                return getAjaxData('', 0);
+                return getAjaxData('没有数据', 0);
             }
         }
         $goodsCateList  = $this->model->getCategoryList();

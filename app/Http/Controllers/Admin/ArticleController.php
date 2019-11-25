@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ArticleRequest;
+use App\Model\Admin\ArticleCategoryModel;
 use App\Model\Admin\ArticleModel;
 use Illuminate\Http\Request;
 
@@ -27,18 +28,35 @@ class ArticleController extends Controller
         if ($request->ajax()){
             $pageIndex = $request->post('page', 1);
             $pageSize = $request->post('limit', PAGE_SIZE);
-            $cateId = $request->all('cate_id', 1);
+            $cateId = $request->post('cate_id', 1);
             $condition = [];
+
+            if ($cateId){
+                $condition['art.category_id'] = ['nq', $cateId];
+            }
+
+            $title = $request->post('title', '');
+            if ($title){
+                $condition['art.title'] = ['like', $title];
+            }
+
+            $status = $request->post('status', '');
+            if ($status != ''){
+                $condition['art.status'] = ['nq', $status];
+            }
+
             $list = [];
-            $count = $this->model->getCount($this->model, $condition);
+            $count = $this->model->getCount($this->model->from('article','art'), $condition);
             if ($count){
-                $list = $this->model->getPageQuery($this->model, $pageIndex, $pageSize, $condition);
+                $objView = $this->model->from('article','art')->select('art.*', 'cate.category_name')
+                    ->leftJoin('article_category as cate', 'cate.category_id', '=', 'art.category_id');
+                $list = $this->model->getPageQuery($objView, $pageIndex, $pageSize, $condition);
             }
 
             if ($list) {
                 return getAjaxData('', 1, $list, ['page'=>$pageIndex, 'limit'=>$pageSize, 'count'=>$count]);
             } else {
-                return getAjaxData('', 0);
+                return getAjaxData('没有数据', 0);
             }
         }
         return view('admin.article.index');
@@ -51,29 +69,19 @@ class ArticleController extends Controller
      */
     public function create(ArticleRequest $request)
     {
-        if ($request->ajax()) {
-
+        if ($request->get('title', '')) {
             $params = $request->all();
-
-            $params = $this->model->saveData($params);
+            $params = $this->model->saveArticle($params);
             if ($params){
                 return getAjaxData();
-
             } else {
                 return getAjaxData('', 0);
-
             }
 
         } else {
 
             $type = $request->get('cate_id', 1);
-            $view = '';
-            if ($type == 1){
-                $view = 'admin.article.create1';
-            } else {
-                $view = 'admin.article.create2';
-            }
-            return view($view);
+            return view('admin.article.create');
         }
     }
 
@@ -139,5 +147,20 @@ class ArticleController extends Controller
         }
 
         return view('admin.article.config', ['config_type_list'=>$configTypeList]);
+    }
+
+    public function getInitialData(Request $request)
+    {
+        $articleCateModel = new ArticleCategoryModel();
+        $cateList = $articleCateModel->where('status', 1)->get();
+        $data['cate_list'] = $articleCateModel->getSonList(0, $cateList);
+
+        $artId = $request->get('id', 0);
+        $data['info'] = $this->model->where('art_id', $artId)->first();
+        if ($data){
+            return getAjaxData('', 1, $data);
+        } else {
+            return getAjaxData('', 1);
+        }
     }
 }

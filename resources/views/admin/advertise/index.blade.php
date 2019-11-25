@@ -4,6 +4,13 @@
     @endsection
 @section('resources')
     <link rel="stylesheet" href="{{ asset(ADMIN) }}/element-ui/lib/theme-chalk/index.css">
+    <style>
+        .layui-table-cell{
+            height:80px;
+            line-height: 80px;
+        }
+        .layui-table-total{display: none}
+    </style>
 @endsection
 
 @section('container')
@@ -54,6 +61,12 @@
 {{--                        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>--}}
 {{--                    </div>--}}
                 </script>
+
+                {{--                图片--}}
+                <script type="text/html" id="thumb">
+                    <img src="@php echo "{{ d.thumb  }}";@endphp" alt="" style="width: 100%;height: 100%">
+                </script>
+
                 {{--                行工具--}}
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
@@ -140,6 +153,7 @@
                 ,cols: [[
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'adv_name', title:'广告名称', minWidth:50, fixed: 'left'}
+                    ,{field:'thumb', title:'图片', minWidth:50, templet: '#thumb'}
                     ,{field:'type_name', title:'所属类型', minWidth:120}
                     ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
                     ,{field:'status', title:'状态', minWidth:80, templet:'#status'}

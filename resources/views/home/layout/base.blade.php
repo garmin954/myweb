@@ -37,7 +37,8 @@
 <script type="text/javascript" src="{{ asset(HOME) }}/js/superfish.js"></script>
 <script type="text/javascript" src="{{ asset(HOME) }}/js/jquery.slicknav.js"></script>
 <script type="text/javascript" src="{{ asset(HOME) }}/js/countDown.js"></script>
-
+<script src="{{ asset(ADMIN) }}/js/vue.js"></script>
+<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 <script type="text/javascript">
     jQuery(".cus-show").slide({mainCell:".bd ul",autoPlay:true,effect:"leftMarquee",vis:5,interTime:50});
 </script>
