@@ -62,19 +62,12 @@
                 {{--                推荐--}}
                 <script type="text/html" id="is_top">
                     <input type="checkbox" name="is_top" lay-filter="is_top" data-id="@php  echo "{{ d.art_id }}"; @endphp" value="@php  echo "{{ d.is_top }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                           @{{  if(d.is_top == 1){ }}
-                           checked
-                           @{{ }  }}
-                    >
+                           @{{  d.is_top == 1 ? 'checked': '' }} >
                 </script>
                 {{--                状态--}}
                 <script type="text/html" id="status">
                     <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.art_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                           @{{  if(d.status == 1){ }}
-                           checked
-                           @{{ }  }}
-
-                    >
+                           @{{  d.status == 1 ? 'checked': '' }} >
 
                 </script>
             </div>

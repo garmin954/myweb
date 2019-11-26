@@ -76,10 +76,8 @@
                 {{--                状态--}}
                 <script type="text/html" id="status">
                     <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.adv_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                        @php echo "{{ if( d.status == 1){ }}"; @endphp
-                           checked
-                        @php echo "{{ } }}"; @endphp
-                    >
+                           @{{  d.status == 1 ? 'checked': '' }} >
+
 
                 </script>
             </div>

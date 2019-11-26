@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class BaseController extends Controller
 {
 
+
     /**
      * 上传图片
      * @param  Request  $request

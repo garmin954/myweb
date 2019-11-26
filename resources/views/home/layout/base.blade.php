@@ -9,11 +9,14 @@
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/base.css" />
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/header.css" />
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/footer.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset(HOME) }}/css/m-footer.css"/>
+
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/swiper.min.css" />
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/index.css" />
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/owl.carousel.css" />
     <link type="text/css" rel="stylesheet" href="{{ asset(HOME) }}/css/owl.theme.default.css" />
     <script src="{{ asset(HOME) }}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ asset(HOME) }}/js/bootstrap.min.js"></script>
 
     <!--[if lte IE 9]>
     <script>if (!/upgrade\.html/.test(location.href)) window.location = window.location.host+'/upgrade.html'; </script>

@@ -71,19 +71,13 @@
                 {{--                状态--}}
                 <script type="text/html" id="status">
                     <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                    @php  echo "{{  if(d.status == 1){ }}"; @endphp
-                    checked
-                    @php echo "{{ }  }}";@endphp
-                    >
+                           @{{  d.status == 1 ? 'checked': '' }} >
 
                 </script>
                 {{--                状态--}}
                 <script type="text/html" id="is_top">
                     <input type="checkbox" name="is_top" lay-filter="is_top" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.is_top }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                           @php  echo "{{  if(d.is_top == 1){ }}"; @endphp
-                           checked
-                            @php echo "{{ }  }}";@endphp
-                    >
+                           @{{  d.is_top == 1 ? 'checked': '' }} >
 
                 </script>
                 {{--主图--}}

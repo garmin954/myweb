@@ -6,9 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\GoodsCateGoryRequest;
 use App\Model\Admin\GoodsCategoryModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 
-class GoodsCategoryController extends Controller
+class GoodsCategoryController extends BaseController
 {
     protected $model;
 
@@ -99,6 +100,12 @@ class GoodsCategoryController extends Controller
     {
         if ($request->ajax()){
             if (isset($request['id']) && isset($request['id']) && isset($request['id'])){
+
+                $guding = array_keys(Config::get('template.goods_cate_list'));
+                if (in_array($request['id'],$guding)){
+                    return getAjaxData('不能设置一级分类状态', 0);
+                }
+
                 $res= $this->model->changeField($request);
                 if ($res){
                     return getAjaxData('', 1);
@@ -119,6 +126,13 @@ class GoodsCategoryController extends Controller
     {
         if ($request->ajax()) {
             $id = $request->get('id');
+
+
+            $guding = array_keys(Config::get('template.goods_cate_list'));
+            if (in_array($id,$guding)){
+                return getAjaxData('不能删除一级分类', 0);
+            }
+
             $res = $this->model->delData($id);
 
             if ($res) {

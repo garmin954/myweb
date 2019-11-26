@@ -31,11 +31,9 @@
 {{--                状态--}}
                 <script type="text/html" id="status">
 
-                    <%#  if(d.status == 1){ %>
-                    <input type="checkbox" checked name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
-                    <%# }else{  %>
-                    <input type="checkbox" name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF">
-                    <%# }  %>
+
+                    <input type="checkbox"   name="open" lay-skin="switch" value="<% d.status %>" lay-text="ON|OFF"
+                    @{{  d.status == 1 ? 'checked': '' }} >
 
 
                 </script>

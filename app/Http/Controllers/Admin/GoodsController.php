@@ -10,7 +10,7 @@ use App\Model\Admin\GoodsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class GoodsController extends Controller
+class GoodsController extends BaseController
 {
     //
     protected $model;

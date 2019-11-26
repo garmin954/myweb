@@ -8,7 +8,7 @@ use App\Model\admin\ConfigType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ConfigTypeController extends Controller
+class ConfigTypeController extends BaseController
 {
     //
     public function index(Request $request)

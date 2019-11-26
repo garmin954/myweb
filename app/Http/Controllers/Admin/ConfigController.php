@@ -9,7 +9,7 @@ use App\Http\Requests\Base;
 use App\Model\admin\ConfigType;
 use Illuminate\Http\Request;
 
-class ConfigController extends Controller
+class ConfigController extends BaseController
 {
     protected $model;
 

@@ -8,7 +8,7 @@ use App\Model\Admin\ArticleCategoryModel;
 use App\Model\Admin\ArticleModel;
 use Illuminate\Http\Request;
 
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
     protected $model;
 

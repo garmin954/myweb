@@ -152,9 +152,12 @@ class GoodsController extends Controller
      */
     public function goodsInfo(Request $request)
     {
-
+        $id = $request->get('id', 0);
+        $goodsModel = new GoodsModel();
+        $info =  $goodsModel->where('goods_id', $id)->first()->toArray();
         return view('home.goods.goodsInfo', [
-            'active' => 'group'
+            'active' => 'group',
+            'info' => $info
         ]);
     }
 }

@@ -24,3 +24,30 @@
         </div>
     </div>
 </div>
+<div class="footer footernav visible-xs">
+    <a href="/">
+                <span class="glyphicon glyphicon-home">
+                </span>
+        <br>
+        首页
+    </a>
+    <a href="tel:13903166318">
+                <span class="glyphicon glyphicon-phone">
+                </span>
+        <br>
+        手机
+    </a>
+    <a href="sms:13903166318">
+                <span class="glyphicon glyphicon-comment">
+                </span>
+        <br>
+        短信
+    </a>
+    <a href="#">
+                <span class="glyphicon glyphicon-circle-arrow-up">
+                </span>
+        <br>
+        顶部
+    </a>
+</div>
+

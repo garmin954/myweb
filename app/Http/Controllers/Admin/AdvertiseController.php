@@ -8,7 +8,7 @@ use App\Model\Admin\AdvertiseModel;
 use App\Model\Admin\AdvertiseTypeModel;
 use Illuminate\Http\Request;
 
-class AdvertiseController extends Controller
+class AdvertiseController extends BaseController
 {
     //
     protected $model;

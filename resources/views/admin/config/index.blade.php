@@ -32,10 +32,7 @@
                 {{--                状态--}}
                 <script type="text/html" id="status">
                     <input type="checkbox" name="status" lay-filter="status" data-id="<% d.config_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
-                    <%#  if(d.status == 1){ %>
-                    checked
-                    <%# }  %>
-                    >
+                           @{{  d.status == 1 ? 'checked': '' }} >
 
                 </script>
             </div>

@@ -26,6 +26,7 @@ class BaseRequest extends FormRequest
         'present'  => '字段值可以为空但是必传',
         'array'    => '必须是数组格式',
         'json'     => '不是有效的json格式',
+        'captcha'  => '验证码',
     ];
 
     /**

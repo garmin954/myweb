@@ -11,9 +11,9 @@
 function getAjaxData(string $msg='', int $code=1, $data=[], $other=[]){
 
     if ($code == 0){
-        $msg = '操作失败！';
+        $msg = $msg ? $msg : '操作失败！';
     } else if ($code == 1){
-        $msg = '操作成功！';
+        $msg = $msg ? $msg : '操作成功！';
     }
 
     $params = [

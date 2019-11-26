@@ -41,11 +41,8 @@
 
                 {{--                状态--}}
                 <script type="text/html" id="status">
-                    <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
-                           @php  echo "{{  if(d.status == 1){ }}"; @endphp
-                           checked
-                        @php echo "{{ }  }}";@endphp
-                    >
+                    <input type="checkbox" name="status" lay-filter="status" data-id="@{{ d.category_id }}" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
+                           @{{  d.status == 1 ? 'checked': '' }} >
 
                 </script>
             </div>
@@ -94,7 +91,7 @@
                 ,page: true
 
             });
-
+            form.render();
 
             form.on('switch(status)', function(data){
                 let status = data.elem.checked ? 1: 0;
