@@ -53,8 +53,8 @@
                     </el-form-item>
                     {{--参团人数--}}
                     <el-form-item label="参团人数">
-                        <el-input-number v-model="goodsForm.nums" @change="handleChange" :min="1" :max="1000" label="描述文字">
-                        </el-input-number>
+                        <el-input v-model="goodsForm.nums" @change="handleChange"  label="描述文字">
+                        </el-input>
                     </el-form-item>
 
                     {{--price--}}
@@ -220,7 +220,7 @@
                     'goods_thumb' : '', // 商品图片
                     'picture_list' : [], // 图片列表
                     'category_list' : [],
-                    'nums' : '1', // 参团人数
+                    'nums' : '10-99', // 参团人数
                     'price' : '1', // 均价
                     'avg' : '1', // 参团人均
                     'status' : '1', // 商品状态

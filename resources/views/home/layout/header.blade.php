@@ -41,9 +41,9 @@
         <!-- PC端导航 -->
         <div class="header-menu">
             <ul class="menu-group clearfix">
-                <li class="active"><a href="/">首页</a></li>
-                <li>
-                    <a href="{{ route('group') }}">团建产品</a>
+                <li @if($active == 'index')class="active"@endif ><a href="/">首页</a></li>
+                <li @if($active == 'group')class="active"@endif>
+                    <a href="{{ route('group') }}" >团建产品</a>
                 </li>
                 <li>
                     <a href="list-5.html">团建攻略</a>

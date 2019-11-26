@@ -118,3 +118,6 @@ Route::prefix('goods')->name('goods.')->group(function () {
     Route::post('getCategoryList', 'Home\GoodsController@getCategoryList')->name('getCategoryList');
     Route::post('searchGoods', 'Home\GoodsController@searchGoods')->name('searchGoods');
 });
+
+Route::get('goodsInfo', 'Home\GoodsController@goodsInfo')->name('goodsInfo');
+

@@ -294,7 +294,7 @@
                         let html = '';
                         res.data.forEach(item=>{
                             html += `
-                            <a href="article-1.html" target="_blank" class="">
+                            <a href="{{route('goodsInfo')}}?id=`+item.goods_id+`" target="_blank" class="">
                                 <div class="inner-product-list-item">
                                     <div class="inner-product-list-item-img">
                                         <img alt="" src=" `+item.goods_thumb+`">
@@ -302,24 +302,41 @@
                                     <div class="inner-product-list-item-title">
                                         `+item.goods_name+`
                                     </div>
-                                    <div class="inner-product-list-item-tags">
-                                            <span>
-                                                强化合作
-                                            </span>
-                                        <span>
-                                                磨炼意志
-                                            </span>
-                                        <span>
-                                                提升凝聚力
-                                            </span>
-                                    </div>
-                                    <div class="inner-product-list-item-type">
-                                        旅行团建 | 1天0晚 | 20-200人
-                                    </div>
+                                    <div class="inner-product-list-item-tags">`;
+                                    let cate3 = item['cate'][{{ CATE_3 }}];
+                                    if (cate3 != undefined){
+                                        cate3.forEach((item)=>{
+                                            html +=`<span> `+item.category_name+` </span>`
+                                        });
+                                    }
+                                    html +=`</div>
+                                    <div class="inner-product-list-item-type">`;
+                                        let cate2 = item['cate'][{{ CATE_2 }}];
+                                    if (cate2 != undefined){
+                                            cate2.forEach((item)=>{
+                                                html += ``+item.category_name+` | `
+                                            });
+                                        }
+                                    let cate4 = item['cate'][{{ CATE_4 }}];
+                                    if (cate4 != undefined){
+                                        cate4.forEach((item)=>{
+                                            html += ``+item.category_name+` | `
+                                        });
+                                    }
+
+                                    if (item.nums){
+                                        html += item.nums+` 人 `;
+                                    }
+                                    html +=`</div>
                                     <div class="inner-product-list-item-destination">
-                                            <span>
-                                                阳澄湖
-                                            </span>
+                                            <span>`;
+                                                let cate1 = item['cate'][{{ CATE_1 }}];
+                                                if (cate1 != undefined){
+                                                    cate1.forEach((item)=>{
+                                                        html += ``+item.category_name+``
+                                                    });
+                                                }
+                                    html += `</span>
                                     </div>
                                     <div class="inner-product-list-item-price">
                                             <span>
@@ -368,10 +385,16 @@
                         phtml += ` href="javascript:;" onclick="selectCate('`+i+`')">`+i+`</a></li>`;
                     }
 
+
                     phtml += `<li><a href="javascript:;" onclick="selectCate('`+next+`')">下一页</a></li>
                     `;
+
+                    if (pageCount <= 0){
+                        phtml = '';
+                    }
+
                     // 分页
-                    $('.pagination').html(phtml)
+                    $('.pagination').html(phtml);
 
                     $('.loading').hide();
 

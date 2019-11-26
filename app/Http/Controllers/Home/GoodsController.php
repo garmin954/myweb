@@ -7,6 +7,7 @@ use App\Model\Admin\GoodsCategoryLinkModel;
 use App\Model\Admin\GoodsCategoryModel;
 use App\Model\Admin\GoodsModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class GoodsController extends Controller
@@ -20,6 +21,7 @@ class GoodsController extends Controller
 
         return view('home.goods.group', [
             'cate_list' => $cateList,
+            'active' => 'group'
         ]);
     }
 
@@ -39,6 +41,9 @@ class GoodsController extends Controller
     }
 
 
+    /*
+     * 搜索
+     */
     public function searchGoods(Request $request)
     {
         if ($request->isMethod('post')){
@@ -63,16 +68,63 @@ class GoodsController extends Controller
                 $list = $goodsModel->getPageQuery($obgView, $pageIndex, $pageSize, $condition);
             }
 
+            foreach ($list as &$goods){
+                $goods['cate'] = $this->getGoodsCate($goods['goods_id']);
+            }
+
             return getAjaxData('', 1, $list, ['count'=>$count, 'page'=>$pageIndex,'limit'=>$pageSize]);
         }
     }
 
 
-    public function getGoodsInfo($goodsId)
+    /**
+     * 获取商品数据
+     * @param $goodsId
+     * @return array|mixed
+     */
+    public function getGoodsCate($goodsId)
     {
+        $goodsData = Cache::pull('goods_info_'.$goodsId);
+        if (empty($goodsData)){
+            $goodsModel = new GoodsModel();
+            $goodsCategoryLinkModel = new GoodsCategoryLinkModel();
+            $goodsCategoryModel = new GoodsCategoryModel();
+            $info = $goodsModel->where('goods_id', $goodsId)->first()->toArray();
 
+            $data1 = $goodsCategoryModel->whereIn('category_id', explode(',', $info['category_id_1']))->get()->toArray();
+            $data2 = $goodsCategoryModel->whereIn('category_id', explode(',', $info['category_id_2']))->get()->toArray();
+
+            $attrList = [];
+            foreach ($data1 as $val1){
+                $itemArr = $val1;
+                foreach ($data2 as $val2){
+                    if ($val2['pid'] == $val1['category_id']){
+                        $itemArr['child'][] = $val2;
+                    }
+                }
+
+                if (isset($itemArr['child'])){
+                    $attrList[$val1['pid']] = empty($attrList[$val1['pid']]) ?  [] : $attrList[$val1['pid']];
+                    $attrList[$val1['pid']] = array_merge($attrList[$val1['pid']], $itemArr['child']);
+                }else{
+                    $attrList[$val1['pid']][] = $itemArr;
+                }
+
+            }
+
+            Cache::put('goods_info_'.$goodsId, $attrList, 3600*24);
+            $goodsData = $attrList;
+        }
+
+        return $goodsData;
     }
 
+    /**
+     * 查询条件
+     * @param $first
+     * @param $second
+     * @param $obgView
+     */
     public function getCateCondition($first, $second, &$obgView)
     {
         $goodsCateModel = new GoodsCategoryModel();
@@ -90,5 +142,19 @@ class GoodsController extends Controller
             }
         }
 
+    }
+
+
+    /**
+     * 商品详情
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|\think\response\View
+     */
+    public function goodsInfo(Request $request)
+    {
+
+        return view('home.goods.goodsInfo', [
+            'active' => 'group'
+        ]);
     }
 }
