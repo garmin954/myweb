@@ -58,7 +58,7 @@
                     if(res.data.code > 0){
                         layer.msg(res.data.msg, {icon:1, shade:0.5, anim:6})
                         setTimeout(function () {
-                            window.location.href = "{{ route('admin.home') }}";
+                            window.location.href = "{{ route('admin.index') }}";
                         }, 2000)
                     }else{
                         layer.msg(res.data.msg, {icon:2, shade:0.5, anim:6})

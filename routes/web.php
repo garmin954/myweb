@@ -13,8 +13,11 @@
 
 Route::prefix('admin')->name('admin.')->group( function (){
     Route::get('/', 'Admin\AdminController@index')->name('home');
+    Route::get('index', 'Admin\AdminController@index')->name('index');
     Route::get('home', 'Admin\AdminController@home')->name('home');
     Route::any('login', 'Admin\AdminController@login')->name('login');
+    Route::get('outLogin', 'Admin\AdminController@outLogin')->name('outLogin');
+    Route::any('editPass', 'Admin\AdminController@editPass')->name('editPass');
 
 
     Route::prefix('config')->name('config.')->group(function (){
@@ -59,7 +62,7 @@ Route::prefix('admin')->name('admin.')->group( function (){
     Route::prefix('picture')->name('picture.')->group(function (){
         Route::get('index', 'Admin\PictureController@index')->name('index');
         Route::post('update', 'Admin\PictureController@update')->name('update');
-        Route::post('delete', 'Admin\PictureController@delete')->name('delete');
+        Route::post('delImage', 'Admin\PictureController@delImage')->name('delImage');
     });
 
     //广告

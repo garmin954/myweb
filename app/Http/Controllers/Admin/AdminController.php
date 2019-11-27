@@ -41,8 +41,8 @@ class AdminController extends BaseController
                 return getAjaxData('密码错误！', 0);
             }
 
-            Session(['admin_id' => $info['id']]);
-            Session()->save();
+            Session::put('admin_id' , $info['id']);
+            Session::save();
 
             return getAjaxData('登录成功！', 1);
         }
@@ -50,4 +50,42 @@ class AdminController extends BaseController
         return view('admin.admin.login');
     }
 
+    public function outLogin(Request $request)
+    {
+//        Session::flush();
+
+        Session::put('admin_id', null);
+        return redirect('admin/login')->withErrors(['注销成功，正在跳转到登陆页面！']);
+    }
+
+    public function editPass(Request $request)
+    {
+
+        if ($request->getMethod() == 'POST'){
+            $adminModel = new \App\Model\Admin\AdminModel();
+            $oldPass = generatePassword($request->post('oldpassword', ''));
+            $newPass = generatePassword($request->post('newpassword', ''));
+            $rePass = generatePassword($request->post('repassword', ''));
+
+            if ($newPass !== $rePass){
+                return getAjaxData('确认密码不相同', 0);
+            }
+
+            $info = $adminModel->where('id', Session('admin_id'))->where('password', $oldPass)->first();
+            if (empty($info)){
+                return getAjaxData('密码不正确', 0);
+            }
+
+            $res = $adminModel->where('id', Session('admin_id'))->update(['password'=> $newPass]);
+
+            if ($res){
+                return getAjaxData('重置密码成功', 1);
+
+            }
+
+            return getAjaxData('', 0);
+
+        }
+        return view('admin.admin.editPass');
+    }
 }

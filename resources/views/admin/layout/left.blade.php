@@ -86,12 +86,7 @@
                             <i class="iconfont">&#xec18;</i>
                             <cite>广告管理</cite></a>
                     </li>
-
-                    <li>
-                        <a onclick="xadmin.add_tab('相册管理','{{ route('admin.picture.index') }}')">
-                            <i class="iconfont">&#xec18;</i>
-                            <cite>相册管理</cite></a>
-                    </li>
+                    
                 </ul>
             </li>
 

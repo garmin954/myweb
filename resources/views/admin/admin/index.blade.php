@@ -37,24 +37,24 @@
     </ul>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;" onclick="showChangeBackground()" class="iconfont font-lg" >&#xeb72;</a>
+            <a href="javascript:;" onclick="showChangeBackground()" class="iconfont font-lg layui-icon" >&#xe66a;</a>
+        </li>
+{{--        <li class="layui-nav-item to-index">--}}
+{{--            <a href="javascript:;" class="iconfont" title="消息"  >&#xe610;</a>--}}
+{{--        </li>--}}
+        <li class="layui-nav-item to-index">
+            <a href="/" target="_blank" class="iconfont layui-icon" title="前端"  >&#xe68e;</a>
         </li>
         <li class="layui-nav-item to-index">
-            <a href="javascript:;" class="iconfont" title="消息"  >&#xe610;</a>
-        </li>
-        <li class="layui-nav-item to-index">
-            <a href="/" target="_blank" class="iconfont" title="前端"  >&#xe619;</a>
-        </li>
-        <li class="layui-nav-item to-index">
-            <a href="javascript:;"  > <i class="iconfont" >&#xe6ae;</i></a>
+            <a href="javascript:;"  > <i class="iconfont layui-icon" >&#xe716;</i></a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
+                    <a  href="/">打开前台</a></dd>
                 <dd>
-                    <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
+                    <a onclick="xadmin.add_tab('修改密码','{{ route('admin.editPass') }}')">修改密码</a></dd>
                 <dd>
-                    <a href="./login.html">退出</a></dd>
+                    <a href="{{route('admin.outLogin')}}">退出</a></dd>
             </dl>
         </li>
     </ul>

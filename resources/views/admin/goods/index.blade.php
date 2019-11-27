@@ -90,166 +90,166 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
-    <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
-    <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
-    <script>
-        var vm = new Vue({
-            el:'#app',
-            data: {
-                form:{
-                    goods_name: '',
-                    category_id: '',
-                    status: ''
+        <script src="{{ asset(ADMIN) }}/js/vue.js"></script>
+        <script src="{{ asset(ADMIN) }}/element-ui/lib/index.js"></script>
+        <script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+        <script>
+            var vm = new Vue({
+                el:'#app',
+                data: {
+                    form:{
+                        goods_name: '',
+                        category_id: '',
+                        status: ''
+                    },
+                    optionsStatus:[
+                        {label:'全部', value:''},
+                        {label:'正常', value:'1'},
+                        {label:'关闭', value:'0'},
+                    ],
+                    optionsCate: []
                 },
-                optionsStatus:[
-                    {label:'全部', value:''},
-                    {label:'正常', value:'1'},
-                    {label:'关闭', value:'0'},
-                ],
-                optionsCate: []
-            },
-            created(){
-                this.getSearchData();
-            },
-            methods:{
-                getSearchData(){
-                    let self = this;
-                    axios.get("{{ route('admin.goods.getSearchData') }}", {}).then(respond=>{
-                        let res = respond.data;
-                        if (res.code > 0){
-                            self.optionsCate =  res.data.cate_list
-                        }else{
-                            layer.msg('获取搜索资源异常');
-                        }
-                    }).catch(e=>{
-                        layer.msg('获取搜索资源异常'+ e);
-                    })
+                created(){
+                    this.getSearchData();
                 },
-                onSubmit(){
-                    reload(this.form.goods_name, this.form.category_id, this.form.status);
-                }
-            }
-        });
-        layui.use(['table', 'laytpl', 'layer', 'form'], function(){
-            var table = layui.table
-                ,layer = layui.layer
-                ,form = layui.form
-                ,laytpl = layui.laytpl;
-
-            let url = '{{ route('admin.goods.index') }}';
-            table.render({
-                elem: '#list',
-                height:700
-                ,url: url
-                ,id:'idTest'
-                ,title: '用户数据表'
-                ,totalRow: true
-                ,toolbar: '#toolbar' // 自定义头部工具
-                ,defaultToolbar: [] // layui工具
-                ,response: {
-                    // statusName: 'code' //规定数据状态的字段名称，默认：code
-                    statusCode: 1
-                    ,countName: 'count' //规定数据总数的字段名称，默认：count
-                    ,dataName: 'data' //规定数据列表的字段名称，默认：data
-                }
-                ,cols: [[
-                    { fixed: 'left',width: 1}
-                    ,{field:'goods_thumb', title:'图片', minWidth:90, templet:'#goods_thumb'}
-                    ,{field:'goods_name', title:'名称', minWidth:120, }
-                    ,{field:'nums', title:'价格(均价)', minWidth:120, }
-                    ,{field:'avg', title:'参与人均价', minWidth:120, }
-                    ,{field:'price', title:'价格(均价)', minWidth:120, }
-                    ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
-                    ,{field:'sale_type', title:'营销展示类型', minWidth:120}
-                    ,{field:'sale_value', title:'营销展示值', minWidth:120}
-                    ,{field:'is_top', title:'推荐', minWidth:120, templet:'#is_top'}
-                    ,{field:'status', title:'状态', minWidth:120, templet:'#status'}
-                    ,{field:'updated_at', title:'更新时间', minWidth:180}
-                    ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:160}
-                ]]
-                ,page: true
-                ,done: function(res, curr, count){
-                    logs(res);
+                methods:{
+                    getSearchData(){
+                        let self = this;
+                        axios.get("{{ route('admin.goods.getSearchData') }}", {}).then(respond=>{
+                            let res = respond.data;
+                            if (res.code > 0){
+                                self.optionsCate =  res.data.cate_list
+                            }else{
+                                layer.msg('获取搜索资源异常');
+                            }
+                        }).catch(e=>{
+                            layer.msg('获取搜索资源异常'+ e);
+                        })
+                    },
+                    onSubmit(){
+                        reload(this.form.goods_name, this.form.category_id, this.form.status);
+                    }
                 }
             });
-            // laytpl.config({
-            //     open: '<%',
-            //     close: '%>'
-            // });
+            layui.use(['table', 'laytpl', 'layer', 'form'], function(){
+                var table = layui.table
+                    ,layer = layui.layer
+                    ,form = layui.form
+                    ,laytpl = layui.laytpl;
 
-            window.reload = (goods_name='', category_id='', status=1)=>{
-                table.reload('idTest', {
-                    url: url
-                    ,where: {
-                        goods_name: goods_name,
-                        category_id: category_id,
-                        status: status,
-                    } //设定异步数据接口的额外参数
-                    //,height: 300
-
+                let url = '{{ route('admin.goods.index') }}';
+                table.render({
+                    elem: '#list',
+                    height:700
+                    ,url: url
+                    ,id:'idTest'
+                    ,title: '用户数据表'
+                    ,totalRow: true
+                    ,toolbar: '#toolbar' // 自定义头部工具
+                    ,defaultToolbar: [] // layui工具
+                    ,response: {
+                        // statusName: 'code' //规定数据状态的字段名称，默认：code
+                        statusCode: 1
+                        ,countName: 'count' //规定数据总数的字段名称，默认：count
+                        ,dataName: 'data' //规定数据列表的字段名称，默认：data
+                    }
+                    ,cols: [[
+                        { fixed: 'left',width: 1}
+                        ,{field:'goods_thumb', title:'图片', minWidth:90, templet:'#goods_thumb'}
+                        ,{field:'goods_name', title:'名称', minWidth:120, }
+                        ,{field:'nums', title:'价格(均价)', minWidth:120, }
+                        ,{field:'avg', title:'参与人均价', minWidth:120, }
+                        ,{field:'price', title:'价格(均价)', minWidth:120, }
+                        ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
+                        ,{field:'sale_type', title:'营销展示类型', minWidth:120}
+                        ,{field:'sale_value', title:'营销展示值', minWidth:120}
+                        ,{field:'is_top', title:'推荐', minWidth:120, templet:'#is_top'}
+                        ,{field:'status', title:'状态', minWidth:120, templet:'#status'}
+                        ,{field:'updated_at', title:'更新时间', minWidth:180}
+                        ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:160}
+                    ]]
+                    ,page: true
+                    ,done: function(res, curr, count){
+                        logs(res);
+                    }
                 });
-            }
-            //工具栏事件
-            table.on('toolbar(list)', function(obj){
-                var checkStatus = table.checkStatus(obj.config.id);
-                switch(obj.event){
-                    case 'getCheckData':
-                        var data = checkStatus.data;
-                        layer.alert(JSON.stringify(data));
-                        break;
-                    case 'getCheckLength':
-                        var data = checkStatus.data;
-                        layer.msg('选中了：'+ data.length + ' 个');
-                        break;
-                    case 'isAll':
-                        layer.msg(checkStatus.isAll ? '全选': '未全选')
-                        break;
-                };
-            });
+                // laytpl.config({
+                //     open: '<%',
+                //     close: '%>'
+                // });
 
-            form.on('switch(status)', function(data){
-                let status = data.elem.checked ? 1: 0;
-                YuanLu.changStatus({
-                    url :'{{ route('admin.goods.changeField') }}',
-                    params : {id: $(data.elem).attr('data-id'), value: status, field : 'status'}
-                });
-            });
+                window.reload = (goods_name='', category_id='', status=1)=>{
+                    table.reload('idTest', {
+                        url: url
+                        ,where: {
+                            goods_name: goods_name,
+                            category_id: category_id,
+                            status: status,
+                        } //设定异步数据接口的额外参数
+                        //,height: 300
 
-            form.on('switch(is_top)', function(data){
-                let status = data.elem.checked ? 1: 0;
-                YuanLu.changStatus({
-                    url :'{{ route('admin.goods.changeField') }}',
-                    params : {id: $(data.elem).attr('data-id'), value: status, field : 'is_top'}
-                });
-            });
-
-            table.on('edit()', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
-                if (obj.value> 127){
-                    layer.msg('最大不能超过127');
-                    return false;
-                }
-                YuanLu.changStatus({
-                    url :'{{ route('admin.goods.changeField') }}',
-                    params : {id: obj.data.goods_id, value: obj.value, field : 'sort'}
-                });
-            });
-
-            //监听行工具事件
-            table.on('tool(list)', function(obj){
-                var data = obj.data;
-                //console.log(obj)
-                if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        layer.close(index);
                     });
-                } else if(obj.event === 'update'){
-                    xadmin.open('修改配置','{{ route('admin.goods.create') }}?id='+data.goods_id )
-                } else if(obj.event === 'look'){
-                    window.open( "{{ route('goods') }}"+'?id='+data.goods_id );
                 }
+                //工具栏事件
+                table.on('toolbar(list)', function(obj){
+                    var checkStatus = table.checkStatus(obj.config.id);
+                    switch(obj.event){
+                        case 'getCheckData':
+                            var data = checkStatus.data;
+                            layer.alert(JSON.stringify(data));
+                            break;
+                        case 'getCheckLength':
+                            var data = checkStatus.data;
+                            layer.msg('选中了：'+ data.length + ' 个');
+                            break;
+                        case 'isAll':
+                            layer.msg(checkStatus.isAll ? '全选': '未全选')
+                            break;
+                    };
+                });
+
+                form.on('switch(status)', function(data){
+                    let status = data.elem.checked ? 1: 0;
+                    YuanLu.changStatus({
+                        url :'{{ route('admin.goods.changeField') }}',
+                        params : {id: $(data.elem).attr('data-id'), value: status, field : 'status'}
+                    });
+                });
+
+                form.on('switch(is_top)', function(data){
+                    let status = data.elem.checked ? 1: 0;
+                    YuanLu.changStatus({
+                        url :'{{ route('admin.goods.changeField') }}',
+                        params : {id: $(data.elem).attr('data-id'), value: status, field : 'is_top'}
+                    });
+                });
+
+                table.on('edit()', function(obj){ //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+                    if (obj.value> 127){
+                        layer.msg('最大不能超过127');
+                        return false;
+                    }
+                    YuanLu.changStatus({
+                        url :'{{ route('admin.goods.changeField') }}',
+                        params : {id: obj.data.goods_id, value: obj.value, field : 'sort'}
+                    });
+                });
+
+                //监听行工具事件
+                table.on('tool(list)', function(obj){
+                    var data = obj.data;
+                    //console.log(obj)
+                    if(obj.event === 'del'){
+                        layer.confirm('真的删除行么', function(index){
+                            obj.del();
+                            layer.close(index);
+                        });
+                    } else if(obj.event === 'update'){
+                        xadmin.open('修改配置','{{ route('admin.goods.create') }}?id='+data.goods_id )
+                    } else if(obj.event === 'look'){
+                        window.open( "{{ route('goods') }}"+'?id='+data.goods_id );
+                    }
+                });
             });
-        });
-    </script>
+        </script>
 @endsection

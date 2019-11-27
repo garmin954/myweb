@@ -16,20 +16,18 @@ class BaseController extends Controller
         $action = \request()->route()->getActionMethod();
         $routeList = ['login'];
 
-//        session(['chairs' => 7, 'instruments' => 3]);
-        var_dump(session()->all());
+        if (!in_array($action, $routeList)){
+            $this->middleware(function ($request, $next) {
+                $adminId = session()->get('admin_id');
 
-//        if (Session::get('admin_id') || in_array($action, $routeList)){
-//            dump(\session()->all());
-//
-//
-//
-//        } else {
-//
-//
-//            Header('Location:'.route('admin.login'));
-//            return  false;
-//        }
+                if (!$adminId){
+                    Header('Location:'.route('admin.login'));
+//                    return  false;
+                }
+                // 也可使用 Session::get('user_id'); 需声明 use Session;
+                return $next($request);
+            });
+        }
     }
 
 }
