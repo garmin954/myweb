@@ -10,6 +10,8 @@ define('CATE_3', 3); // 团建收益
 define('CATE_4', 4); // 团建天数
 define('CATE_5', 5); // 团建价格
 
+define('ADMIN_CODE', 'sfbsd943');
+
 return [
     'config_input_type' => [
         1 => '文本框',

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin\AdminModel;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends BaseController
 {
@@ -25,20 +27,27 @@ class AdminController extends BaseController
 
         if (\request()->getMethod() === 'POST'){
 
-            return 2;
-        }
-        return view('admin.admin.login');
-    }
+            $username = $request->get('username');
+            $password = generatePassword($request->get('password'));
 
-    protected function validateLogin(Request $request){
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required',
-            'captcha' => 'required|captcha',
-        ],[
-            'captcha.required' => trans('validation.required'),
-            'captcha.captcha' => trans('validation.captcha'),
-        ]);
+            $adminModel = new \App\Model\Admin\AdminModel();
+
+            $info = $adminModel->where('admin_name', $username)->first();
+
+            if (empty($info)){
+                return getAjaxData('账户不存在！', 0);
+            }
+            if ($info['password'] !== $password){
+                return getAjaxData('密码错误！', 0);
+            }
+
+            Session(['admin_id' => $info['id']]);
+            Session()->save();
+
+            return getAjaxData('登录成功！', 1);
+        }
+
+        return view('admin.admin.login');
     }
 
 }

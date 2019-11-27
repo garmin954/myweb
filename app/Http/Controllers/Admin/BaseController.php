@@ -15,14 +15,21 @@ class BaseController extends Controller
     {
         $action = \request()->route()->getActionMethod();
         $routeList = ['login'];
-        if (Session::has('admin') || in_array($action, $routeList)){
 
-        } else {
+//        session(['chairs' => 7, 'instruments' => 3]);
+        var_dump(session()->all());
 
-
-            Header('Location:'.route('admin.login'));
-            return  false;
-        }
+//        if (Session::get('admin_id') || in_array($action, $routeList)){
+//            dump(\session()->all());
+//
+//
+//
+//        } else {
+//
+//
+//            Header('Location:'.route('admin.login'));
+//            return  false;
+//        }
     }
 
 }

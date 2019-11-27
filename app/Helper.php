@@ -28,3 +28,14 @@ function getAjaxData(string $msg='', int $code=1, $data=[], $other=[]){
 
     return json_encode($params);
 }
+
+
+/**
+ * 生成密码
+ * @param $pass
+ * @return string
+ */
+function generatePassword($pass){
+
+    return md5(md5($pass).ADMIN_CODE);
+}
