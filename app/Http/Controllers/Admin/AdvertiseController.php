@@ -33,14 +33,14 @@ class AdvertiseController extends BaseController
 
             $typeId = $request->get('type_id', '');
             if ($typeId){
-                $condition['type_id'] = ['nq', $typeId];
+                $condition['adv.type_id'] = ['nq', $typeId];
             }
 
             $status = $request->get('status', '');
             if ($status != ''){
                 $condition['status'] = ['nq', $status];
             }
-            $count = $this->model->getCount($this->model, $condition);
+            $count = $this->model->getCount($this->model->from('advertise', 'adv'), $condition);
 
             $objView = $this->model->from('advertise', 'adv')->select('adv.*', 'type.type_name')->leftJoin('advertise_type as type', 'adv.type_id', '=', 'type.type_id');
             $list = $this->model->getPageQuery($objView, $pageIndex, $pageSize, $condition);

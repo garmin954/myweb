@@ -52,15 +52,17 @@
                     <a href="{{ route('fight') }}" >拼团建</a>
                 </li>
 
-                <li>
-                    <a href="list-4.html">合作伙伴</a>
+                <li @if($active == 'cooperation')class="active"@endif>
+                    <a href="{{ route('cooperation') }}" >合作伙伴</a>
                 </li>
-                <li>
-                    <a href="list-2.html">未来企服</a>
+
+                <li @if($active == 'future')class="active"@endif>
+                    <a href="{{ route('future') }}" >未来企服</a>
                 </li>
-                <li>
-                    <a href="list-3.html">关于我们</a>
+                <li @if($active == 'aboutus')class="active"@endif>
+                    <a href="{{ route('aboutus') }}" >关于我们</a>
                 </li>
+
             </ul>
         </div>
         <!-- 移动端导航 -->

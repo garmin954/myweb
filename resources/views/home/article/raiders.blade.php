@@ -12,8 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/common.css" />
 
     <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/animate.css" />
-    <link href="{{ asset(HOME)}}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset(HOME)}}/css/bootstrap-me.css" rel="stylesheet">
+
     <link href="{{ asset(HOME)}}/css/case.css" rel="stylesheet">
 
     {{--    <link rel="stylesheet" href="static/css/infos1.css"/>--}}
@@ -42,17 +41,19 @@
                 >
             </div>
             <div class="row-flex wow fadeInUp">
+
+                @foreach($list as $item)
                 <div class="col">
                     <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
+                        <a href="{{ route('artInfo', ['id'=> $item['art_id']]) }}" style="height: 191px;">
+                            <img  class="card-img-top" src="{{$item['thumb']}}" alt="{{$item['title']}}" style="width: 100%;height: 100%">
                         </a>
                         <div class="caption">
                             <h4 class="card-title">
-                                古北水镇|自驾游全攻略
+                                {{$item['title']}}
                             </h4>
                             <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
+                                {{$item['article_desc']}}
                             </p>
                         </div>
                         <footer>
@@ -62,311 +63,21 @@
                                             </span>
                             </div>
                             <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
+                                <a href="{{ route('artInfo', ['id'=> $item['art_id']]) }}" class="btn btn-htj">
                                     查看攻略
                                 </a>
                             </div>
                         </footer>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="thumbnail product-item">
-                        <a href="article-2.html">
-                            <img class="card-img-top" src="https://iproduct.damaotuanjian.com/PRODUCT/60ABA2E5-F9B4-90B7-37D9-48FB07B28444-s1" alt="古北水镇|自驾游全攻略">
-                        </a>
-                        <div class="caption">
-                            <h4 class="card-title">
-                                古北水镇|自驾游全攻略
-                            </h4>
-                            <p class="card-text">
-                                古北水镇Tips：江南水乡|司马台长城
-                            </p>
-                        </div>
-                        <footer>
-                            <div class="listview-tags col">
-                                            <span class="label label-info">
-                                                团建攻略
-                                            </span>
-                            </div>
-                            <div class="col-auto">
-                                <a href="article-2.html" class="btn btn-htj">
-                                    查看攻略
-                                </a>
-                            </div>
-                        </footer>
-                    </div>
-                </div>
+                @endforeach
+
             </div>
+            <div style="text-align: center">
+                {{ $list->links() }}
+            </div>
+
+
         </div>
     </div>
 

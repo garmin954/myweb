@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use \Illuminate\Support\Facades\Cache;
 
 class AdminController extends BaseController
 {
@@ -87,5 +88,15 @@ class AdminController extends BaseController
 
         }
         return view('admin.admin.editPass');
+    }
+
+    public function clearCache()
+    {
+        Cache::flush();
+
+        return getAjaxData('更新缓存成功！', 1);
+
+        return getAjaxData('更新缓存失败！', 0);
+
     }
 }

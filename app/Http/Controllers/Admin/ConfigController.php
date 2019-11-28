@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\ConfigRequest;
 use App\Http\Requests\Base;
 use App\Model\admin\ConfigType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ConfigController extends BaseController
 {
@@ -127,6 +128,7 @@ class ConfigController extends BaseController
             foreach ($param as $field => $val){
                 $res = $configModel->where("config_code", $field)->update(['value'=> $val]);
                 if (!$res){
+                    Cache::forget('web_config');
                     return getAjaxData('', 0);
                 }
             }

@@ -37,3 +37,4 @@ INSERT INTO `yl_advertise_type` VALUES ('3', '其它广告', '50', null, null);
 
 INSERT INTO `yl_article_category` VALUES ('1', '团建攻略', '0', '0', '50', null, null);
 INSERT INTO `yl_article_category` VALUES ('2', '合作伙伴', '0', '0', '50', null, null);
+INSERT INTO `yl_article_category` VALUES ('3', '未来企服', '0', '0', '50', null, null);

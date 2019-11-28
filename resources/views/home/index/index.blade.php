@@ -9,21 +9,14 @@
     <!-- 主导航 -->
     <div id="slider">
         <div class="owl-carousel owl-theme">
+            @foreach($banner_list as $banner)
             <div class="item">
-                <a href="#">
-                    <img src="https://imetadata.damaotuanjian.com/METADATA/40B7DB90-D3A0-11E9-8E15-D3DCA8C874B5" />
+                <a href="{{$banner['link']}}">
+                    <img src="{{$banner['thumb']}}" />
                 </a>
             </div>
-            <div class="item">
-                <a href="#">
-                    <img src="https://imetadata.damaotuanjian.com/METADATA/B8C8254D-BC47-B6A1-9DFB-4BE027AA5538" />
-                </a>
-            </div>
-            <div class="item">
-                <a href="#">
-                    <img src="https://imetadata.damaotuanjian.com/METADATA/E4F36930-CFD2-11E9-8E03-C3E3740D724B" />
-                </a>
-            </div>
+            @endforeach
+
         </div>
     </div>
 
@@ -35,441 +28,50 @@
                 <div class="column-bar">
                     <span class="col-title">当季优选</span>
                     <ul class="tab-group">
-                        <li>亲子互动</li>
-                        <li>水上娱乐</li>
-                        <li>户外体验</li>
-                        <li>周边跟团游</li>
+                        @foreach($cate_1_list as $cate1)
+                            <li>{{$cate1['category_name']}}</li>
+                        @endforeach
+
                     </ul>
-                    <a href="#" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('group')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper">
                     <div class="tab-box line-type-box">
                         <ul class="column-list-group clearfix">
-                            <li class="first-item">
+                            @foreach($goods_1_list as $key=>$goods1)
+
+                                @if($key == 0)
+                                    <li class="first-item">
                                 <i class="sale-icon"></i>
-                                <a href="" class="img-area"><img src="{{ asset(HOME) }}/picture/01.jpg" alt=""></a>
+                                <a href="" class="img-area"><img src="{{$goods1['goods_thumb']}}" alt=""></a>
                                 <div class="info-bar">
-                                    <a href="" class="tit">【青春游】成都+色达+新都桥+稻城亚双...</a>
-                                    <span class="pri"><span class="jg">&yen;<span class="num">10799.00</span></span>起</span>
+                                    <a href="" class="tit">{{$goods1['goods_name']}}</a>
+                                    <span class="pri"><span class="jg">&yen;<span class="num">{{$goods1['price']}}</span></span>起</span>
                                 </div>
                             </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/02.png" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">都江堰-成都大熊猫繁育基地汽车1日游牛人专线，...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/03.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">峨眉山-乐山双汽2日游</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/04.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/05.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽12日游</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/06.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽8日跟团游</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/07.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">【直通车】成都+都江堰+青城山巴士往返1日游含青...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/08.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">都江堰-青城山汽车1日游金牌导游，万人甄选，纯玩...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/09.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                @else
+                                    <li class="item
+                                    @if($key == 3 || $key == 8)
+                                        mr_0
+                                    @endif">
+                                        <a href="">
+                                            <div class="img-area">
+                                                <img src="{{$goods1['goods_thumb']}}" alt=""></div>
+                                            <div class="info-area">
+                                                <div class="tit">{{$goods1['goods_name']}}</div>
+                                                <div class="data-bar clearfix">
+                                                    <span class="myd">{{$goods1['sale_value']}} 次好评</span>
+                                                    <span class="pri"><span class="jg">&yen;<span class="num">{{$goods1['price']}}</span></span>起</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+
+                            @endforeach
+
                         </ul>
-                    <!--
-                    <ul class="column-list-group clearfix">
-                        <li class="first-item">
-                            <i class="sale-icon"></i>
-                            <a href="" class="img-area"><img src="{{ asset(HOME) }}/picture/s1.jpg" alt=""></a>
-                            <div class="info-bar">
-                                <a href="" class="tit">【青春游】成都+色达+新都桥+稻城亚双...</a>
-                                <span class="pri"><span class="jg">&yen;<span class="num">10799.00</span></span>起</span>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/02.png" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-成都大熊猫繁育基地汽车1日游牛人专线，...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/03.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">峨眉山-乐山双汽2日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/04.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/05.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽12日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/06.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽8日跟团游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/07.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【直通车】成都+都江堰+青城山巴士往返1日游含青...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/08.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-青城山汽车1日游金牌导游，万人甄选，纯玩...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/09.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="column-list-group clearfix">
-                        <li class="first-item">
-                            <i class="sale-icon"></i>
-                            <a href="" class="img-area"><img src="{{ asset(HOME) }}/picture/s2.jpg" alt=""></a>
-                            <div class="info-bar">
-                                <a href="" class="tit">【青春游】成都+色达+新都桥+稻城亚双...</a>
-                                <span class="pri"><span class="jg">&yen;<span class="num">10799.00</span></span>起</span>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/02.png" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-成都大熊猫繁育基地汽车1日游牛人专线，...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/03.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">峨眉山-乐山双汽2日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/04.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/05.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽12日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/06.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽8日跟团游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/07.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【直通车】成都+都江堰+青城山巴士往返1日游含青...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/08.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-青城山汽车1日游金牌导游，万人甄选，纯玩...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/09.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="column-list-group clearfix">
-                        <li class="first-item">
-                            <i class="sale-icon"></i>
-                            <a href="" class="img-area"><img src="{{ asset(HOME) }}/picture/s3.jpg" alt=""></a>
-                            <div class="info-bar">
-                                <a href="" class="tit">【青春游】成都+色达+新都桥+稻城亚双...</a>
-                                <span class="pri"><span class="jg">&yen;<span class="num">10799.00</span></span>起</span>
-                            </div>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/02.png" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-成都大熊猫繁育基地汽车1日游牛人专线，...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/03.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">峨眉山-乐山双汽2日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/04.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/05.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽12日游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/06.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【青春游】成都+色达+新都桥+稻城亚丁双汽8日跟团游</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/07.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【直通车】成都+都江堰+青城山巴士往返1日游含青...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/08.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">都江堰-青城山汽车1日游金牌导游，万人甄选，纯玩...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item mr_0">
-                            <a href="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/09.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">[中秋]成都+都江堰+青城山1日游净纯玩蜀都，0自...</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="myd">6688 次好评</span>
-                                        <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                    -->
+
                     </div>
                 </div>
             </div>
@@ -477,19 +79,17 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">找场地</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('group')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <div class="col-side-area">
                         <div class="side-con">
                             <h4 class="type-bar">价位</h4>
                             <ul class="type-group">
-                                <li><a href="" class="item">不限</a></li>
-                                <li><a href="" class="item">150元以下</a></li>
-                                <li><a href="" class="item">150-300元</a></li>
-                                <li><a href="" class="item">300-450元</a></li>
-                                <li><a href="" class="item">450-700元</a></li>
-                                <li><a href="" class="item">1000元以上</a></li>
+                                <li><a href="{{route('group')}}" class="item">不限</a></li>
+                                @foreach($cate_5_list as $cate5)
+                                <li><a href="{{route('group')}}" class="item">{{$cate5['category_name']}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="side-banner">
@@ -498,102 +98,27 @@
                     </div>
                     <div class="tab-box same-type-box fr">
                         <ul class="column-list-group clearfix">
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/10.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">德阳黑龙滩长岛天堂洲际酒...</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
+                            @foreach($goods_5_list as $key=>$goods5)
+
+
+                                <li class="item
+                                    @if($key == 3 || $key == 6)
+                                    mr_0
+                                @endif">
+                                    <a href="">
+                                        <div class="img-area">
+                                            <img src="{{$goods5['goods_thumb']}}" alt=""></div>
+                                        <div class="info-area">
+                                            <div class="tit">{{$goods5['goods_name']}}</div>
+                                            <div class="data-bar clearfix">
+                                                <span class="myd">{{$goods5['sale_value']}} 次好评</span>
+                                                <span class="pri"><span class="jg">&yen;<span class="num">{{$goods5['price']}}</span></span>起</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/11.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">德阳龙之梦瑞峰公寓酒店</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/12.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">德阳柳江古镇李家大院</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/13.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">美客美家酒店</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/14.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">城市客栈(成都宽窄巷子店</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/15.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">德阳帝盛君豪酒店</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/16.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">尚锦翡翠大酒店(乐山大佛店)</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/17.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">黑龙滩长岛天堂洲际酒</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -602,21 +127,16 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">主题团建</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('group')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <div class="col-side-area">
                         <div class="side-con tj-info">
                             <h4 class="type-bar">主题团建</h4>
                             <ul class="type-group">
-                                <li><a href="" class="item">温泉</a></li>
-                                <li><a href="" class="item">游乐场</a></li>
-                                <li><a href="" class="item">博物馆</a></li>
-                                <li><a href="" class="item">水世界</a></li>
-                                <li><a href="" class="item">演出</a></li>
-                                <li><a href="" class="item">儿童乐园</a></li>
-                                <li><a href="" class="item">漂流</a></li>
-                                <li><a href="" class="item">赏花</a></li>
+                                @foreach($cate_2_list as $cate2)
+                                    <li><a href="{{route('group')}}" class="item">{{$cate2['category_name']}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="side-banner">
@@ -625,102 +145,27 @@
                     </div>
                     <div class="tab-box same-type-box fr">
                         <ul class="column-list-group clearfix">
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/22.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">北京欢乐谷</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
+                            @foreach($goods_2_list as $key=>$goods2)
+
+
+                                <li class="item
+                                    @if($key == 3 || $key == 5)
+                                    mr_0
+                                @endif">
+                                    <a href="">
+                                        <div class="img-area">
+                                            <img src="{{$goods2['goods_thumb']}}" alt=""></div>
+                                        <div class="info-area">
+                                            <div class="tit">{{$goods2['goods_name']}}</div>
+                                            <div class="data-bar clearfix">
+                                                <span class="myd">{{$goods2['sale_value']}} 次好评</span>
+                                                <span class="pri"><span class="jg">&yen;<span class="num">{{$goods2['price']}}</span></span>起</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/23.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">故宫</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/24.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">水立方</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/25.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">鸟巢3D体育馆</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/26.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">圆明园</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/27.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">温泉</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/28.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">北京大观园</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/29.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">桃园仙谷</div>
-                                        <div class="data-bar clearfix">
-                                            <span class="myd">6688 次好评</span>
-                                            <span class="pri"><span class="jg">&yen;<span class="num">99.00</span></span>起</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                                    </a>
+                                </li>
+
+                            @endforeach
                         </ul>
                     </div>
                 </div>

@@ -130,7 +130,7 @@
                     art_id: id ? id : 0,
                     title: '',
                     article_desc: '',
-                    category_id: '',
+                    category_id: {{request()->get('cate_id', '')}},
                     thumb: '',
                     is_top: '1',
                     sort: '50',

@@ -52,7 +52,7 @@
                 <dd>
                     <a  href="/">打开前台</a></dd>
                 <dd>
-                    <a  href="/">清除缓存</a>
+                    <a  href="javascript:;" onclick="clearCache()">清除缓存</a>
                 </dd>
                 <dd>
                     <a onclick="xadmin.add_tab('修改密码','{{ route('admin.editPass') }}')">修改密码</a></dd>
@@ -179,6 +179,7 @@
 <script src="{{ asset(ADMIN) }}/js/html5.min.js"></script>
 <script src="{{ asset(ADMIN) }}/js/respond.min.js"></script>
 <![endif]-->
+<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 
 <script>
     function setBg() {
@@ -192,5 +193,24 @@
         var color = getCookie('left_bg');
         $(".left-nav").attr('style','background:'+color+"!important")
     })
+
+    function clearCache() {
+        //loading层
+        var index = layer.load(1, {
+            shade: 0.5 //0.1透明度的白色背景
+        });
+
+        axios.post("{{route('admin.clearCache')}}").then(respond=>{
+            let res = respond.data;
+            if(res.code > 0){
+                setTimeout(function () {
+                    layer.msg(res.msg, {icon:1,anim:6})
+                    layer.close(index)
+                })
+            }else{
+                layer.msg(res.msg)
+            }
+        })
+    }
 </script>
 </html>

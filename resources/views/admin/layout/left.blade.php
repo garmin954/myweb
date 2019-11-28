@@ -66,6 +66,12 @@
                             <i class="iconfont">&#xec18;</i>
                             <cite>合作伙伴</cite></a>
                     </li>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('未来企服','{{ route('admin.article3.index', array('cate_id'=>3)) }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>未来企服</cite></a>
+                    </li>
                 </ul>
             </li>
 
@@ -86,7 +92,7 @@
                             <i class="iconfont">&#xec18;</i>
                             <cite>广告管理</cite></a>
                     </li>
-                    
+
                 </ul>
             </li>
 

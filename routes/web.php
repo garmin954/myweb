@@ -18,6 +18,8 @@ Route::prefix('admin')->name('admin.')->group( function (){
     Route::any('login', 'Admin\AdminController@login')->name('login');
     Route::get('outLogin', 'Admin\AdminController@outLogin')->name('outLogin');
     Route::any('editPass', 'Admin\AdminController@editPass')->name('editPass');
+    Route::post('clearCache', 'Admin\AdminController@clearCache')->name('clearCache');
+
 
 
     Route::prefix('config')->name('config.')->group(function (){
@@ -108,6 +110,12 @@ Route::prefix('admin')->name('admin.')->group( function (){
 
     });
 
+    // 内容
+    Route::prefix('article3')->name('article3.')->group(function (){
+        Route::any('create', 'Admin\ArticleController@create')->name('create');
+        Route::get('index', 'Admin\ArticleController@index')->name('index');
+    });
+
     // 上传
     Route::any('upload', 'BaseController@upload')->name('upload');
 
@@ -132,5 +140,10 @@ Route::get('goodsInfo', 'Home\GoodsController@goodsInfo')->name('goodsInfo');
 
 // 文章
 Route::get('raiders', 'Home\ArticleController@raiders')->name('raiders');
+Route::get('artInfo', 'Home\ArticleController@artInfo')->name('artInfo');
 
+Route::get('cooperation', 'Home\ArticleController@cooperation')->name('cooperation');
+
+Route::get('future', 'Home\ArticleController@future')->name('future');
+Route::get('aboutus', 'Home\ArticleController@aboutus')->name('aboutus');
 

@@ -33,7 +33,7 @@
 @show
 
 
-@include('home.layout.footer');
+@include('home.layout.footer')
 <script src="{{ asset(HOME) }}/js/swiper.min.js"></script>
 <script src="{{ asset(HOME) }}/js/superslide.min.js"></script>
 <script type="text/javascript" src="{{ asset(HOME) }}/js/owl.carousel.js"></script>
