@@ -7,6 +7,7 @@
 @endsection
 @section('description')
     {{$info['goods_desc']}}-{{$config['description']}}
+
 @endsection
 @section('resources')
 
@@ -17,6 +18,9 @@
     <link href="{{ asset(HOME)}}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset(HOME)}}/css/bootstrap-me.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/animate.css" />
+    <link href="{{ asset(HOME)}}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset(HOME)}}/css/bootstrap-me.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/common.css" />
 {{--    <link rel="stylesheet" href="static/css/infos1.css"/>--}}
 {{--    <link rel="stylesheet" href="static/css/infos2.css"/>--}}
 @endsection
@@ -98,6 +102,10 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="inner-product-list-item-date">
+                                        <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="{{$info['end_time']}}">
+                                        <span></span><span class="time-end">活动结束</span>
+                                    </div>
                                     <div class="inner-detail-header-price">
                                                     <span>
                                                         {{$info['price']}}
@@ -133,7 +141,7 @@
                                 <div class="product-detail">
                                     @foreach($recommend as $item)
                                         <div class="thumbnail">
-                                            <a href="{{route('goodsInfo', ['id'=>$item['goods_id']])}}">
+                                            <a href="{{route('goodsInfos', ['id'=>$item['goods_id']])}}">
                                                 <div class="size-control s-4-3">
                                                     <img class="size-control-item card-img-top"
                                                          src="{{$item['goods_thumb']}}"
@@ -147,6 +155,7 @@
                                             </div>
                                         </div>
                                     @endforeach
+
                                 </div>
                             </div>
                         </div>
@@ -167,11 +176,30 @@
     <script src="{{ asset(HOME)}}/js/jquery.SuperSlide.2.1.1.js">
     </script>
     <script src="{{ asset(HOME)}}/js/js-detail.js"></script>
+    <script type="text/javascript" src="{{ asset(HOME)}}/js/wow.min.js"></script>
+    <script type="text/javascript" src="{{ asset(HOME)}}/js/countDown.js"></script>
         <script type="text/javascript">
             jQuery(".slide-pics").slide({
                 mainCell: ".bd ul",
                 autoPlay: true
             });
+
+            $("input[name='countDown']").each(function () {
+                var time_end=this.value;
+                var con=$(this).next("span");
+                var _=this.dataset;
+                countDown(con,{
+                    title:_.title,//优先级最高,填充在prefix位置
+                    prefix:_.prefix,//前缀部分
+                    suffix:_.suffix,//后缀部分
+                    time_end:time_end//要到达的时间
+                })
+                //提供3个事件分别为:启动,重启,停止
+                    .on("countDownStarted countDownRestarted  countDownEnded ",function (arguments) {
+                        console.info(arguments);
+                    });
+            });
+
     </script>
     <script type="text/javascript">
         $('.header-menu-m .p-2 img').click(function () {

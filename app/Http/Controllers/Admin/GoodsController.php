@@ -43,6 +43,12 @@ class GoodsController extends BaseController
                 $condition['status'] = ['nq', $status];
             }
 
+            // 搜索状态
+            $navId = $request->get('nav_id', '');
+            if ($navId != ''){
+                $condition['type'] = ['nq', $navId];
+            }
+
             // 搜索分类
             $categoryArr = $request->get('category_id', '');
             if ($categoryArr){
@@ -131,6 +137,7 @@ class GoodsController extends BaseController
         if ($goodsId){
             $goodsCateLinkModel = new GoodsCategoryLinkModel();
             $data['info'] = $this->model->where('goods_id', $goodsId)->first();
+            $data['info']['end_time'] = date('Y-m-d H:i:s', $data['info']['end_time']);
             $data['info']['category_list'] =$goodsCateLinkModel->getGoodsCateLinkArr($goodsId);
         }
 

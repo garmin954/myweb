@@ -29,6 +29,17 @@
                                 :props="{ checkStrictly: true }"
                                 clearable></el-cascader>
                     </el-form-item>
+                    <el-form-item label="栏目" >
+                        <el-select v-model="form.nav_id" placeholder="请选择">
+
+                        <el-option
+                                v-for="item in typeCateOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value"></el-option>
+                        </el-select>
+
+                    </el-form-item>
 
                     <el-form-item label="状态">
                         <el-select v-model="form.status" placeholder="请选择">
@@ -67,7 +78,14 @@
                     <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 </script>
+                {{--                蕾西--}}
+                <script type="text/html" id="type">
+                     <a href="javascript:;" class="layui-btn layui-btn-xs @{{  d.type == 1 ? ' ': 'layui-btn-danger' }}">
+                         @{{  d.type == 1 ? '团建产品': '拼团建' }}
+                     </a>
 
+
+                </script>
                 {{--                状态--}}
                 <script type="text/html" id="status">
                     <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.goods_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
@@ -100,14 +118,23 @@
                     form:{
                         goods_name: '',
                         category_id: '',
-                        status: ''
+                        status: '',
+                        nav_id: '',
                     },
                     optionsStatus:[
                         {label:'全部', value:''},
                         {label:'正常', value:'1'},
                         {label:'关闭', value:'0'},
                     ],
-                    optionsCate: []
+                    optionsCate: [],
+                    typeCateOptions:[
+                        {label:'全部', value:''},{
+                        value: '1',
+                        label: '团建产品',
+                    },{
+                        value: '2',
+                        label: '拼团建',
+                    }]
                 },
                 created(){
                     this.getSearchData();
@@ -127,7 +154,7 @@
                         })
                     },
                     onSubmit(){
-                        reload(this.form.goods_name, this.form.category_id, this.form.status);
+                        reload(this.form.goods_name, this.form.category_id, this.form.status, this.form.nav_id);
                     }
                 }
             });
@@ -163,6 +190,7 @@
                         ,{field:'sort', title:'排序', minWidth:120, edit:'text'}
                         ,{field:'sale_type', title:'营销展示类型', minWidth:120}
                         ,{field:'sale_value', title:'营销展示值', minWidth:120}
+                        ,{field:'type', title:'栏目类型', minWidth:100, templet:'#type'}
                         ,{field:'is_top', title:'推荐', minWidth:120, templet:'#is_top'}
                         ,{field:'status', title:'状态', minWidth:120, templet:'#status'}
                         ,{field:'updated_at', title:'更新时间', minWidth:180}
@@ -178,13 +206,14 @@
                 //     close: '%>'
                 // });
 
-                window.reload = (goods_name='', category_id='', status=1)=>{
+                window.reload = (goods_name='', category_id='', status=1, nav_id='')=>{
                     table.reload('idTest', {
                         url: url
                         ,where: {
                             goods_name: goods_name,
                             category_id: category_id,
                             status: status,
+                            nav_id: nav_id,
                         } //设定异步数据接口的额外参数
                         //,height: 300
 

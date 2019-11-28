@@ -45,12 +45,13 @@
                 <li @if($active == 'group')class="active"@endif>
                     <a href="{{ route('group') }}" >团建产品</a>
                 </li>
-                <li>
-                    <a href="list-5.html">团建攻略</a>
+                <li @if($active == 'raiders')class="active"@endif>
+                    <a href="{{ route('raiders') }}">团建攻略</a>
                 </li>
-                <li>
-                    <a href="list-7.html">拼团建</a>
+                <li @if($active == 'fight')class="active"@endif>
+                    <a href="{{ route('fight') }}" >拼团建</a>
                 </li>
+
                 <li>
                     <a href="list-4.html">合作伙伴</a>
                 </li>

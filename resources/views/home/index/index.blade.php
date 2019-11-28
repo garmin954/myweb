@@ -1,13 +1,9 @@
 @extends('home.layout.base')
 @section('title')
-    首页
+    {{$config['web_name']}}
 @endsection
-@section('keywords')
-    首页
-@endsection
-@section('description')
-    首页
-@endsection
+@section('keywords'){{$config['keywords']}}@endsection
+@section('description'){{$config['description']}}@endsection
 
 @section('container')
     <!-- 主导航 -->

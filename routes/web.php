@@ -118,11 +118,19 @@ Route::prefix('admin')->name('admin.')->group( function (){
 Route::get('goods', 'Home\GoodsController@index')->name('goods');
 Route::get('/', 'Home\IndexController@index')->name('/');
 Route::get('group', 'Home\GoodsController@group')->name('group');
+Route::get('fight', 'Home\GoodsController@fight')->name('fight');
 
 Route::prefix('goods')->name('goods.')->group(function () {
     Route::post('getCategoryList', 'Home\GoodsController@getCategoryList')->name('getCategoryList');
+
     Route::post('searchGoods', 'Home\GoodsController@searchGoods')->name('searchGoods');
 });
 
+Route::get('goodsInfos', 'Home\GoodsController@goodsInfos')->name('goodsInfos');
 Route::get('goodsInfo', 'Home\GoodsController@goodsInfo')->name('goodsInfo');
+
+
+// 文章
+Route::get('raiders', 'Home\ArticleController@raiders')->name('raiders');
+
 

@@ -52,6 +52,9 @@
                 <dd>
                     <a  href="/">打开前台</a></dd>
                 <dd>
+                    <a  href="/">清除缓存</a>
+                </dd>
+                <dd>
                     <a onclick="xadmin.add_tab('修改密码','{{ route('admin.editPass') }}')">修改密码</a></dd>
                 <dd>
                     <a href="{{route('admin.outLogin')}}">退出</a></dd>

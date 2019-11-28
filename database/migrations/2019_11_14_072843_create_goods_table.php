@@ -36,8 +36,10 @@ class CreateGoodsTable extends Migration
             $table->string('nums', '100')->default('')->comment('参团人数');
             $table->decimal('price')->default('0.00')->comment('价格(均价)');
             $table->tinyInteger('avg')->default('1')->comment('参与人均价');
+            $table->integer('end_time')->comment('结束时间');
             $table->tinyInteger('status')->default('1')->comment('状态');
             $table->tinyInteger('sort')->default('50')->comment('排序');
+            $table->tinyInteger('type')->default('1')->comment('类型 1：团建 2 拼团');
             $table->text('content')->nullable(false)->comment('内容');
             $table->tinyInteger('is_top')->default('0')->comment('是否推荐');
 //            $table->float('discount', 4, 2)->default('10')->comment('折扣');

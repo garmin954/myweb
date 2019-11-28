@@ -115,9 +115,23 @@ class ConfigController extends BaseController
     /**
      * 配置页面
      */
-    public function config()
+    public function config(Request $request)
     {
         $configTypeModel = new ConfigType();
+        $configModel = new \App\Model\Admin\Config();
+
+        if ($request->getMethod() == 'POST'){
+            $param = $request->all();
+            unset($param['file']);
+
+            foreach ($param as $field => $val){
+                $res = $configModel->where("config_code", $field)->update(['value'=> $val]);
+                if (!$res){
+                    return getAjaxData('', 0);
+                }
+            }
+            return getAjaxData('', 1);
+        }
         $configTypeList = $configTypeModel->where('status', 1)->get ();
         $configList = $this->model->where('status', 1)->get();
         $list = [];

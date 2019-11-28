@@ -47,6 +47,27 @@
                         <el-input v-model="goodsForm.goods_name"></el-input>
                     </el-form-item>
 
+                    {{--栏目类型--}}
+                    <el-form-item label="栏目类型" >
+                        <el-select v-model="goodsForm.type" placeholder="请选择">
+                            <el-option
+                                    v-for="(item ,index) in typeCateOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+
+                    {{--时间--}}
+                    <el-form-item v-if="goodsForm.type == '2'" label="营销值" style="width: 300px">
+                        <el-date-picker
+                                v-model="goodsForm.end_time"
+                                type="datetime"
+                                placeholder="选择日期时间">
+                        </el-date-picker>
+                    </el-form-item>
+
                     {{--商品描述--}}
                     <el-form-item label="商品描述">
                         <el-input type="textarea" v-model="goodsForm.goods_desc"></el-input>
@@ -229,6 +250,8 @@
                     'is_top' : '0', // 是否推荐
                     'sale_type' : '1', // 营销类型
                     'sale_value' : '1', // 营销展示值
+                    'type' : '1', // 栏目类型
+                    'end_time' : '', // 结束时间
                 },
                 value:'',
                 dialogVisible:false,
@@ -237,7 +260,14 @@
                 typeOptions:[], // 类型
                 thumbList:[], // 相册
                 thumbItem:[], // 相册
-                activeName : 'first' // 当前tab
+                activeName : 'first', // 当前tab
+                typeCateOptions:[{
+                    value: '1',
+                    label: '团建产品',
+                },{
+                    value: '2',
+                    label: '拼团建',
+                }]
             },
             created(){
                 this.getGoodsRelated();
@@ -275,6 +305,8 @@
                                 self.goodsForm.sale_type=res.data.info.sale_type.toString();
                                 self.goodsForm.sale_value=res.data.info.sale_value;
                                 self.goodsForm.content=res.data.info.content;
+                                self.goodsForm.type=res.data.info.type.toString();
+                                self.goodsForm.end_time=res.data.info.end_time;
                                 setTimeout(function () {
                                     ueditor.setContent(res.data.info.content)
                                 },1000)

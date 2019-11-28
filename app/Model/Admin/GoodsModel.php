@@ -57,7 +57,7 @@ class GoodsModel extends Base
             $params['category_id_2'] = implode(',', $params['category_id_2']);
             unset($params['category_list']);
 
-
+            $params['end_time'] = strtotime($params['end_time']);
             $res = $this->saveData($params);
             if (isset($params['goods_id'])){
                 $goodsId = $params['goods_id'];

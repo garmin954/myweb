@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/animate.css" />
     <link href="{{ asset(HOME)}}/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ asset(HOME)}}/css/bootstrap-me.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/common.css" />
+
     <style>
         .recommend-wrap{top: 0px}
         .loading{
@@ -185,22 +187,21 @@
                             <h4 class="recommend-title">
                                 相关推荐
                             </h4>
-
                             @foreach($recommend as $item)
-                            <div class="thumbnail">
-                                <a href="{{route('goodsInfo', ['id'=>$item['goods_id']])}}">
-                                    <div class="size-control s-4-3">
-                                        <img class="size-control-item card-img-top"
-                                             src="{{$item['goods_thumb']}}"
-                                             alt="{{$item['goods_name']}}">
+                                <div class="thumbnail">
+                                    <a href="{{route('goodsInfos', ['id'=>$item['goods_id']])}}">
+                                        <div class="size-control s-4-3">
+                                            <img class="size-control-item card-img-top"
+                                                 src="{{$item['goods_thumb']}}"
+                                                 alt="{{$item['goods_name']}}">
+                                        </div>
+                                    </a>
+                                    <div class="caption">
+                                        <h5 class="title">
+                                            {{$item['goods_name']}}
+                                        </h5>
                                     </div>
-                                </a>
-                                <div class="caption">
-                                    <h5 class="title">
-                                        {{$item['goods_name']}}
-                                    </h5>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -212,11 +213,14 @@
 @endsection
 
 @section('scripts')
-
+    <script type="text/javascript" src="{{ asset(HOME)}}/js/wow.min.js"></script>
+    <script type="text/javascript" src="{{ asset(HOME)}}/js/countDown.js"></script>
     <script type="text/javascript">
+
         let page = $("#page").val();
         let limit =  $("#limit").val();
 
+        let nav_id = "{{ $active == 'group' ? 1 : 2 }}";
         $(function () {
             Object.keys($(".top-cate ul li")).forEach((key)=>{
                 if(!isNaN(parseInt(key))){
@@ -283,7 +287,7 @@
                     }
                 }
             });
-            // console.log(first);
+            console.log(first);
             // console.log(seconds);
 
             let params = {
@@ -291,7 +295,7 @@
                 seconds:seconds.toString(),
                 page: page,
                 limit: limit,
-                nav_id : "{{ $active == 'group' ? 1 : 2 }}"
+                nav_id : nav_id
             }
             axios.post("{{ route('goods.searchGoods') }}", params).then(respond=>{
                 let res = respond.data;
@@ -301,7 +305,7 @@
                         let html = '';
                         res.data.forEach(item=>{
                             html += `
-                            <a href="{{route('goodsInfo')}}?id=`+item.goods_id+`" target="_blank" class="">
+                            <a href="{{route('goodsInfos')}}?id=`+item.goods_id+`" target="_blank" class="">
                                 <div class="inner-product-list-item">
                                     <div class="inner-product-list-item-img">
                                         <img alt="" src=" `+item.goods_thumb+`">
@@ -334,7 +338,9 @@
                                     if (item.nums){
                                         html += item.nums+` 人 `;
                                     }
-                                    html +=`</div>
+                                    html +=`
+
+                                    </div>
                                     <div class="inner-product-list-item-destination">
                                             <span>`;
                                                 let cate1 = item['cate'][{{ CATE_1 }}];
@@ -345,6 +351,11 @@
                                                 }
                                     html += `</span>
                                     </div>
+                                    <div class="inner-product-list-item-date">
+                                        <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="`+item.end_time+`">
+	                                    <span></span><span class="time-end">活动结束</span>
+                                    </div>
+
                                     <div class="inner-product-list-item-price">
                                             <span>
                                                 `+item.price+`
@@ -360,6 +371,7 @@
                             `;
                         })
                         $('.item-list').html(html)
+                        setTimeout( reloadTime, 100)
 
                     }else{
                         $('.item-list').html(`
@@ -399,11 +411,11 @@
                     if (pageCount <= 0){
                         phtml = '';
                     }
-
                     // 分页
                     $('.pagination').html(phtml);
 
                     $('.loading').hide();
+                    setTimeout( reloadTime, 1000)
 
                 }else{
 
@@ -413,6 +425,23 @@
             });
         }
 
+        function reloadTime() {
+            $("input[name='countDown']").each(function () {
+                var time_end=this.value;
+                var con=$(this).next("span");
+                var _=this.dataset;
+                countDown(con,{
+                    title:_.title,//优先级最高,填充在prefix位置
+                    prefix:_.prefix,//前缀部分
+                    suffix:_.suffix,//后缀部分
+                    time_end:time_end//要到达的时间
+                })
+                //提供3个事件分别为:启动,重启,停止
+                    .on("countDownStarted countDownRestarted  countDownEnded ",function (arguments) {
+                        console.info(arguments);
+                    });
+            });
+        }
     </script>
 
 
