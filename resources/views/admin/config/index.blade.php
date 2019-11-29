@@ -26,15 +26,15 @@
                 {{--                行工具--}}
                 <script type="text/html" id="bar">
                     <a class="layui-btn layui-btn-xs" lay-event="update">编辑</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    {{--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>--}}
                 </script>
-
                 {{--                状态--}}
                 <script type="text/html" id="status">
-                    <input type="checkbox" name="status" lay-filter="status" data-id="<% d.config_id %>" value="<% d.status %>" lay-skin="switch"  lay-text="ON|OFF"
+                    <input type="checkbox" name="status" lay-filter="status" data-id="@php  echo "{{ d.config_id }}"; @endphp" value="@php  echo "{{ d.status }}"; @endphp" lay-skin="switch"  lay-text="ON|OFF"
                            @{{  d.status == 1 ? 'checked': '' }} >
 
                 </script>
+
             </div>
 
         </div>
@@ -67,7 +67,7 @@
                     {type: 'checkbox', fixed: 'left'}
                     ,{field:'config_name', title:'配置名称', minWidth:50, fixed: 'left'}
                     ,{field:'config_code', title:'配置代码', minWidth:120, edit: 'text'}
-                    ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
+                    // ,{field:'status', title:'状态', minWidth:80, templet:'#status'}
                     ,{field:'updated_at', title:'更新时间', minWidth:120}
                     ,{fixed: 'right', title:'操作', toolbar: '#bar', minWidth:150}
                 ]]
@@ -77,10 +77,7 @@
 
                 }
             });
-            laytpl.config({
-                open: '<%',
-                close: '%>'
-            });
+
 
             window.reload = ()=>{
 

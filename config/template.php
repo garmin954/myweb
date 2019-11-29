@@ -12,6 +12,12 @@ define('CATE_5', 5); // 团建价格
 
 define('ADMIN_CODE', 'sfbsd943');
 
+
+define('ART_1', 1); // 团建攻略
+define('ART_2', 2); // 合作伙伴
+define('ART_3', 3); // 未来企服
+define('ART_4', 4); // 客户反馈
+
 return [
     'config_input_type' => [
         1 => '文本框',
@@ -34,5 +40,11 @@ return [
         3 => '团建收益',
         4 => '团建天数',
         5 => '团建价格',
+    ],
+    'art_cate_list'=>[
+        1 => '团建攻略',
+        2 => '合作伙伴',
+        3 => '未来企服',
+        4 => '客户反馈',
     ]
 ];

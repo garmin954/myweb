@@ -4,7 +4,15 @@
 @endsection
 @section('keywords'){{$config['keywords']}}@endsection
 @section('description'){{$config['description']}}@endsection
+@section('resources')
 
+    <link rel="stylesheet" href="{{ asset(HOME)}}/css/normalize.css"/>
+    <link href="{{ asset(HOME)}}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset(HOME)}}/css/bootstrap-me.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset(HOME)}}/css/animate.css" />
+    {{--    <link rel="stylesheet" href="static/css/infos1.css"/>--}}
+    {{--    <link rel="stylesheet" href="static/css/infos2.css"/>--}}
+@endsection
 @section('container')
     <!-- 主导航 -->
     <div id="slider">
@@ -43,7 +51,7 @@
                                 @if($key == 0)
                                     <li class="first-item">
                                 <i class="sale-icon"></i>
-                                <a href="" class="img-area"><img src="{{$goods1['goods_thumb']}}" alt=""></a>
+                                <a href="{{route('goodsInfo', ['id'=>$goods1['goods_id']])}}" class="img-area"><img src="{{$goods1['goods_thumb']}}" alt=""></a>
                                 <div class="info-bar">
                                     <a href="" class="tit">{{$goods1['goods_name']}}</a>
                                     <span class="pri"><span class="jg">&yen;<span class="num">{{$goods1['price']}}</span></span>起</span>
@@ -54,7 +62,7 @@
                                     @if($key == 3 || $key == 8)
                                         mr_0
                                     @endif">
-                                        <a href="">
+                                        <a href="{{route('goodsInfo', ['id'=>$goods1['goods_id']])}}">
                                             <div class="img-area">
                                                 <img src="{{$goods1['goods_thumb']}}" alt=""></div>
                                             <div class="info-area">
@@ -100,12 +108,12 @@
                         <ul class="column-list-group clearfix">
                             @foreach($goods_5_list as $key=>$goods5)
 
-
+                                @if($key <= 6)
                                 <li class="item
                                     @if($key == 3 || $key == 6)
                                     mr_0
                                 @endif">
-                                    <a href="">
+                                    <a href="{{route('goodsInfo', ['id'=>$goods5['goods_id']])}}">
                                         <div class="img-area">
                                             <img src="{{$goods5['goods_thumb']}}" alt=""></div>
                                         <div class="info-area">
@@ -117,7 +125,7 @@
                                         </div>
                                     </a>
                                 </li>
-
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -146,13 +154,13 @@
                     <div class="tab-box same-type-box fr">
                         <ul class="column-list-group clearfix">
                             @foreach($goods_2_list as $key=>$goods2)
-
+                                @if($key <= 6)
 
                                 <li class="item
                                     @if($key == 3 || $key == 5)
                                     mr_0
                                 @endif">
-                                    <a href="">
+                                    <a href="{{route('goodsInfo', ['id'=>$goods2['goods_id']])}}">
                                         <div class="img-area">
                                             <img src="{{$goods2['goods_thumb']}}" alt=""></div>
                                         <div class="info-area">
@@ -164,7 +172,7 @@
                                         </div>
                                     </a>
                                 </li>
-
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -174,7 +182,7 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">客户反馈</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('raiders')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <div class="col-side-area">
@@ -184,54 +192,15 @@
                     </div>
                     <div class="tab-box ship-type-box fr">
                         <ul class="ship-list-group clearfix">
+                            @foreach($art_4_list as $arts4)
                             <li>
-                                <a href="" class="name">皇家加勒比国际游轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">10月预售，限量双成人立减500长江三峡景色美，...</div>
+                                <a href="{{route('artInfo', ['id'=>$arts4['art_id']])}}" class="name">{{$arts4['title']}}</a>
+                                <a href="{{route('artInfo', ['id'=>$arts4['art_id']])}}" class="info-area">
+                                    <div class="tit">{{$arts4['article_desc']}}</div>
                                 </a>
                             </li>
-                            <li>
-                                <a href="" class="name">公主游轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">丰都鬼城+神农溪+三峡大坝【长海系列游轮—长江1号...</div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="name">长江黄金系列邮轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">长江三峡—目的地参团【黄金系列游轮—黄金7号周四...</div>
-                                </a>
-                            </li>
-                            <li class="mr_0">
-                                <a href="" class="name">世纪游轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">品长江黄金游轮·赏三峡诗画风光·享典雅尊贵人生>长...</div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="name">南海邮轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">暑期2大1小，儿童不占床只要699 【免费升级到3楼+...</div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="name">黄金邮轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">与家人来一次触动灵魂的旅行【世纪天子号游轮】重...</div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="name">丽星邮轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">长江三峡景色美，风光使得游人醉【世纪系列豪华游...</div>
-                                </a>
-                            </li>
-                            <li class="mr_0">
-                                <a href="" class="name">皇家加勒比国际游轮</a>
-                                <a href="" class="info-area">
-                                    <div class="tit">【限量楼层升级】长江三峡4晚5日游 重庆-宜昌 豪华...</div>
-                                </a>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>
@@ -240,194 +209,102 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">拼团建</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('fight')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <ul class="tuan-list-group clearfix">
-                        <li class="item load">
-                            <a href="">
+                        @foreach($pin_list as $key => $pins)
+                        <li class="item load
+                            @if($key == 3)
+                                mr_0
+                            @endif
+                            ">
+                            <a href="{{route('goodsInfos', ['id'=>$pins['goods_id']])}}">
                                 <div class="date">
-                                    <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="2020/01/01 00:00:00">
+                                    <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="{{$pins['end_time']}}">
                                     <span></span><span class="time-end">活动结束</span>
                                 </div>
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/38.jpg" alt=""></div>
+                                <div class="img-area"><img src="{{$pins['goods_thumb']}}" alt=""></div>
                                 <div class="info-area">
-                                    <div class="tit">[国庆]桂林-阳朔-大漓江-遇龙河-阿 什国际品牌酒店 西栅内客栈</div>
+                                    <div class="tit">{{$pins['goods_name']}}</div>
                                     <div class="data-bar clearfix">
                                         <span class="yhq">
-                                            <span class="yj">原价<del>&yen;440.99</del></span>
-                                            <span class="zk">6.85折</span>
+                                            <span class="yj">原价<del>&yen;{{$pins['price']}}</del></span>
+                                            <span class="zk">{{$pins['sale_value']}}折</span>
                                         </span>
-                                        <span class="pri"><span class="jg">&yen<span class="num">380.99</span></span>起</span>
+                                        <span class="pri"><span class="jg">&yen<span class="num">{{$pins['price']*$pins['sale_value']/10}}</span></span>起</span>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li class="item load">
-                            <a href="">
-                                <div class="date">
-                                    <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="2020/01/01 00:00:00">
-                                    <span></span><span class="time-end">活动结束</span>
-                                </div>
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/39.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">阳澄联合阳澄湖大闸蟹礼券 2988型公4.5两 母3.5两 4对</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="yhq">
-                                            <span class="yj">原价<del>&yen;440.99</del></span>
-                                            <span class="zk">6.85折</span>
-                                        </span>
-                                        <span class="pri"><span class="jg">&yen<span class="num">220.09</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item load">
-                            <a href="">
-                                <div class="date">
-                                    <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="2020/01/01 00:00:00">
-                                    <span></span><span class="time-end">活动结束</span>
-                                </div>
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/40.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">臭豆腐 休闲零食 黑色油炸豆腐干蒜蓉味零食小吃120g</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="yhq">
-                                            <span class="yj">原价<del>&yen;440.99</del></span>
-                                            <span class="zk">6.85折</span>
-                                        </span>
-                                        <span class="pri"><span class="jg">&yen<span class="num">32.99</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="item load mr_0">
-                            <a href="">
-                                <div class="date">
-                                    <input type="hidden" name="countDown" data-prefix="还有" data-suffix="" value="2020/01/01 00:00:00">
-                                    <span></span><span class="time-end">活动结束</span>
-                                </div>
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/41.jpg" alt=""></div>
-                                <div class="info-area">
-                                    <div class="tit">【门票】成都大熊猫基地</div>
-                                    <div class="data-bar clearfix">
-                                        <span class="yhq">
-                                            <span class="yj">原价<del>&yen;440.99</del></span>
-                                            <span class="zk">6.85折</span>
-                                        </span>
-                                        <span class="pri"><span class="jg">&yen<span class="num">99.99</span></span>起</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+
+                        @endforeach
                     </ul>
                 </div>
             </div>
-            <script type="text/javascript">
-                $("input[name='countDown']").each(function () {
-                    var time_end=this.value;
-                    var con=$(this).next("span");
-                    var _=this.dataset;
-                    countDown(con,{
-                        title:_.title,//优先级最高,填充在prefix位置
-                        prefix:_.prefix,//前缀部分
-                        suffix:_.suffix,//后缀部分
-                        time_end:time_end//要到达的时间
-                    })
-                    //提供3个事件分别为:启动,重启,停止
-                        .on("countDownStarted countDownRestarted  countDownEnded ",function (arguments) {
-                            console.info(arguments);
-                        });
-                });
-            </script>
             <!-- 拼团建 -->
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">合作伙伴</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('cooperation')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
             </div>
             <div class="partner-container clearfix">
                 <div class="c1 clearfix">
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
+
+                    @foreach($friendship_list as $key =>$link1)
+                        @if($key <= 8)
+                            <div class="partner-img
+                            @if($key % 2 == 1)
+                                    white
+                            @else
+                                    orange
+                            @endif
+                            ">
+                                <img src="{{$link1['thumb']}}"/>
+                            </div>
+                        @endif
+                    @endforeach
+
                 </div>
                 <div class="c2 clearfix">
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-logo-img">
-                        <img src="{{ asset(HOME) }}/picture/logo_partner.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
+                    {{--partner-logo-img--}}
+                    @foreach($friendship_list as $key =>$link1)
+                        @if($key <= 15 && $key >= 9)
+                            <div class="
+                            @if($key % 2 == 1)
+                                        partner-img  white
+                            @else
+                                    @if($key == 12)
+                                    partner-logo-img
+                                    @else
+                                        partner-img  white
+                                    @endif
+                                        partner-img  orange
+                            @endif
+                                    ">
+                                <img src="{{$link1['thumb']}}"/>
+                            </div>
+                        @endif
+                    @endforeach
+
+
                 </div>
                 <div class="c3 clearfix">
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img white">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
-                    <div class="partner-img orange">
-                        <img src="{{ asset(HOME) }}/picture/baidu.png"/>
-                    </div>
+                    @foreach($friendship_list as $key =>$link1)
+                        @if($key >= 19)
+                            <div class="partner-img
+                            @if($key % 2 == 1)
+                                  orange
+
+                            @else
+                                    white
+                            @endif
+                                    ">
+                                <img src="{{$link1['thumb']}}"/>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <!-- 合作伙伴 -->
@@ -441,76 +318,37 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">未来企服</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('future')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <div class="tab-box other-type-box">
                         <div class="qf-first-item">
-                            <a href="#">
+                            <a href="{{route('artInfo', ['id'=>$art_3_list[0]['art_id']])}}">
                                 <div class="img-area">
-                                    <img src="{{ asset(HOME) }}/picture/1111.jpg" alt="">
+                                    <img src="{{$art_3_list[0]['thumb']}}" alt="">
                                 </div>
                                 <div class="info-area">
-                                    <div class="tit-al">肉干肉脯休闲零食特产小吃靖江风味猪肉脯自然片</div>
+                                    <div class="tit-al">{{$art_3_list[0]['article_desc']}}</div>
 
                                 </div>
                             </a>
                         </div>
                         <ul class="column-list-group sec-items clearfix">
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/48.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">肉干肉脯休闲零食特产小吃靖江风味猪肉脯自然片</div>
 
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/49.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">鱼豆腐170g 原味烧烤味豆腐香辣味特产风味零食 </div>
+                            @foreach($art_3_list as $key =>$arts3)
+                                @if($key >= 1)
+                                    <li class="item">
+                                        <a href="{{route('artInfo', ['id'=>$arts3['art_id']])}}">
+                                            <div class="img-area"><img src="{{$arts3['thumb']}}" alt=""></div>
+                                            <div class="info-area">
+                                                <div class="tit-al">{{$arts3['article_desc']}}</div>
 
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/50.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">黄山烧饼梅干菜酥饼</div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
 
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/48.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">肉干肉脯休闲零食特产小吃靖江风味猪肉脯自然片</div>
-
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/49.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">鱼豆腐170g 原味烧烤味豆腐香辣味特产风味零食 </div>
-
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="item mr_0">
-                                <a href="">
-                                    <div class="img-area"><img src="{{ asset(HOME) }}/picture/50.jpg" alt=""></div>
-                                    <div class="info-area">
-                                        <div class="tit-al">黄山烧饼梅干菜酥饼</div>
-
-                                    </div>
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -520,59 +358,22 @@
             <div class="column-container cus-show">
                 <div class="column-bar">
                     <span class="col-title">个人拼团出游</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('fight')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper bd clearfix">
                     <ul class="jieban-list-group clearfix">
+                        @foreach($pins_list as $pinss)
                         <li>
-                            <a href="" class="">
+                            <a href="{{route('goodsInfo', ['id'=>$pinss['goods_id']])}}" class="">
 
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/56.jpg" alt="" class=""></div>
+                                <div class="img-area"><img src="{{$pinss['goods_thumb']}}" alt="" class=""></div>
                                 <div class="info-area">
-                                    <h4 class="tit">乌鲁木齐+布尔津+喀纳斯+克拉玛依+伊宁市+那拉提+巴音布鲁克...</h4>
+                                    <h4 class="tit">{{$pinss['goods_name']}}</h4>
 
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="" class="">
-
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/56.jpg" alt="" class=""></div>
-                                <div class="info-area">
-                                    <h4 class="tit">乌鲁木齐+布尔津+喀纳斯+克拉玛依+伊宁市+那拉提+巴音布鲁克...</h4>
-
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="">
-
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/56.jpg" alt="" class=""></div>
-                                <div class="info-area">
-                                    <h4 class="tit">乌鲁木齐+布尔津+喀纳斯+克拉玛依+伊宁市+那拉提+巴音布鲁克...</h4>
-
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="">
-
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/56.jpg" alt="" class=""></div>
-                                <div class="info-area">
-                                    <h4 class="tit">乌鲁木齐+布尔津+喀纳斯+克拉玛依+伊宁市+那拉提+巴音布鲁克...</h4>
-
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" class="">
-                                <div class="img-area"><img src="{{ asset(HOME) }}/picture/59.jpg" alt="" class=""></div>
-                                <div class="info-area">
-                                    <h4 class="tit">华东五市-苏州园林-杭州-乌镇双飞6日游</h4>
-
-                                </div>
-                            </a>
-                        </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -580,63 +381,27 @@
             <div class="column-container">
                 <div class="column-bar">
                     <span class="col-title">自驾游路线推荐</span>
-                    <a href="" class="more-link">更多<i class="more-icon"></i></a>
+                    <a href="{{route('raiders')}}" class="more-link">更多<i class="more-icon"></i></a>
                 </div>
                 <div class="column-wrapper clearfix">
                     <div class="tab-box">
                         <ul class="strategy-list-group clearfix">
+                            @foreach($art_1_list as $arts1)
                             <li>
-                                <a href="">
+                                <a href="{{route('artInfo', ['id'=>$arts1['art_id']])}}">
                                     <div class="img-area">
-                                        <img src="{{ asset(HOME) }}/picture/64.jpg" alt="">
-                                        <span class="date">2018-8-31</span>
+                                        <img src="{{$arts1['thumb']}}" alt="">
+                                        <span class="date">{{$arts1['created_at']}}</span>
                                     </div>
                                     <div class="info-area">
-                                        <h4 class="tit">巴厘岛购物别犯愁，一篇攻略搞定各类人群，合理安排一天的购物...</h4>
+                                        <h4 class="tit">{{$arts1['title']}}</h4>
                                         <div class="line-bar"></div>
-                                        <div class="txt">来到巴厘岛除了在度假酒店享受惬意的时光，在蓝梦岛，金巴兰海滩打卡拍...</div>
+                                        <div class="txt">{{$arts1['article_desc']}}</div>
                                     </div>
                                 </a>
                             </li>
-                            <li>
-                                <a href="">
-                                    <div class="img-area">
-                                        <img src="{{ asset(HOME) }}/picture/65.jpg" alt="">
-                                        <span class="date">2018-8-31</span>
-                                    </div>
-                                    <div class="info-area">
-                                        <h4 class="tit">巴厘岛购物别犯愁，一篇攻略搞定各类人群，合理安排一天的购物...</h4>
-                                        <div class="line-bar"></div>
-                                        <div class="txt">来到巴厘岛除了在度假酒店享受惬意的时光，在蓝梦岛，金巴兰海滩打卡拍...</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <div class="img-area">
-                                        <img src="{{ asset(HOME) }}/picture/66.jpg" alt="">
-                                        <span class="date">2018-8-31</span>
-                                    </div>
-                                    <div class="info-area">
-                                        <h4 class="tit">巴厘岛购物别犯愁，一篇攻略搞定各类人群，合理安排一天的购物...</h4>
-                                        <div class="line-bar"></div>
-                                        <div class="txt">来到巴厘岛除了在度假酒店享受惬意的时光，在蓝梦岛，金巴兰海滩打卡拍...</div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="mr_0">
-                                <a href="">
-                                    <div class="img-area">
-                                        <img src="{{ asset(HOME) }}/picture/67.png" alt="">
-                                        <span class="date">2018-8-31</span>
-                                    </div>
-                                    <div class="info-area">
-                                        <h4 class="tit">巴厘岛购物别犯愁，一篇攻略搞定各类人群，合理安排一天的购物...</h4>
-                                        <div class="line-bar"></div>
-                                        <div class="txt">来到巴厘岛除了在度假酒店享受惬意的时光，在蓝梦岛，金巴兰海滩打卡拍...</div>
-                                    </div>
-                                </a>
-                            </li>
+                            @endforeach
+
                         </ul>
                     </div>
                 </div>
@@ -656,4 +421,27 @@
     </div>
 
 
+@endsection
+
+@section('scripts')
+<script type="text/javascript" src="{{ asset(HOME)}}/js/countDown.js"></script>
+<script>
+    $(function(){
+        $("input[name='countDown']").each(function () {
+            var time_end=this.value;
+            var con=$(this).next("span");
+            var _=this.dataset;
+            countDown(con,{
+                title:_.title,//优先级最高,填充在prefix位置
+                prefix:_.prefix,//前缀部分
+                suffix:_.suffix,//后缀部分
+                time_end:time_end//要到达的时间
+            })
+            //提供3个事件分别为:启动,重启,停止
+                .on("countDownStarted countDownRestarted  countDownEnded ",function (arguments) {
+                    console.info(arguments);
+                });
+        });
+    })
+</script>
 @endsection

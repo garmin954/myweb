@@ -267,6 +267,9 @@
                 },{
                     value: '2',
                     label: '拼团建',
+                },{
+                    value: '3',
+                    label: '个人团',
                 }]
             },
             created(){

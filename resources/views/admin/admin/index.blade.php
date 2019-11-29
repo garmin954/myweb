@@ -27,6 +27,9 @@
         <a href="/" target="_blank"><i title="前端" class="iconfont">&#xe68a;</i></a>
     </div>
     <div class="left_menu">
+        <a href="javascript:;" onclick="clearCache()" class="refreshThis" id="refresh"><i title="刷新" class="iconfont layui-icon">&#xe639;</i></a>
+    </div>
+    <div class="left_menu">
         <a href="javascript:;" class="refreshThis" id="refresh"><i title="刷新" class="iconfont">&#xe673;</i></a>
     </div>
 

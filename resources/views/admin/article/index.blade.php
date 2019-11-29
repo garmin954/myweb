@@ -217,7 +217,7 @@
                         layer.close(index);
                     });
                 } else if(obj.event === 'update'){
-                    xadmin.open('修改','{{ route('admin.article.create') }}?id='+data.art_id,800 )
+                    xadmin.open('修改','{{ route('admin.article.create',array('cate_id'=> request()->get('cate_id'))) }}&id='+data.art_id,800 )
                 }
             });
         });

@@ -6,13 +6,9 @@
         <div class="st-link-list clearfix">
             <strong>友情链接：</strong>
             <div class="child">
-                <a href="#">百度</a>
-                <a href="#">新浪</a>
-                <a href="#">搜狐</a>
-                <a href="#">雅虎</a>
-                <a href="#">谷歌</a>
-                <a href="#">阿里巴巴</a>
-                <a href="#">腾讯</a>
+                @foreach($friend_list as $fres)
+                 <a href="{{$fres['link']}}">{{$fres['adv_name']}}</a>
+                @endforeach
             </div>
         </div>
     </div>
@@ -20,7 +16,7 @@
 <div class="st-footer">
     <div class="wm-1200">
         <div class="st-foot-edit">
-            <p>未来团建 备案号：京ICP备 6666666号-1 咨询电话：139-0316-6318 地址：北京市朝阳区宏泰东街绿地中心</p>
+            <p>{{$config['web_name']}} {{$config['gs_desc']}}</p>
         </div>
     </div>
 </div>

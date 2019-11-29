@@ -82,31 +82,31 @@
                         |
                     </li>
                     <li>
-                        <a href="list-6.html">团建产品</a>
+                        <a href="{{ route('group') }}">团建产品</a>
                     </li>
                     <li class="nav-break">
                         |
                     </li>
                     <li>
-                        <a href="list-5.html">团建攻略</a>
+                        <a href="{{ route('raiders') }}">团建攻略</a>
                     </li>
                     <li>
-                        <a href="list-7.html">拼团建</a>
+                        <a href="{{ route('fight') }}">拼团建</a>
                     </li>
                     <li class="nav-break">
                         |
                     </li>
                     <li>
-                        <a href="list-4.html">合作伙伴</a>
+                        <a href="{{ route('cooperation') }}">合作伙伴</a>
                     </li>
                     <li class="nav-break">
                         |
                     </li>
                     <li>
-                        <a href="list-2.html">未来企服</a>
+                        <a href="{{ route('future') }}">未来企服</a>
                     </li>
                     <li>
-                        <a href="list-3.html">关于我们</a>
+                        <a href="{{ route('aboutus') }}">关于我们</a>
                     </li>
                 </ul>
             </div>

@@ -135,7 +135,7 @@
                     is_top: '1',
                     sort: '50',
                     status: '1',
-                    content:''
+                    content:'内容'
                 },
                 rules: {
                     title: [

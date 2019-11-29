@@ -115,7 +115,11 @@ Route::prefix('admin')->name('admin.')->group( function (){
         Route::any('create', 'Admin\ArticleController@create')->name('create');
         Route::get('index', 'Admin\ArticleController@index')->name('index');
     });
-
+    // 内容
+    Route::prefix('article4')->name('article4.')->group(function (){
+        Route::any('create', 'Admin\ArticleController@create')->name('create');
+        Route::get('index', 'Admin\ArticleController@index')->name('index');
+    });
     // 上传
     Route::any('upload', 'BaseController@upload')->name('upload');
 

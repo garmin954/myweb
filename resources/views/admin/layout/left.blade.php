@@ -9,11 +9,11 @@
                     <cite>系统管理</cite>
                     <i class="iconfont nav_right">&#xec17;</i></a>
                 <ul class="sub-menu">
-                    <li>
-                        <a onclick="xadmin.add_tab('配置类型','{{ route('admin.config_type.index') }}')">
-                            <i class="iconfont">&#xec18;</i>
-                            <cite>配置类型</cite></a>
-                    </li>
+                    {{--<li>--}}
+                        {{--<a onclick="xadmin.add_tab('配置类型','{{ route('admin.config_type.index') }}')">--}}
+                            {{--<i class="iconfont">&#xec18;</i>--}}
+                            {{--<cite>配置类型</cite></a>--}}
+                    {{--</li>--}}
 
                     <li>
                         <a onclick="xadmin.add_tab('配置管理','{{ route('admin.config.index') }}')">
@@ -71,6 +71,12 @@
                         <a onclick="xadmin.add_tab('未来企服','{{ route('admin.article3.index', array('cate_id'=>3)) }}')">
                             <i class="iconfont">&#xec18;</i>
                             <cite>未来企服</cite></a>
+                    </li>
+
+                    <li>
+                        <a onclick="xadmin.add_tab('客户反馈','{{ route('admin.article4.index', array('cate_id'=>4)) }}')">
+                            <i class="iconfont">&#xec18;</i>
+                            <cite>客户反馈</cite></a>
                     </li>
                 </ul>
             </li>
